@@ -43,6 +43,7 @@ A ordem segue os marcos do `docs/producao/plano-de-negocio.md`, seção 6.
 | O.2 | Decidir as perguntas em aberto do design quando o assunto chegar (final verdadeiro, feiticeiro, subchefes do folclore, animais do R, espaços de runa) | Gabriel | livre | fim de cada doc em `docs/` |
 | O.3 | Antes da página da Steam: buscar a marca "D Rock" (USPTO/INPI), conferir o MEI para jogos e fazer a consulta com o contador | Gabriel + Claude | livre | negócio, seções 1 e 4 |
 | O.4 | Avaliar o Metroidvania System (MetSys) para adotar ou não | Codex + Gabriel | esperando Gabriel (ler docs/tecnico/avaliacao-metsys.md) | docs/design/level-design-referencias.md |
+| O.5 | Pesquisa da jogabilidade do Grand Chase por fontes públicas | Codex | esperando Gabriel (ler docs/design/referencia-grand-chase.md) | — |
 
 ## Feito
 
