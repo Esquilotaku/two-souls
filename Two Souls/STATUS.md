@@ -207,3 +207,9 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - **Verificado:** `tests/test_world_map.gd` (22 salas, todas alcançáveis na ordem das habilidades), `tests/test_world_flow.gd` (jogo sozinho: 48 passagens de porta, bloqueio, santuário, morte, continuar, migração), `test_aseprite_frames.gd`, 600 quadros sem erro. Fotos de 4 salas conferidas.
 - **Não verificado:** ninguém jogou com teclado. Pulo, escadas automáticas, alcance das portas de cima, chefes nas salas novas e balanceamento são cálculo, não jogo. Os subchefes ainda usam o chefe genérico. Os rascunhos do Codex ganharam `.gdignore` para o Godot não importá-los.
 - **Próximo passo:** o Gabriel joga e junta os branches; depois ligar os controles da 1.6, minimapa (1.4), relógio com descanso e modos (1.5) e as mecânicas reais dos bloqueios (1.7).
+## Ponto de retomada — 01/11/2026 (Codex, tarefa 1.6)
+
+- Branch `codex/controles`. Implementados `scripts/input_config.gd`, `scripts/ui/controls_menu.gd` e `tests/test_input_config.gd`; a 1.6 está esperando Claude integrar a tela e chamar `InputConfig` no `game.gd`.
+- Padrões de controle: pulo A (inferior), ataque X (esquerdo), dash B (direito), lança LB, super soco RB, magia LT, transformação RT, interação Y, contexto RS, cura LS, mapa View, inventário Xbox/Guide e talentos/Pausa Menu. Movimento também usa direcional e analógico esquerdo. Setas para olhar, Espaço para pular, A/S/QWER, D/F, Enter, Tab/I/T e Esc no teclado.
+- Testados: carregamento headless do projeto, `tests/test_input_config.gd` e `tests/test_aseprite_frames.gd`; todos passaram. O GitHub Actions passou no run `41350609632`. Ainda não foi testado por pessoa apertando teclas nem com controle físico.
+- Próximo passo: Claude integrar no `game.gd`, incluindo carregamento das configurações e abertura/fechamento do menu; depois Gabriel validar os controles em teclado e controle físico.
