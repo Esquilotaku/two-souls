@@ -8,6 +8,12 @@ Este arquivo vale para qualquer agente de IA que trabalhe nesta pasta. Responda 
 - `Two Souls/STATUS.md` — **bilhete de passagem compartilhado**: estado atual, o que falta, próximo passo.
 - `Two Souls - Plano do Jogo.md` — decisões de design e perguntas em aberto.
 - `Two Souls - Pesquisa Inicial.md` — pesquisa e fontes.
+- `docs/` — decisões do brainstorm de 01/11/2026. São a fonte de verdade do design e prevalecem sobre o Plano do Jogo quando houver conflito:
+  - `brainstorm-mundo-interligado.md`: mapa, regiões, chefes, relógio;
+  - `brainstorm-jogo.md`: história, habilidades, runas, arte, som, controles;
+  - `estudio-e-cargos.md`: quem faz o quê;
+  - `plano-de-negocio.md`: Steam, impostos, marketing.
+- `docs/TAREFAS.md` — **quadro de tarefas**: quem pegou cada tarefa, o estado e o branch.
 - `twosouls/` e os `.psd` na raiz — material original da faculdade. Só leitura: nunca editar, mover ou apagar.
 - `tools/Godot4.7.2/` — executável do Godot (fora do git).
 
@@ -21,13 +27,30 @@ Este arquivo vale para qualquer agente de IA que trabalhe nesta pasta. Responda 
 - Este Aseprite **não abre os PSDs** do material original; exporte-os em PNG antes.
 - O Aseprite sai com código 0 mesmo quando falha: sempre confira o arquivo gerado.
 
+## Quem faz o quê
+
+Detalhes em `docs/estudio-e-cargos.md`. Não há freelancers: tudo é feito pelo Gabriel e pelas IAs.
+
+| Cargo | Responsável |
+|---|---|
+| Direção criativa e palavra final | Gabriel |
+| Produção (STATUS, TAREFAS, planejamento) | Claude organiza, Gabriel aprova |
+| Programação (Godot/GDScript) | Codex e Claude, em branches separados |
+| Game design e roteiro | Gabriel cria, Claude escreve e organiza em `docs/` |
+| Arte e animação | Gabriel (conceitos, ajuste fino no Aseprite) e IA de imagem (rascunhos) |
+| Música e efeitos sonoros | IA de música, com o Gabriel escolhendo e editando |
+| Testes | Gabriel joga; GitHub Actions a cada envio |
+| Marketing, comunidade, textos | Gabriel é o rosto; Claude escreve, Gabriel revisa |
+
+- **Agentes especializados novos** (em `.claude/agents/` ou como skill): só quando uma tarefa se repetir umas 3 vezes, e o Gabriel lê antes do primeiro uso.
+
 ## Regra de passagem entre agentes
 
 Claude e Codex não trabalham ao mesmo tempo nos mesmos arquivos.
 
-1. **Ao começar:** leia `Two Souls/STATUS.md` e rode `git status` e `git log --oneline -10`. Se houver mudança não commitada que você não fez, pare e pergunte ao Gabriel.
+1. **Ao começar:** leia `Two Souls/STATUS.md` e `docs/TAREFAS.md`, e rode `git status` e `git log --oneline -10`. Se houver mudança não commitada que você não fez, pare e pergunte ao Gabriel. Antes de trabalhar numa tarefa, marque-a em `docs/TAREFAS.md` com o seu nome e o branch. Não pegue tarefa que outro agente já marcou.
 2. **Durante:** faça commits pequenos, um por mudança que faça sentido sozinha. A mensagem começa com quem fez: `[claude] ...` ou `[codex] ...`.
-3. **Ao parar** (fim da tarefa, cota acabando ou troca de agente): atualize a seção "Ponto de retomada" do `STATUS.md` (o que fez, o que não foi verificado, próximo passo) e faça commit. Nunca deixe mudança sem commit ao passar a vez.
+3. **Ao parar** (fim da tarefa, cota acabando ou troca de agente): atualize a seção "Ponto de retomada" do `STATUS.md` (o que fez, o que não foi verificado, próximo passo) e o estado da tarefa em `docs/TAREFAS.md`, e faça commit. Nunca deixe mudança sem commit ao passar a vez.
 4. Trabalho em paralelo só em branches separados (`claude/...`, `codex/...`), e quem junta é o Gabriel.
 
 ## Como verificar

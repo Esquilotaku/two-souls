@@ -122,3 +122,12 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   2. depois, programar o marco 1 (mundo interligado, santuários, minimapa) a partir dos documentos.
 - **Não verificado:** nada foi rodado no Godot; o documento é só de design. O protótipo continua linear.
 - **Ligação com a nota de arte acima:** o brainstorm decidiu a resolução como **pixel art 640×360, com Orion de uns 64 a 80 px** (`docs/brainstorm-jogo.md`, seção 5). As formas animais são pretas com detalhes verdes.
+
+## Ponto de retomada — 01/11/2026, noite (Claude, nuvem)
+
+- O brainstorm foi juntado ao `main` ([PR #1](https://github.com/Esquilotaku/two-souls/pull/1)).
+- **Feito:**
+  - criado `docs/TAREFAS.md`, o quadro de tarefas com os marcos, a arte e as decisões pendentes;
+  - o `AGENTS.md` ganhou a seção "Quem faz o quê", os documentos de `docs/` na lista de arquivos e a regra de marcar e atualizar tarefas no quadro.
+- **Pendente (O.1):** o Gabriel quer usar o **Orca** (`stablyai/orca`, app de desktop que roda Claude Code e Codex lado a lado) e a skill de orquestração dele. **Nada foi instalado.** Pela regra do AGENTS.md, o Gabriel lê antes; a instalação é feita na **sessão do PC**, onde os agentes rodam.
+- **Próximo passo:** tarefa 1.1 do quadro, o plano técnico do mundo interligado.
