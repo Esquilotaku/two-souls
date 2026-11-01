@@ -50,15 +50,16 @@ Sessão de brainstorm entre o Gabriel e o Claude, 01/11/2026. Branch `claude/bra
 graph TD
   Copas["Copas (alto)"] --- Covil["Covil do Feiticeiro (alto)"]
   Clareira["Clareira da Árvore Mãe"] --- Floresta["Floresta Antiga"]
-  Floresta -->|2 selos: pulo duplo + mergulho| Coracao["Coração Corrompido"]
+  Floresta --- Coracao["Coração Corrompido"]
+  Copas -->|gavião: entrada alta, onde está Aenia| Coracao
   Floresta -->|pulo duplo| Copas
   Clareira --- Trilha["Trilha da Tribo"]
   Floresta --- Lago["Lago"]
   Coracao -->|purificação| Covil
-  Clareira -.->|super soco| Cav["Cavernas e Túnel (baixo)"]
+  Clareira -.->|super soco / tatu| Cav["Cavernas e Túnel (baixo)"]
   Trilha -.-> Cav
-  Floresta -.->|secreto| Cav
-  Lago -.->|mergulho: trecho alagado| Cav
+  Floresta -.->|tatu: secreto| Cav
+  Lago -.->|jiboia: trecho alagado| Cav
   Coracao -.->|raízes| Cav
   Lago -.->|gancho futuro| Ruinas["Ruínas sob o Lago (pós-1.0)"]
   Cav -.->|gancho futuro| Raizes["Raízes Profundas (pós-1.0)"]
@@ -82,6 +83,26 @@ As linhas tracejadas são passagens subterrâneas ou secretas. Os rótulos mostr
 ---
 
 ## Tema 2 — Habilidades que abrem caminhos
+
+> **Revisado no bloco 2** (ver `brainstorm-jogo.md`). Agora são **7 habilidades**, cada uma com um espírito animal [Gabriel]:
+>
+> | Ordem | Habilidade | Onde ganha |
+> |---|---|---|
+> | 1 | Lança cravada (humano) | Clareira |
+> | 2 | Super soco (humano, presente de The Rock): foco em combate, quebra algumas pedras no caminho | The Rock |
+> | 3 | Onça-pintada preta: corrida livre com duração e recarga | subchefe da Floresta Antiga |
+> | 4 e 5, em qualquer ordem | Jiboia: mergulho, frestas e escalar árvores | subchefe do Lago |
+> | | Tatu-canastra: cavar terra fofa, túneis e segredos das cavernas (ferramenta principal do mapa) | subchefe do Túnel |
+> | 6 | Gavião-real (harpia): pulo duplo. Abre as Copas e a entrada alta do Coração, onde Aenia está | subchefe das Cavernas profundas (exige jiboia e tatu) |
+> | 7 | Purificação (os gêmeos) | resgate de Aenia; abre o Covil |
+>
+> Mudanças:
+> - Os "dois selos" do Coração **foram removidos**.
+> - O planar fica com o gavião, depois do 1.0.
+> - O gancho e o cipó ficam com Orion em forma humana, depois do 1.0.
+> - O macaco-prego foi descartado.
+>
+> As tabelas abaixo ficam como histórico.
 
 ### Decisões aprovadas
 
