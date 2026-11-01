@@ -39,6 +39,6 @@
 ## Não verificado
 
 - Se o Codex enxerga a skill em `~/.agents/skills` de fato: falta abrir uma sessão do Codex e perguntar.
-- Se o Orca abre o Codex agora que o comando existe (`orca agent launch --agent codex`).
+- Se o Orca abre o Codex agora que o comando existe. Teste de 01/11/2026: `orca agent launch --agent codex` abriu o terminal, mas o PowerShell bloqueou o `codex.ps1` do npm ("a execução de scripts foi desabilitada", política de execução do Windows). Saídas: trocar o shell do Orca para Prompt de Comando ou Git Bash (usam `codex.cmd`), ou o Gabriel liberar scripts do usuário no PowerShell. Isso é uma configuração de segurança, então quem decide e faz é ele.
 - Um ciclo completo (Claude coordena e Codex entrega `worker_done`) ainda não foi testado.
 - A telemetria continuava ligada até o fim desta sessão: o Gabriel não achou a opção na configuração inicial.
