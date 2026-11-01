@@ -122,3 +122,61 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   2. depois, programar o marco 1 (mundo interligado, santuários, minimapa) a partir dos documentos.
 - **Não verificado:** nada foi rodado no Godot; o documento é só de design. O protótipo continua linear.
 - **Ligação com a nota de arte acima:** o brainstorm decidiu a resolução como **pixel art 640×360, com Orion de uns 64 a 80 px** (`docs/brainstorm-jogo.md`, seção 5). As formas animais são pretas com detalhes verdes.
+
+## Ponto de retomada — 01/11/2026, noite (Claude, nuvem)
+
+- O brainstorm foi juntado ao `main` ([PR #1](https://github.com/Esquilotaku/two-souls/pull/1)).
+- **Feito:**
+  - criado `docs/TAREFAS.md`, o quadro de tarefas com os marcos, a arte e as decisões pendentes;
+  - o `AGENTS.md` ganhou a seção "Quem faz o quê", os documentos de `docs/` na lista de arquivos e a regra de marcar e atualizar tarefas no quadro.
+- **Pendente (O.1):** o Gabriel quer usar o **Orca** (`stablyai/orca`, app de desktop que roda Claude Code e Codex lado a lado) e a skill de orquestração dele. **Nada foi instalado.** Pela regra do AGENTS.md, o Gabriel lê antes; a instalação é feita na **sessão do PC**, onde os agentes rodam.
+- **Próximo passo:** tarefa 1.1 do quadro, o plano técnico do mundo interligado.
+
+## Ponto de retomada — 01/11/2026, noite (Claude, PC, tarefa O.1)
+
+- Branch `claude/brainstorm-mundo`. O `main` local só foi avançado até o `origin/main`.
+- **Feito:**
+  - o Orca 1.4.245 foi instalado no PC;
+  - a skill `orchestration` foi instalada pelo próprio Orca para o Claude e o Codex;
+  - detalhes, conferências e ressalvas estão em `docs/orca.md`, e há uma linha de uso no `AGENTS.md` (seção "Como verificar");
+  - a O.1 está marcada como feita no quadro.
+- **Verificado:** `orca status` ok, a skill aparece no Claude Code, e `orca skills get orchestration` e `orca orchestration run-list` funcionam.
+- **Não verificado:**
+  - se o Codex enxerga a skill (ela está em `~/.agents/skills`, sem link em `~/.codex/skills`). Depois disso foi instalado o **Codex CLI 0.166.0** (`npm -g @openai/codex`): logado com ChatGPT e `codex doctor` sem falhas. Depois de o Gabriel liberar scripts no PowerShell (RemoteSigned, só o usuário dele), o Orca abriu o Codex e ele **confirmou que vê a skill** em `~/.agents/skills`. O Orca abre o Codex em "YOLO mode", sem aprovação de comandos (ver `docs/orca.md`);
+  - um ciclo completo Claude → Codex → `worker_done`;
+  - a telemetria do Orca continua **ligada**: o Gabriel precisa desligar em Settings → Privacy.
+- **Fora do git:** a pasta `txt/` (notas do Gabriel) continua sem commit; falta decidir se entra.
+- **Próximo passo:** testar o Orca com uma tarefa pequena, por exemplo o Claude pedir ao Codex uma revisão e receber o resultado. Depois, a tarefa 1.1, o plano técnico do mundo interligado.
+
+## Ponto de retomada — 01/11/2026, noite 2 (Claude, nuvem: pesquisa de referências)
+
+- **Pasta nova `referencias/`** (comece por `referencias/README.md` e `referencias/checklist-do-jogo.md`):
+  - estudo de jogos e ferramentas;
+  - vídeos (transcrições lidas via vidIQ, com o ok do Gabriel);
+  - lendas do Brasil, biomas e fauna;
+  - bestiário com mais de 60 ideias de inimigos;
+  - código aberto para Godot;
+  - checklist do que o jogo precisa ter.
+- **Script `pipeline/baixar-referencias.ps1`:** baixa capturas oficiais da Steam de uns 50 jogos para `referencias/imagens/` (fora do git). **Não testado:** a nuvem não alcança a Steam. Rodar no PC (tarefa R.1).
+- **Decisões novas que a pesquisa levantou:** viagem rápida, marcadores no mapa, fonte e HUD para o Steam Deck, segunda rota para habilidades e alternativa para quem travar num chefe. Estão no `docs/TAREFAS.md` (R.2 a R.6).
+- **Bloqueios da nuvem:** a rede bloqueia `store.steampowered.com` e `youtube.com`. Os vídeos foram lidos pelo vidIQ (uns 50 créditos do vidIQ).
+- **Nada foi instalado e nenhum código do jogo mudou.**
+
+## Ponto de retomada — 01/11/2026, noite 3 (Claude, nuvem)
+
+- **Decisões de design** (detalhes em `docs/brainstorm-jogo.md`, seção 0, e `docs/brainstorm-mundo-interligado.md`, "Decisões de 01/11/2026 (noite)"):
+  - **Heróis:** **Kaê e Aená** (antes Orion e Aenia).
+  - **Vilão:** **Tau**, guardião caído da tribo do D Rock, corrompido pelo espírito da seca (nome provisório "Estiagem"); na fase 2 vira o **Teju Jaguá**.
+  - **Lendas:** Curupira, Boiúna, Minhocão, Mapinguari e Boitatá como subchefes; 8 lendas como minibosses. Vencer acalma; purificar depois do resgate liberta e vira NPC.
+  - **Saci:** NPC brincalhão.
+  - **Inimigos:** 50 comuns no 1.0, com um núcleo de 25 primeiro.
+  - **Mapa:** viagem rápida pelas raízes da Árvore Mãe (os santuários são brotos com ruínas da tribo); minimapa revelado andando; marcadores manuais e automáticos.
+  - **Habilidades:** R = onça, tatu e jiboia; runas de 2 a 5 espaços.
+  - **Final verdadeiro:** luta contra o espírito da seca e a chuva volta.
+- **Em aberto:** título do jogo e nome da floresta ("Two Souls" é o nome de trabalho; "Monte Ligna" sai).
+- **Novo:** `docs/historia.md`, a história reescrita com os nomes novos, **em rascunho, esperando a aprovação do Gabriel**.
+- **Próximo passo (no PC):**
+  - tarefa A.1, folha de estilo do Kaê;
+  - tarefa 1.1, plano técnico do mapa interligado, avaliando o addon MetSys com a leitura do Gabriel antes;
+  - depois, voltar a programar o jogo bruto.
+- **Ainda vale no código:** o protótipo ainda usa os nomes antigos (Orion, Aenia, The Rock). Trocar quando mexer nesses arquivos, sem pressa.

@@ -226,6 +226,60 @@ A distribuição dos subchefes e minibosses é **provisória**. A Serpe do Brejo
 
 ---
 
+## Decisões de 01/11/2026 (noite) — depois da pesquisa de referências
+
+Fontes da pesquisa: `referencias/checklist-do-jogo.md`, `referencias/lendas-do-brasil.md`, `referencias/videos-e-aprendizados.md`.
+
+1. **Viagem rápida: sim** [Gabriel].
+   - Como funciona ainda não foi decidido.
+   - Sugestão do Claude: entre santuários já ativados; no modo Desafio, com custo ou limite.
+2. **Mapa** [Gabriel]: o **minimapa existe desde o início** e **vai se revelando conforme o jogador explora**. Não há mapa comprado nem achado. (O Claude interpretou assim a resposta; confirmar se houver dúvida.)
+3. **Marcadores no mapa (opção B)** [Gabriel]:
+   - **História e Aventura:** marcadores manuais (uns 4 tipos) e automáticos (santuários, chefes vencidos e bloqueios de habilidade já vistos, com o ícone do animal que abre).
+   - **Desafio:** só os manuais.
+3b. **Santuários e viagem rápida (opção B)** [Gabriel]:
+   - os santuários são **brotos da Árvore Mãe mesclados a ruínas de pedra construídas em volta**;
+   - a viagem rápida corre **pelas raízes**, de santuário ativado a santuário ativado, **liberada depois do D Rock**;
+   - no Desafio, a ideia do Claude (não decidida) é exigir que o santuário de destino tenha sido ativado naquela noite;
+   - o Saci pode zoar a viagem de vez em quando, sem atrapalhar.
+   - **Pergunta em aberto:** quem construiu as ruínas?
+4. **Subchefes = lendas, pacote A** [Gabriel, proposta do Claude]:
+
+| Subchefe | Região | Recompensa |
+|---|---|---|
+| **Curupira** | Floresta Antiga | onça |
+| **Boiúna (Cobra Grande)** | Lago | jiboia |
+| **Minhocão** | Túnel | tatu |
+| **Mapinguari** | Cavernas profundas | gavião-real |
+| **Boitatá** | Copas | caminho do Covil |
+
+5. **Minibosses = lendas** [Gabriel, proposta do Claude], um por região, menos o Coração e o Covil:
+
+| Miniboss | Região | Depois de vencido |
+|---|---|---|
+| **Pé de Garrafa** | Clareira | foge e some |
+| **Quibungo** | Trilha da Tribo | foge e some |
+| **Romãozinho** | Floresta Antiga | foge e some |
+| **Matinta Pereira** | Copas (só à noite) | **purificável, vira NPC** |
+| **Capelobo** | Cavernas | foge e some |
+| **Iara** | Lago | **purificável, vira NPC** |
+| **Cabeça de Cuia** | Túnel alagado | **purificável, vira NPC** (a maldição é quebrada) |
+| **Teiniaguá** | gruta secreta (aberta pelo tatu) | **purificável, vira NPC** (o encanto é quebrado) |
+
+6. **Regra das lendas (opção C)** [Gabriel]:
+   - **Vencer a luta só acalma** a lenda: ela foge, ainda meio corrompida.
+   - **Depois do resgate de Aenia**, com a **purificação**, Orion volta a cada região e **purifica a lenda de vez**. Aí ela vira NPC na própria região e dá uma recompensa (runa rara ou peça do final verdadeiro).
+   - Vale para os **5 subchefes** e para os **4 minibosses amaldiçoados** (opção B dos minibosses).
+   - **Purificar todas as lendas** passa a ser uma das condições do **final verdadeiro**.
+7. **Saci** [Gabriel]: **não é inimigo**. É um **NPC brincalhão que às vezes trolla o jogador**. Ideias do Claude, não decididas: rouba um item e o jogador persegue até ele devolver com bônus; aparece em regiões diferentes; dá dicas que podem ser verdade ou pegadinha.
+
+**Alternativas descartadas:**
+- **Subchefes:** Comadre Fulozinha, Pé de Garrafa, Iara, Caboclo d'Água, Capelobo, Corpo-seco, Teiniaguá, Saci e Matinta como subchefes.
+- **Destino das lendas:** sumir depois de vencidas (pouco vivo); virar NPC logo após a luta (sem motivo para voltar).
+- **Minibosses:** todos virando NPC (trabalho demais); todos sumindo.
+
+---
+
 ## Perguntas em aberto
 
 - **Mapa:** quantas salas por região, e o nome final de cada região.
