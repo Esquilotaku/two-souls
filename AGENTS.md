@@ -13,7 +13,8 @@ Este arquivo vale para qualquer agente de IA que trabalhe nesta pasta. Responda 
   - `brainstorm-jogo.md`: história, habilidades, runas, arte, som, controles;
   - `estudio-e-cargos.md`: quem faz o quê;
   - `plano-de-negocio.md`: Steam, impostos, marketing;
-  - `historia.md`: a história com os nomes novos (Kaê, Aená, Tau), em rascunho para aprovação.
+  - `historia.md`: a história com os nomes novos (Kaê, Aená, Tau), em rascunho para aprovação;
+  - `cronica-do-mundo.md`: o livro do mundo, contado como história, com todas as regiões, chefes, lendas e inimigos, e diagramas.
 - `referencias/` — pesquisa de referências: jogos, vídeos, lendas, fauna, bestiário, código aberto e checklist do jogo. Comece por `referencias/checklist-do-jogo.md`.
 - `docs/TAREFAS.md` — **quadro de tarefas**: quem pegou cada tarefa, o estado e o branch.
 - `twosouls/` e os `.psd` na raiz — material original da faculdade. Só leitura: nunca editar, mover ou apagar.
