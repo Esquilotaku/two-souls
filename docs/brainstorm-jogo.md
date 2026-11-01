@@ -36,6 +36,7 @@ Sessão de brainstorm entre o Gabriel e o Claude, iniciada em 01/11/2026. O mund
 - **Final** (opção D) [Gabriel]:
   - **Final normal:** o feliz e clássico. O feiticeiro é derrotado, os gêmeos purificam a floresta juntos, a Árvore Mãe encerra a narração e The Rock aparece como aliado.
   - **Final verdadeiro:** para quem achar todos os segredos ou terminar no Desafio. **O conteúdo ainda não foi definido.**
+- **Lendas como subchefes, minibosses e NPCs** (01/11, noite) [Gabriel]: ver `brainstorm-mundo-interligado.md`, "Decisões de 01/11/2026 (noite)". Vencer acalma a lenda; purificar depois do resgate liberta e ela vira NPC. **Purificar todas** é uma condição do final verdadeiro. **O Saci é um NPC brincalhão**, não inimigo.
 - **The Rock nunca foi vilão** [Gabriel]: é o guardião da floresta e o primeiro grande chefe, só para testar a força de Orion. Depois vira aliado.
 
 ### Alternativas descartadas

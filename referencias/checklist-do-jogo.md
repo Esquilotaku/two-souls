@@ -38,7 +38,8 @@ Montado pelo Claude em 01/11/2026 a partir do brainstorm (`docs/`) e da pesquisa
 - ✅ Santuários fixos que só valem se ativados; morrer não tira nada.
 - ✅ Minimapa revelado conforme se anda.
 - ✅ Atalhos de volta com pista; segredos de recompensa fora do mapa.
-- 🆕❓ **Viagem rápida (fast travel). A decisão mais importante que falta.**
+- ✅ **Viagem rápida: SIM** (01/11). ❓ Como funciona ainda falta decidir.
+- (Histórico da pesquisa:) **Viagem rápida (fast travel).**
   - **O que a pesquisa mostra:**
     - é vista como conforto essencial, e um jogo foi criticado por não ter;
     - o Blasphemous ganhou viagem entre santuários numa atualização;
@@ -49,7 +50,7 @@ Montado pelo Claude em 01/11/2026 a partir do brainstorm (`docs/`) e da pesquisa
     - no **Desafio**, a viagem pode custar algo ou ficar limitada.
 - 🆕❓ **Marcadores no mapa:** o jogador marca lugares para voltar depois. O Blasphemous e o Silksong têm. [opinião] Barato de fazer e muito pedido.
 - 🆕 **O mapa mostra as saídas ainda não exploradas** de cada sala. Isso permite "cutucar o mapa" quando o jogador trava ([vídeo GMTK Silksong](https://www.youtube.com/watch?v=l7xXW0EbK4g), [fórum Steam](https://steamcommunity.com/app/2230650/discussions/0/4033599336912482385)).
-- ❓ O mapa é comprado ou achado por região (como no Hollow Knight), ou só revelado andando.
+- ✅ **O minimapa existe desde o início e se revela andando** (01/11). Sem compra.
 - 🆕 **Fechadura perto da chave.** A primeira utilidade de cada habilidade fica perto de onde ela é ganha ([GMTK Dread](https://www.youtube.com/watch?v=5pop-cc9kmY)).
 - 🆕 **Duas rotas para o que é importante.** Pelo menos uma habilidade alcançável por dois caminhos, e **uma alternativa de exploração para quem travar num chefe** ([GMTK Silksong](https://www.youtube.com/watch?v=l7xXW0EbK4g)).
 - 🆕 **Migalhas de pão:** itens e inimigos que puxam para o caminho certo; mais fortes nos modos História e Aventura.
@@ -67,7 +68,7 @@ Montado pelo Claude em 01/11/2026 a partir do brainstorm (`docs/`) e da pesquisa
 ## 5. Chefes e inimigos
 
 - ✅ 16 lutas: 3 principais, 5 subchefes, 8 minibosses.
-- ❓ Quais lendas viram cada subchefe e miniboss (proposta em [`lendas-do-brasil.md`](lendas-do-brasil.md)).
+- ✅ **Lendas decididas** para os 5 subchefes e os 8 minibosses, e a regra vencer → acalmar → purificar → NPC (`docs/brainstorm-mundo-interligado.md`). O Saci é NPC.
 - ❓ Escolher de 20 a 25 inimigos comuns entre as mais de 60 ideias em [`bestiario-ideias.md`](bestiario-ideias.md).
 - 🆕 **Todo ataque tem aviso**, e a mesma cor tem sempre o mesmo significado (por exemplo, brilho roxo da corrupção = não dá para bloquear) ([fontes no bestiário](bestiario-ideias.md)).
 - 🆕 **Os chefes ensinam o próprio padrão**, com fases que mudam ataque ou ambiente.
