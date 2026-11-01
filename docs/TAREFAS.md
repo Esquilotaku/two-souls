@@ -23,7 +23,7 @@ A ordem segue os marcos do `docs/plano-de-negocio.md`, seÃ§Ã£o 6.
 | 1.3 | SantuÃ¡rios fixos que sÃ³ valem se ativados; morrer volta ao Ãºltimo ativado sem perder nada | Codex ou Claude | em andamento (Claude, claude/estrutura-mundo) | mundo, tema 1, itens 6 e 7 |
 | 1.4 | Minimapa revelado conforme as salas visitadas | Codex ou Claude | livre | mundo, tema 1 |
 | 1.5 | RelÃ³gio com descanso no santuÃ¡rio e os modos HistÃ³ria, Aventura e Desafio | Codex ou Claude | livre | mundo, tema 4 |
-| 1.6 | Controles novos (setas, EspaÃ§o, A, S, QWER, D, F, Enter) com remapeamento | Codex ou Claude | livre | jogo, seÃ§Ã£o 7 |
+| 1.6 | Controles novos (setas, Espaço, A, S, QWER, D, F, Enter) com remapeamento | Codex | esperando Claude (integrar no game.gd) | jogo, seção 9 |
 | 1.7 | Bloqueios de habilidade: lanÃ§a cravada e super soco primeiro | Codex ou Claude | livre | jogo, seÃ§Ã£o 3 |
 
 ## Arte (em paralelo)
