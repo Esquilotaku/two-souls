@@ -30,7 +30,7 @@ A ordem segue os marcos do `docs/plano-de-negocio.md`, seção 6.
 
 | # | Tarefa | Responsável sugerido | Estado | Referência |
 |---|---|---|---|---|
-| A.1 | Folha de estilo do Orion em 640×360 (paleta, altura de 64 a 80 px, contorno, formas animais pretas com verde) | Gabriel + Claude | em andamento (Claude, claude/folha-estilo) | jogo, seção 5; estúdio, fluxo de arte |
+| A.1 | Folha de estilo do Orion em 640×360 (paleta, altura de 64 a 80 px, contorno, formas animais pretas com verde) | Gabriel + Claude | feito (01/11/2026) | `docs/folha-de-estilo-orion.md` |
 | A.2 | Exportar os PSDs originais para PNG, como referência | Gabriel | livre | AGENTS.md, seção Aseprite |
 | A.3 | Orion básico no Aseprite (parado, correndo, pulando, atacando) e ligar no `player.gd` | Gabriel + Codex | livre | AGENTS.md, seção Aseprite |
 
@@ -49,3 +49,4 @@ A ordem segue os marcos do `docs/plano-de-negocio.md`, seção 6.
 | — | Brainstorm completo (4 documentos em `docs/`) | Claude + Gabriel | 01/11/2026 |
 | — | Quadro de tarefas e cargos no `AGENTS.md` | Claude | 01/11/2026 |
 | O.1 | Orca instalado e skill `orchestration` para Claude e Codex (`docs/orca.md`) | Claude + Gabriel | 01/11/2026 |
+| A.1 | Folha de estilo do Orion: paleta de 28 cores, 72 px, contorno, 6 animações e script `pipeline/new-orion.lua` | Claude + Gabriel | 01/11/2026 |

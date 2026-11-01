@@ -147,3 +147,20 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   - a telemetria do Orca continua **ligada**: o Gabriel precisa desligar em Settings → Privacy.
 - **Fora do git:** a pasta `txt/` (notas do Gabriel) continua sem commit; falta decidir se entra.
 - **Próximo passo:** testar o Orca com uma tarefa pequena, por exemplo o Claude pedir ao Codex uma revisão e receber o resultado. Depois, a tarefa 1.1, o plano técnico do mundo interligado.
+
+## Ponto de retomada — 01/11/2026, noite (Claude, tarefa A.1)
+
+- Branch `claude/folha-estilo`, saído de `claude/brainstorm-mundo`.
+- **Feito (aprovado pelo Gabriel):** `docs/folha-de-estilo-orion.md`. Decisões:
+  - paleta de 28 cores, com pele, cabelo, túnica e couro medidos na referência aprovada (`Two Souls/art/orion-paleta.gpl`);
+  - Orion com 72 px de altura, quadro de 128×96, pé em (64, 88);
+  - contorno de fora de 1 px quase preto e, nas formas animais, verde-escuro;
+  - 6 animações, 29 quadros a 12 por segundo: `idle` 6, `run` 8, `jump` 3, `fall` 2, `attack` 6, `dash` 4.
+- `pipeline/new-orion.lua` cria um `.aseprite` vazio nesse padrão: modo indexado com a paleta travada, as tags, as camadas `corpo`, `lanca` e `guia` (escondida). Não sobrescreve arquivo existente.
+- **Verificado:** o script rodou no Aseprite e o arquivo gerado foi reaberto e conferido (tamanho, modo, 29 cores, tags e faixas, duração de 83 ms, guia escondida). O export no formato do `export-aseprite.ps1` sai com as 6 tags, e a guia não entra no PNG. A recusa de sobrescrever também foi testada. O Godot carrega sem erro (`--headless --quit`).
+- **Não verificado:**
+  - nenhum quadro foi desenhado;
+  - as cores de metal, olho e animais são propostas, não medidas;
+  - o `aseprite_frames.gd` ainda ignora o `"repeat": "1"` das tags que não repetem (fica para a A.3).
+- `art/orion.aseprite` (ilustração antiga) não foi mexido.
+- **Próximo passo:** A.3, o Orion básico desenhado num arquivo gerado pelo script e ligado ao `player.gd`.
