@@ -164,3 +164,10 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   - o `aseprite_frames.gd` ainda ignora o `"repeat": "1"` das tags que não repetem (fica para a A.3).
 - `art/orion.aseprite` (ilustração antiga) não foi mexido.
 - **Próximo passo:** A.3, o Orion básico desenhado num arquivo gerado pelo script e ligado ao `player.gd`.
+## Ponto de retomada — 01/11/2026 (Codex, tarefa A.3)
+
+- Branch `codex/orion-basico`, derivado de `claude/folha-estilo`; a A.3 está marcada em andamento no quadro.
+- A ferramenta de imagem integrada gerou seis folhas de rascunho (idle, run, jump, fall, attack e dash), sem API ou serviço cobrado. Foram usadas 6 imagens geradas. Os PNGs estão em `Two Souls/art/rascunhos/`; a ilustração anterior foi preservada como `orion-ilustracao-antiga.aseprite`.
+- A CLI Aseprite criou o esqueleto `Two Souls/art/orion.aseprite` com 29 quadros e seis tags, mas não abriu os PNGs para montagem. A conversão pela interface foi iniciada, mas só o rascunho idle virou `.aseprite`; o run ficou aberto para salvar. O arquivo atual de destino ainda não tem os sprites desenhados.
+- **Não verificado/não feito:** desenho final e indexação dos quadros, export `orion.png`/`orion.json`, integração no player, tratamento de `repeat`, testes Godot e de frames, execução do jogo, push e Actions.
+- **Próximo passo:** retomar a conversão/montagem das folhas no Aseprite, conferir a paleta e os pivôs e só então integrar e rodar as verificações. A arte precisa ser mostrada ao Gabriel; a A.3 deve passar a “esperando Gabriel” depois da conclusão técnica.
