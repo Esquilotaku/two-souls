@@ -221,3 +221,10 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - Verificado: importacao do projeto, carregamento headless e todos os testes automatizados, incluindo `test_runes.gd`; GitHub Actions `41353603483` passou. Sem teste manual de gameplay.
 - Integracao no save, concessao das runas/fragmentos e aplicacao dos bonus nas habilidades ficam para Claude; tarefa 1.8 aguarda essa ligacao.
 - O branch foi enviado para `origin/codex/runas`; proximo passo: Claude integrar o RuneState no save e fluxo do jogo.
+
+## Ponto de retomada — 01/11/2026 (Codex, avaliação MetSys)
+
+- Criada a avaliação em `docs/avaliacao-metsys.md`, com comparação ao mundo atual, fontes oficiais, compatibilidade declarada e recomendação parcial para Gabriel decidir.
+- MetSys não foi instalado; nenhum arquivo de código do jogo foi alterado. Apenas este STATUS, `docs/TAREFAS.md` e o documento de avaliação fazem parte desta tarefa.
+- Não foi verificada a compatibilidade do addon no Godot 4.7.2 nem foi rodada verificação do jogo; esta tarefa foi de leitura e documentação. A compatibilidade real permanece a confirmar em cópia isolada, caso Gabriel decida avaliar uma adoção.
+- Tarefa O.4 aguarda Gabriel ler `docs/avaliacao-metsys.md` e decidir se quer protótipo do editor de mapa/minimapa.
