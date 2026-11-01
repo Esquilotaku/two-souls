@@ -29,12 +29,18 @@ jobs:
       - name: Rodar 600 quadros
         run: ./godot --headless --path "Two Souls" --quit-after 600 2>&1 | tee run.log
 
-      - name: Testar sprites do Aseprite
-        run: ./godot --headless --path "Two Souls" -s res://tests/test_aseprite_frames.gd
+      - name: Rodar os testes (tests/test_*.gd)
+        run: |
+          set -o pipefail
+          for test in "Two Souls"/tests/test_*.gd; do
+            name=$(basename "$test")
+            echo "== $name"
+            ./godot --headless --path "Two Souls" -s "res://tests/$name" 2>&1 | tee -a tests.log
+          done
 
       - name: Procurar erros no log
         run: |
-          if grep -E "SCRIPT ERROR|^ERROR:|Parse Error" import.log run.log; then
+          if grep -E "SCRIPT ERROR|^ERROR:|Parse Error" import.log run.log tests.log; then
             echo "::error::O Godot acusou erro. Veja as linhas acima."
             exit 1
           fi
