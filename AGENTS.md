@@ -24,8 +24,7 @@ Este arquivo vale para qualquer agente de IA que trabalhe nesta pasta. Responda 
 - Exportar para o jogo: `powershell -ExecutionPolicy Bypass -File pipeline\export-aseprite.ps1 [nome]`. Gera `assets/sprites/<nome>.png` + `.json`; commite os dois junto com o `.aseprite`.
 - No jogo: `AsepriteFrames.load_frames("res://assets/sprites/<nome>.json")` devolve um `SpriteFrames` para `AnimatedSprite2D`.
 - PNG → `.aseprite` com tag: `aseprite -b --script-param src=... --script-param dst=... --script-param tag=idle --script pipeline\new-from-png.lua`.
-- Arquivo novo do Orion no padrão da folha de estilo (`docs/folha-de-estilo-orion.md`): `aseprite -b --script-param dst="Two Soulsrtorion-novo.aseprite" --script pipeline
-ew-orion.lua`. Não sobrescreve arquivo existente.
+- Arquivo novo do Orion no padrão da folha de estilo (`docs/folha-de-estilo-orion.md`): `aseprite -b --script-param dst="Two Souls\art\orion-novo.aseprite" --script pipeline\new-orion.lua`. Não sobrescreve arquivo existente.
 - Este Aseprite **não abre os PSDs** do material original; exporte-os em PNG antes.
 - O Aseprite sai com código 0 mesmo quando falha: sempre confira o arquivo gerado.
 
