@@ -41,7 +41,7 @@ O mundo planejado tem 22 salas em 8 regiões. `WorldMap` descreve células, sala
 
 **O template de transição do MetSys espera uma cena por sala.** No [README](https://github.com/KoBeWi/Metroidvania-System), o mapa pode associar cenas às salas; no código oficial [`RoomTransitions.gd`](https://github.com/KoBeWi/Metroidvania-System/blob/master/addons/MetroidvaniaSystem/Template/Scripts/Modules/RoomTransitions.gd), a transição remove a instância da sala anterior, chama `load_room(target_room)` para carregar a próxima e descarta a anterior. A variante [`ScrollingRoomTransitions.gd`](https://github.com/KoBeWi/Metroidvania-System/blob/master/addons/MetroidvaniaSystem/Template/Scripts/Modules/ScrollingRoomTransitions.gd) mantém as duas apenas durante a rolagem.
 
-Isso **conflita com adotar o fluxo de jogo pronto do MetSys**, pois o Two Souls decidiu manter o mapa inteiro numa cena, com todas as áreas posicionadas no mundo e sem troca de cena por porta ([decisão em `world_scene.gd`](../Two%20Souls/scripts/world/world_scene.gd); [plano técnico](plano-tecnico-mundo.md)). Não significa que o addon seja impossível de usar: seu editor e o `MapView` são componentes separáveis e poderiam servir como ferramenta de planejamento/minimapa, mantendo nosso `WorldScene` e nossa lógica de portas. Essa integração parcial, porém, não é automática.
+Isso **conflita com adotar o fluxo de jogo pronto do MetSys**, pois o Two Souls decidiu manter o mapa inteiro numa cena, com todas as áreas posicionadas no mundo e sem troca de cena por porta ([decisão em `world_scene.gd`](../../Two%20Souls/scripts/world/world_scene.gd); [plano técnico](plano-tecnico-mundo.md)). Não significa que o addon seja impossível de usar: seu editor e o `MapView` são componentes separáveis e poderiam servir como ferramenta de planejamento/minimapa, mantendo nosso `WorldScene` e nossa lógica de portas. Essa integração parcial, porém, não é automática.
 
 ## Riscos e esforço de migração
 
@@ -65,5 +65,5 @@ Isso **conflita com adotar o fluxo de jogo pronto do MetSys**, pois o Two Souls 
 
 - [Plano técnico do mundo](plano-tecnico-mundo.md)
 - [Referências de level design](level-design-referencias.md)
-- [Código atual do mundo](../Two%20Souls/scripts/world/world_map.gd), [montagem do mundo](../Two%20Souls/scripts/world/world_scene.gd), [salvamento](../Two%20Souls/scripts/save_manager.gd) e [fluxo do jogo](../Two%20Souls/scripts/game.gd)
+- [Código atual do mundo](../Two%20Souls/scripts/world/world_map.gd), [montagem do mundo](../../Two%20Souls/scripts/world/world_scene.gd), [salvamento](../Two%20Souls/scripts/save_manager.gd) e [fluxo do jogo](../Two%20Souls/scripts/game.gd)
 - [`AGENTS.md`](../AGENTS.md)
