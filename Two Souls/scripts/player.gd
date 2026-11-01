@@ -18,6 +18,7 @@ const MOVE_SPEED := 152.0 * WORLD_SCALE
 const ACCELERATION := 1180.0 * WORLD_SCALE
 const JUMP_SPEED := -340.0 * WORLD_SCALE
 const COLLISION_SIZE := Vector2(22.0, 66.0)
+const SPRITE_PIVOT_OFFSET_X := 16.0
 
 var health := 5
 var max_health := 5
@@ -57,7 +58,7 @@ func _ready() -> void:
 	character_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	character_sprite.scale = Vector2.ONE
 	# O ponto (64, 88) do quadro deve coincidir com o pé da colisão (y=12).
-	character_sprite.position = Vector2(16.0, COLLISION_SIZE.y * 0.5 - 40.0)
+	character_sprite.position = Vector2(SPRITE_PIVOT_OFFSET_X, COLLISION_SIZE.y * 0.5 - 40.0)
 	character_sprite.z_index = -1
 	add_child(character_sprite)
 	var collision := CollisionShape2D.new()
@@ -110,6 +111,8 @@ func _physics_process(delta: float) -> void:
 		take_damage(1, true)
 	if character_sprite:
 		character_sprite.flip_h = facing < 0
+		# O pivô (64, 88) fica 16 px à esquerda do centro do quadro; ao espelhar, vai para a direita.
+		character_sprite.position.x = SPRITE_PIVOT_OFFSET_X * (-1.0 if facing < 0 else 1.0)
 		character_sprite.visible = not (hurt_timer > 0.0 and int(anim_time * 18.0) % 2 == 0)
 		_update_animation()
 	queue_redraw()
