@@ -20,3 +20,6 @@ desktop.ini
 
 # Quarentena de arquivos (temporária; apagar só com ok do Gabriel)
 _QUARENTENA_*/
+
+# Referências visuais de terceiros (baixadas no PC por pipeline/baixar-referencias.ps1)
+referencias/imagens/

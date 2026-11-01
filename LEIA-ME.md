@@ -23,6 +23,7 @@ Two Souls é um jogo de ação e exploração em pixel art (estilo metroidvania)
 | `docs\producao\` | Organização do trabalho: quadro de tarefas (`TAREFAS.md`), quem faz o quê, plano de negócio. | Sim |
 | `docs\tecnico\` | Como as coisas são programadas e ferramentas avaliadas. | Sim |
 | `docs\historico\` | Primeiros planos (outubro de 2026). Só para consulta; `docs\design\` vale mais. | Não |
+| `referencias\` | Pesquisa: jogos, vídeos, lendas do Brasil, fauna, bestiário, código aberto e o checklist do que o jogo precisa ter. As imagens baixadas da Steam ficam fora do git. | Sim |
 | `material-original\` | **O jogo original da faculdade** (2018) e os arquivos antigos que ficavam soltos (PSDs, `.capx`, imagens). | **Não. Só leitura** |
 | `notas-do-gabriel\` | Anotações e conversas do Gabriel sobre o jogo. | Só o Gabriel |
 | `pipeline\` | Scripts que ajudam a criar e exportar a arte do Aseprite. | Sim |

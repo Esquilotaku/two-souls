@@ -38,12 +38,23 @@ A ordem segue os marcos do `docs/producao/plano-de-negocio.md`, seção 6.
 | A.2 | Exportar os PSDs originais para PNG, como referência | Gabriel | livre | AGENTS.md, seção Aseprite |
 | A.3 | Orion básico no Aseprite (parado, correndo, pulando, atacando) e ligar no `player.gd` | Gabriel + Codex | esperando Gabriel | AGENTS.md, seção Aseprite |
 
+## Referências e decisões novas (da pesquisa de 01/11/2026)
+
+| # | Tarefa | Responsável sugerido | Estado | Referência |
+|---|---|---|---|---|
+| R.1 | Rodar `pipeline/baixar-referencias.ps1` no PC e conferir `referencias/imagens/INDICE.md` | Gabriel ou agente do PC | livre | `referencias/README.md` |
+| R.2 | Decidir viagem rápida, marcadores no mapa e se o mapa é comprado ou só revelado | Gabriel | feito (01/11): viagem rápida pelas raízes da Árvore Mãe, mapa revelado andando, marcadores manuais e automáticos (só manuais no Desafio) | `referencias/checklist-do-jogo.md` |
+| R.3 | Escolher as lendas dos 5 subchefes e 8 minibosses, e de 20 a 25 inimigos comuns | Gabriel | feito (01/11): lendas decididas; **todos os 50 inimigos comuns** entram no 1.0 (núcleo de 25 primeiro) | `referencias/lendas-do-brasil.md`, `referencias/bestiario-ideias.md` |
+| R.4 | Teste de arte: um quadro do Orion à mão, a IA completa a corrida com referência de pose 3D (Mixamo), ajuste no Aseprite | Gabriel + Codex | livre | `referencias/videos-e-aprendizados.md` |
+| R.5 | Avaliar addons (MetSys, LimboAI, Dialogue Manager, Phantom Camera); o Gabriel lê antes de instalar | Gabriel + Claude | livre | `referencias/codigo-aberto-godot.md` |
+| R.6 | Definir fonte e HUD pensando no Steam Deck (texto ≥ 9 px a 1280×800) | Gabriel + Claude | adiado para o final (decisão do Gabriel, 01/11) | `referencias/checklist-do-jogo.md`, seção 9 |
+
 ## Organização e decisões pendentes
 
 | # | Tarefa | Responsável sugerido | Estado | Referência |
 |---|---|---|---|---|
 | O.1 | Avaliar a skill de orquestração do Orca (`stablyai/orca`) para Claude e Codex trabalharem juntos. **O Gabriel lê antes de instalar**; a instalação é no PC | Gabriel + Claude (sessão do PC) | feito (01/11/2026) | `docs/tecnico/orca.md` |
-| O.2 | Decidir as perguntas em aberto do design quando o assunto chegar (final verdadeiro, feiticeiro, subchefes do folclore, animais do R, espaços de runa) | Gabriel | livre | fim de cada doc em `docs/` |
+| O.2 | Decidir as perguntas em aberto do design quando o assunto chegar (final verdadeiro, feiticeiro, subchefes do folclore, animais do R, espaços de runa) | Gabriel | feito (01/11, ver `brainstorm-jogo.md`, seção 0); faltam o nome do espírito da seca e a decisão sobre os nomes de Orion, Aenia e do jogo | fim de cada doc em `docs/` |
 | O.3 | Antes da página da Steam: buscar a marca "D Rock" (USPTO/INPI), conferir o MEI para jogos e fazer a consulta com o contador | Gabriel + Claude | livre | negócio, seções 1 e 4 |
 | O.4 | Avaliar o Metroidvania System (MetSys) para adotar ou não | Codex + Gabriel | esperando Gabriel (ler docs/tecnico/avaliacao-metsys.md) | docs/design/level-design-referencias.md |
 | O.5 | Pesquisa da jogabilidade do Grand Chase por fontes públicas | Codex | esperando Gabriel (ler docs/design/referencia-grand-chase.md) | — |
@@ -54,5 +65,6 @@ A ordem segue os marcos do `docs/producao/plano-de-negocio.md`, seção 6.
 |---|---|---|---|
 | — | Brainstorm completo (4 documentos em `docs/`) | Claude + Gabriel | 01/11/2026 |
 | — | Quadro de tarefas e cargos no `AGENTS.md` | Claude | 01/11/2026 |
+| — | Pesquisa de referências: jogos, ferramentas, vídeos, lendas, fauna, bestiário, código aberto, checklist (`referencias/`) | Claude | 01/11/2026 |
 | O.1 | Orca instalado e skill `orchestration` para Claude e Codex (`docs/tecnico/orca.md`) | Claude + Gabriel | 01/11/2026 |
 | A.1 | Folha de estilo do Orion: paleta de 28 cores, 72 px, contorno, 6 animações e script `pipeline/new-orion.lua` | Claude + Gabriel | 01/11/2026 |

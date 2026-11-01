@@ -13,6 +13,71 @@ Sessão de brainstorm entre o Gabriel e o Claude, iniciada em 01/11/2026. O mund
 
 ---
 
+## 0. Decisões de 01/11/2026 (noite 2) — vilão, final verdadeiro, R, runas e Saci
+
+Estas decisões prevalecem sobre o texto mais antigo deste documento.
+
+**Ruínas dos santuários** [Gabriel]: foram construídas pela **tribo do D Rock**.
+
+**Feiticeiro: Tau** [Gabriel]
+- **Nome:** Tau, da mitologia guarani. Na lenda, Tau é um espírito maligno que **rapta Kerana**; no jogo, Tau **rapta Aenia** ([Wikipedia: Tau](https://Www.wikipedia.org/wiki/Tau_(mythology))).
+- **Lembrança do Gabriel:** o nome original era algo como "Sasar". Ficou como registro; o nome escolhido é Tau.
+- **Quem ele é** (opção A com um toque de C):
+  - **guardião caído da tribo do D Rock**, o escolhido para cuidar da Árvore Mãe;
+  - numa grande seca, quis o poder da Árvore "para salvar os seus" e foi **corrompido por um espírito da seca**;
+  - o D Rock testa Orion porque **o último escolhido caiu**;
+  - é trágico e convencido de que faz o certo.
+- **Fase 2:** vira o **Teju Jaguá**, lagarto com traços de cão, encapuzado, senhor das cavernas. A barra de vida mostra **"Tau, o Teju Jaguá"**.
+  - **Nota de mitologia:** na lenda guarani, o Teju Jaguá é **filho** de Tau e um guardião de cavernas e tesouros. Usá-lo como forma do próprio Tau é uma reinterpretação.
+- **Espírito da seca:** existe separado e foi quem corrompeu Tau. **Nome provisório: "Estiagem"** (sugestão do Claude, não confirmada).
+
+**Mbói Tu'ĩ** [Gabriel]: a serpente-papagaio, guardiã dos pântanos na mitologia guarani ([Wikipedia](https://en.wikipedia.org/wiki/Mb%C3%B3i_Tu%27%C4%A9)). **Substitui a Serpe do Brejo** como subchefe do Brejo, depois do 1.0.
+
+**Final verdadeiro (opção A)** [Gabriel]
+- **Condição:** vencer tudo e purificar todas as lendas.
+- **O que acontece:**
+  1. Depois de vencer Tau, o **espírito da Árvore Mãe aparece** e purifica Tau.
+  2. O **espírito da seca** sai do corpo dele, e acontece a **luta final verdadeira**: Orion e Aenia juntos, com a Árvore Mãe ajudando.
+  3. Na vitória, **a chuva volta à floresta**.
+  4. **Tau, curado, volta a ser guardião** junto com a tribo.
+  5. A Árvore Mãe se revela **a narradora** desde o início.
+- **Descartados:** só a cena, sem luta; o final agridoce em que os gêmeos se unem à Árvore.
+
+**Tecla R (recomendação do Claude, aprovada)**
+- **Onça:** corrida.
+- **Tatu:** bola blindada que rola, atropela inimigos pequenos e passa por espinhos baixos.
+- **Jiboia:** forma rasteira e furtiva, que passa por baixo de inimigos e sobe troncos.
+- **O gavião fica fora do R no 1.0**, para não quebrar os desafios de precisão. Entra depois, com o planar.
+
+**Runas (recomendação aprovada):** começam com **2 espaços** e chegam a **5**. Os 3 extras vêm de **lendas purificadas**.
+
+**Saci, NPC brincalhão:** todas as 6 brincadeiras aprovadas [Gabriel]:
+1. aparece no santuário e dá um **item aleatório** ou uma pegadinha;
+2. **rouba e foge**, e devolve com bônus quando pego;
+3. dá **dicas duvidosas**;
+4. **aparece rindo** no destino da viagem rápida;
+5. **desafio da carapuça**: na lenda popular, quem pega o gorro ganha um desejo; aqui a recompensa é uma **runa com o tornado do Saci**, ou outra coisa a definir;
+6. **assobio** quando ele está por perto.
+
+**Nomes (01/11, noite 2)** [Gabriel]
+- **Ele: Kaê** (antes Orion). Nome inventado, curto, que combina com o dela.
+  - A busca não achou fonte para "Kaê"; nomes parecidos (Kauã, Kauê) são ligados por sites de nomes a "gavião" em tupi, o que coincide com o último animal dele. As fontes são fracas.
+  - Tupã foi descartado por ser a principal divindade tupi-guarani.
+- **Ela: Aená** (antes Aenia).
+- **Título do jogo: em aberto.**
+  - Nome de trabalho: "Two Souls".
+  - Decidir antes da página da Steam (metade do jogo), com o método: o Gabriel cita 3 títulos que acha perfeitos, o Claude gera opções conferindo a Steam, o Gabriel escolhe e pode fazer enquete.
+  - Banco de ideias (sem compromisso): *Seiva*, *Twinroot*, *Last Rain*, *Rootborn*, *Seiva e Casca*, *Duas Almas de…*.
+  - Fato: já existe o jogo "Beyond: Two Souls" (de memória, não verificado).
+- **Nome da floresta: em aberto** (o Gabriel quer um nome nativo do Brasil e fácil).
+  - Opções levantadas: **Caá** (recomendação do Claude), **Ipê**, **Kaagui**.
+  - **Ka'aguy** (guarani, "floresta", [confirmado](https://www.ufrgs.br/educampolitoral/?p=6940)) foi achado difícil de falar.
+  - "Monte Ligna", do original, sai por não soar brasileiro. Em latim, *ligna* = madeiras.
+- **A história será reescrita** com os nomes e o contexto novos, mantendo a estrutura do texto original da faculdade (gêmeos, rapto, jornada).
+- A **referência visual aprovada** dos gêmeos continua valendo; só mudam os nomes.
+
+**HUD e fonte para o Steam Deck:** ficam para o final [Gabriel]. Primeiro o jogo bruto.
+
 ## 1. História
 
 ### Decisões
@@ -36,6 +101,7 @@ Sessão de brainstorm entre o Gabriel e o Claude, iniciada em 01/11/2026. O mund
 - **Final** (opção D) [Gabriel]:
   - **Final normal:** o feliz e clássico. O feiticeiro é derrotado, os gêmeos purificam a floresta juntos, a Árvore Mãe encerra a narração e The Rock aparece como aliado.
   - **Final verdadeiro:** para quem achar todos os segredos ou terminar no Desafio. **O conteúdo ainda não foi definido.**
+- **Lendas como subchefes, minibosses e NPCs** (01/11, noite) [Gabriel]: ver `brainstorm-mundo-interligado.md`, "Decisões de 01/11/2026 (noite)". Vencer acalma a lenda; purificar depois do resgate liberta e ela vira NPC. **Purificar todas** é uma condição do final verdadeiro. **O Saci é um NPC brincalhão**, não inimigo.
 - **The Rock nunca foi vilão** [Gabriel]: é o guardião da floresta e o primeiro grande chefe, só para testar a força de Orion. Depois vira aliado.
 
 ### Alternativas descartadas
@@ -113,6 +179,29 @@ Opção C, a ponte entre as habilidades e as transformações [Gabriel]. A ordem
 ---
 
 ## 4. Inimigos
+
+> **Atualizado em 01/11 (noite)** [Gabriel]:
+> - **Todos os 50 inimigos comuns do `referencias/bestiario-ideias.md` (itens 1 a 54) entram no 1.0.**
+>   - A Matinta Pereira virou miniboss.
+>   - O aguapé, o cipó vivo e o meteoro menor entram como **perigos do cenário**.
+>   - As ideias das regiões novas (item 55 em diante) ficam para depois do 1.0.
+> - **Ordem de produção** [opinião do Claude, não decidida]: primeiro os **25 "núcleo"** (marcados abaixo), depois os outros 25, reaproveitando esqueleto e animação de bichos parecidos.
+>
+> **Núcleo:**
+>
+> | Região | Inimigos |
+> |---|---|
+> | Clareira | saúva-cortadeira, calango, vaga-lume |
+> | Trilha | lanceiro, arqueiro, cupinzeiro vivo |
+> | Floresta | jaguatirica, bugio, jararaca, perereca venenosa |
+> | Copas | tucano, macaco-aranha, casa de marimbondo |
+> | Cavernas e Túnel | morcegos, escorpião-amarelo, cascavel, tatu-peba |
+> | Lago | piranhas, poraquê, jacaré |
+> | Coração | corpo-seco, mandacaru, servo encapuzado |
+> | Covil | servo de elite, gárgula de pedra-raiz |
+>
+> O texto abaixo é da decisão anterior (de 20 a 25 tipos) e fica como histórico.
+
 
 - **Mistura, com base na fauna brasileira corrompida** (opção C) [Gabriel]:
   - Exemplos [proposta, não fechados]: saúvas gigantes, caranguejeiras, morcegos, queixadas, jacarés no Lago, plantas carnívoras, tomados pela corrupção.

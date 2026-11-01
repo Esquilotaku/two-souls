@@ -239,7 +239,7 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 ## Ponto de retomada — 01/11/2026 (Codex, avaliação MetSys)
 
 - Criada a avaliação em `docs/tecnico/avaliacao-metsys.md`, com comparação ao mundo atual, fontes oficiais, compatibilidade declarada e recomendação parcial para Gabriel decidir.
-- MetSys não foi instalado; nenhum arquivo de código do jogo foi alterado. Apenas este STATUS, `docs/TAREFAS.md` e o documento de avaliação fazem parte desta tarefa.
+- MetSys não foi instalado; nenhum arquivo de código do jogo foi alterado. Apenas este STATUS, `docs/producao/TAREFAS.md` e o documento de avaliação fazem parte desta tarefa.
 - Não foi verificada a compatibilidade do addon no Godot 4.7.2 nem foi rodada verificação do jogo; esta tarefa foi de leitura e documentação. A compatibilidade real permanece a confirmar em cópia isolada, caso Gabriel decida avaliar uma adoção.
 - Tarefa O.4 aguarda Gabriel ler `docs/tecnico/avaliacao-metsys.md` e decidir se quer protótipo do editor de mapa/minimapa.
 
@@ -262,3 +262,35 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   - o menu de controles esconde ações ainda não programadas (`InputConfig.NOT_READY`).
 - **Não feito (próximas tarefas no quadro):** 2.1 combos (tabela em `docs/design/combos-proposta.md`, esperando aprovação), 2.2 mapa grande com andares (~160 telas até o D Rock), 2.3 inimigos grandes. O visual do mapa ainda é de blocos cinzas.
 - **Verificado:** todos os testes passam (inclusive 48 passagens andando e o dash). Ninguém jogou esta versão.
+## Ponto de retomada — 01/11/2026, noite 2 (Claude, nuvem: pesquisa de referências)
+
+- **Pasta nova `referencias/`** (comece por `referencias/README.md` e `referencias/checklist-do-jogo.md`):
+  - estudo de jogos e ferramentas;
+  - vídeos (transcrições lidas via vidIQ, com o ok do Gabriel);
+  - lendas do Brasil, biomas e fauna;
+  - bestiário com mais de 60 ideias de inimigos;
+  - código aberto para Godot;
+  - checklist do que o jogo precisa ter.
+- **Script `pipeline/baixar-referencias.ps1`:** baixa capturas oficiais da Steam de uns 50 jogos para `referencias/imagens/` (fora do git). **Não testado:** a nuvem não alcança a Steam. Rodar no PC (tarefa R.1).
+- **Decisões novas que a pesquisa levantou:** viagem rápida, marcadores no mapa, fonte e HUD para o Steam Deck, segunda rota para habilidades e alternativa para quem travar num chefe. Estão no `docs/producao/TAREFAS.md` (R.2 a R.6).
+- **Bloqueios da nuvem:** a rede bloqueia `store.steampowered.com` e `youtube.com`. Os vídeos foram lidos pelo vidIQ (uns 50 créditos do vidIQ).
+- **Nada foi instalado e nenhum código do jogo mudou.**
+
+## Ponto de retomada — 01/11/2026, noite 3 (Claude, nuvem)
+
+- **Decisões de design** (detalhes em `docs/design/brainstorm-jogo.md`, seção 0, e `docs/design/brainstorm-mundo-interligado.md`, "Decisões de 01/11/2026 (noite)"):
+  - **Heróis:** **Kaê e Aená** (antes Orion e Aenia).
+  - **Vilão:** **Tau**, guardião caído da tribo do D Rock, corrompido pelo espírito da seca (nome provisório "Estiagem"); na fase 2 vira o **Teju Jaguá**.
+  - **Lendas:** Curupira, Boiúna, Minhocão, Mapinguari e Boitatá como subchefes; 8 lendas como minibosses. Vencer acalma; purificar depois do resgate liberta e vira NPC.
+  - **Saci:** NPC brincalhão.
+  - **Inimigos:** 50 comuns no 1.0, com um núcleo de 25 primeiro.
+  - **Mapa:** viagem rápida pelas raízes da Árvore Mãe (os santuários são brotos com ruínas da tribo); minimapa revelado andando; marcadores manuais e automáticos.
+  - **Habilidades:** R = onça, tatu e jiboia; runas de 2 a 5 espaços.
+  - **Final verdadeiro:** luta contra o espírito da seca e a chuva volta.
+- **Em aberto:** título do jogo e nome da floresta ("Two Souls" é o nome de trabalho; "Monte Ligna" sai).
+- **Novo:** `docs/design/historia.md`, a história reescrita com os nomes novos, **em rascunho, esperando a aprovação do Gabriel**.
+- **Próximo passo (no PC):**
+  - tarefa A.1, folha de estilo do Kaê;
+  - tarefa 1.1, plano técnico do mapa interligado, avaliando o addon MetSys com a leitura do Gabriel antes;
+  - depois, voltar a programar o jogo bruto.
+- **Ainda vale no código:** o protótipo ainda usa os nomes antigos (Orion, Aenia, The Rock). Trocar quando mexer nesses arquivos, sem pressa.

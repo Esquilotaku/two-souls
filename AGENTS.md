@@ -13,10 +13,12 @@ O mapa completo das pastas, em linguagem simples, está no `LEIA-ME.md` da raiz.
     - `brainstorm-mundo-interligado.md`: mapa, regiões, chefes, relógio;
     - `brainstorm-jogo.md`: história, habilidades, runas, arte, som, controles;
     - `level-design-referencias.md`: o que aprender com outros jogos e regras do nosso level design;
+    - `historia.md`: a história com os nomes novos (Kaê, Aená, Tau), em rascunho para aprovação;
     - `runas.md`, `folha-de-estilo-orion.md`.
   - `docs/producao/` — `TAREFAS.md` (**quadro de tarefas**: quem pegou cada tarefa, o estado e o branch), `estudio-e-cargos.md` (quem faz o quê), `plano-de-negocio.md` (Steam, impostos, marketing).
   - `docs/tecnico/` — `plano-tecnico-mundo.md` (como o mundo é programado), `orca.md`, `ferramentas-avaliadas.md`, `avaliacao-metsys.md`.
   - `docs/historico/` — "Plano do Jogo" e "Pesquisa Inicial" de outubro de 2026. Valem só como histórico; o `docs/design/` prevalece quando houver conflito.
+- `referencias/` — pesquisa de referências: jogos, vídeos, lendas, fauna, bestiário, código aberto e checklist do jogo. Comece por `referencias/checklist-do-jogo.md`.
 - `material-original/` — material original da faculdade (`twosouls/`) e os arquivos que ficavam soltos na raiz (`soltos-da-raiz/`: PSDs, `.capx`, PNG). **Só leitura: nunca editar, mover ou apagar.** (O Gabriel autorizou a mudança para esta pasta em 01/11/2026.)
 - `notas-do-gabriel/` — anotações e conversas do Gabriel. Leia como contexto; não edite.
 - `pipeline/` — scripts do Aseprite. `tools/Godot4.7.2/` — executável do Godot (fora do git).
