@@ -110,21 +110,70 @@ Opção C, a ponte entre as habilidades e as transformações [Gabriel]. A ordem
 
 ---
 
-## 4. Controles
+## 4. Inimigos
 
-- **Andar nas setas** [Gabriel, Gemini]. O mapeamento completo de teclado e controle ainda vai ser decidido.
+- **Mistura, com base na fauna brasileira corrompida** (opção C) [Gabriel]:
+  - Exemplos [proposta, não fechados]: saúvas gigantes, caranguejeiras, morcegos, queixadas, jacarés no Lago, plantas carnívoras, tomados pela corrupção.
+  - **Servos do feiticeiro** perto do Coração Corrompido e do Covil.
+  - **A tribo de The Rock** (lanceiros e arqueiros) ataca só antes da luta. Depois de vencê-lo ela vira amiga e o mapa muda.
+- **Escopo** [opinião]: de 3 a 4 tipos por região, uns 20 a 25 no 1.0. As cores e as versões noturnas multiplicam isso sem tanta arte nova.
+- **Descartados:** só servos do feiticeiro (genérico), só fauna (sem mostrar o avanço do vilão).
+
+## 5. Arte
+
+- **Pixel art em alta resolução** (opção C) [Gabriel]: tela interna de 640×360, com Orion de uns 64 a 80 px.
+- [opinião] É o custo de animação mais alto entre as opções, ainda mais com 6 formas animais. As transformações rápidas do combo, com poucos quadros, ajudam a conter isso. No bloco 3 vamos avaliar um freelancer de animação.
+- **Descartados:**
+  - 320×180: os olhos e os detalhes verdes somem.
+  - 480×270: foi a recomendação do Claude; o Gabriel preferiu mais detalhe.
+
+## 6. Som
+
+- **Base de orquestra leve com instrumentos brasileiros** [Gabriel]: viola caipira, flautas, percussão, rabeca e coro.
+- Tem **um pouco da grandiosidade da fantasia orquestral, sem ser genérica**.
+- **Cada música tem uma variação noturna**: a mesma melodia, mais grave e tensa.
+- **Descartado:** chiptune, que briga com o tom e com a arte em alta resolução.
+
+## 7. Controles (provisório até testar jogando)
+
+**Modelo 1, habilidades no QWER** [Gabriel]:
+
+| Tecla | Ação |
+|---|---|
+| setas | andar e olhar [Gabriel] |
+| Espaço | pular e pulo duplo [Gabriel] |
+| A | atacar (combo da lança) [Gabriel] |
+| S | dash e esquiva (fôlego) [Gabriel] |
+| Enter | confirmar falas e menus [Gabriel] |
+| Q | lança cravada |
+| W | super soco |
+| E | magia e purificação |
+| R | **transformação livre no animal escolhido**, com duração e recarga. O animal do R é escolhido e trocado a qualquer momento por uma runa. Pode ser a onça, o tatu e outros [Gabriel] |
+| D | habilidade de contexto: jiboia em frestas e água, tatu em terra fofa |
+| F | curar com consumível rápido |
+| ↑ | interagir |
+| Tab / I / Esc | mapa / bolsa / pausa |
+
+- **Controle:** Q, W, E e R viram LB, RB, LT e RT.
+- **Todas as teclas são remapeáveis.**
+- **Descartados:** o Modelo 2, com só 2 espaços no estilo Dead Cells, e o Modelo 3, contextual mínimo, difícil de descobrir sozinho.
+- **Fontes consultadas sobre os controles de outros jogos:** o padrão oficial do Silksong e do Dead Cells **não foi verificado**.
+  - Guias de comunidade do Silksong sugerem setas mais Z, X e C ([Hone](https://hone.gg/blog/best-keyboard-controls-for-hollow-knight-silksong/), [AllThings](https://allthings.how/hollow-knight-silksong-get-swift-step-dash-in-deep-docks/)).
+  - As listas divergem ([Destructoid](https://www.destructoid.com/?p=1113384), [Deltia's](https://deltiasgaming.com/hollow-knight-silksong-best-keyboard-controls), [Shacknews](https://www.shacknews.com/article/145794/hollow-knight-silksong-controls)).
+  - Dead Cells: [GamePressure](https://www.gamepressure.com/dead-cells/controls/z39e2c), não aberto.
+
+## 8. Duração, preço, público e idiomas
+
+- **Duração:** de 12 a 18 horas no 1.0 (bloco 1).
+- **Preço** [Gabriel]: US$14,99 cheio, com desconto de lançamento até cerca de US$9,99 (uns 33%).
+  - **Não verificado:** os preços do Hollow Knight (US$14,99) e do Silksong (US$19,99), citados de memória, e as regras da Steam para desconto de lançamento. Vai para o bloco 4.
+- **Público** [proposta]:
+  - **alvo:** fãs de metroidvania do mundo todo;
+  - **primeira comunidade:** o Brasil, via canal Esquilo Otaku;
+  - **argumento extra:** o público hardcore, pelo modo Desafio.
+- **Idiomas** [Gabriel]: português (Brasil) e inglês no lançamento; outros depois, começando pelo espanhol. A tradução por IA precisa de revisão nativa [opinião].
 
 ---
-
-## Próximas perguntas do bloco 2
-
-Uma por vez:
-- inimigos comuns;
-- estilo de arte e som;
-- controles completos;
-- duração;
-- preço;
-- público.
 
 ## Perguntas em aberto
 
@@ -133,5 +182,6 @@ Uma por vez:
 - Que criatura do folclore é cada subchefe.
 - Ferramentas e utilitários.
 - Quantos espaços de runa existem.
-- Duração e recarga da onça.
+- Duração e recarga das transformações livres. Quais animais podem ir para o R (onça e tatu confirmados; jiboia e gavião?), e se o D de contexto continua existindo.
+- Lista de inimigos por região.
 - Se The Rock cuspir fogo combina com ele ser guardião da floresta. No brainstorm com o Gemini apareceu a ideia de um "fogo sagrado/renovador", como o do Boitatá.
