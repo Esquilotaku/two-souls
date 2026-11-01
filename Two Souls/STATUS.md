@@ -91,8 +91,15 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   - 16 lutas (3 + 5 + 8);
   - vários dias com descanso no santuário e modos História, Aventura e Desafio (Desafio todo à noite);
   - demo do início até vencer The Rock.
-- **A fazer, na ordem:**
-  - bloco 2, `docs/brainstorm-jogo.md`: história, personagens, inimigos, progressão, arte, som, controles, duração, preço e público;
-  - bloco 3, `docs/estudio-e-cargos.md`: cargos, IA ou freelancer, coordenação dos agentes, avaliar o Paperclip;
+- **Bloco 2 concluído:** `docs/brainstorm-jogo.md`. Destaques:
+  - Árvore Mãe narradora; folclore brasileiro nos subchefes;
+  - 7 habilidades com espíritos animais (onça, jiboia, tatu, gavião-real);
+  - runas purificáveis; XP só para a árvore de talentos;
+  - pixel art 640×360; trilha brasileira;
+  - controles setas, Espaço, A, S e QWER (R = transformação escolhida por runa);
+  - US$14,99; PT-BR e inglês.
+  - As habilidades mudaram em relação ao bloco 1; o doc do mundo tem um aviso "Revisado no bloco 2".
+- **Bloco 3 concluído:** `docs/estudio-e-cargos.md`. Sem freelancers, só Gabriel e IAs. Coordenação pelo AGENTS.md, mais `docs/TAREFAS.md` (a criar), e agentes por cargo quando a tarefa se repetir. Paperclip adiado.
+- **A fazer:**
   - bloco 4, `docs/plano-de-negocio.md`: empresa no Brasil, Steam Direct, impostos, banco, orçamento, cronograma, marketing e canal Esquilo Otaku. Só com fonte aberta; o que não for conferido fica marcado como "não verificado".
 - **Não verificado:** nada foi rodado no Godot; o documento é só de design. O protótipo continua linear.
