@@ -27,7 +27,7 @@ Atualizado em 17/10/2026. Este arquivo registra o estado de trabalho para uma pa
 - O início era de manhã. Há lembrança de uma fase de túnel, da árvore corrompida perto do pôr do sol e do chefe final à noite; a ordem exata entre The Rock e a árvore ainda está em aberto.
 - The Rock é um guardião tribal que testa Orion, luta sem camisa, usa máscara com penas e trombeta, soca, arremessa pedras e chama lanceiros; depois pode tornar-se aliado. Ao vencê-lo, Orion recebe um super soco. Lançar lanças também é uma habilidade lembrada.
 - A árvore corrompida usa raízes e vinhas. O último chefe lembrado é um lagarto ou dragão encapuzado, com ataque de meteoros.
-- O material original inclui `F:\GAME\twosouls\Cut Scenes.docx`, imagens antigas de Aenia e cenas dos gêmeos, e o projeto atual contém a referência aprovada de The Rock. O `.capx` encontrado é um teste separado de sprites aleatórios, segundo o criador.
+- O material original inclui `F:\GAME\material-original\twosouls\Cut Scenes.docx`, imagens antigas de Aenia e cenas dos gêmeos, e o projeto atual contém a referência aprovada de The Rock. O `.capx` encontrado é um teste separado de sprites aleatórios, segundo o criador.
 
 ## Direção nova de exploração confirmada pelo criador
 
@@ -67,8 +67,8 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - `scripts/player.gd` — Orion, combate, itens e talentos.
 - `scripts/boss.gd` — comportamentos provisórios de chefes.
 - `scripts/save_manager.gd` — salvamento local.
-- `Two Souls - Plano do Jogo.md` em `F:\GAME` — decisões e perguntas de design.
-- `F:\GAME\twosouls\Cut Scenes.docx` — descrição original das cenas.
+- `docs/historico/Two Souls - Plano do Jogo.md` — decisões e perguntas de design de outubro (histórico).
+- `F:\GAME\material-original\twosouls\Cut Scenes.docx` — descrição original das cenas.
 
 ## Ponto de retomada — 01/11/2026 (Claude)
 
@@ -88,7 +88,7 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 ## Ponto de retomada — 01/11/2026 (Claude, brainstorm de design)
 
 - Branch `claude/brainstorm-mundo`. Brainstorm de design com o Gabriel; nenhum código de jogo foi alterado.
-- **Bloco 1 concluído:** `docs/brainstorm-mundo-interligado.md`. Decisões principais:
+- **Bloco 1 concluído:** `docs/design/brainstorm-mundo-interligado.md`. Decisões principais:
   - mapa único com alturas híbridas;
   - mapa grande lançado por partes (1.0 com 8 regiões, 12 a 18 h);
   - rede de cavernas sob o mapa, atalhos de volta com pista e segredos escondidos;
@@ -99,7 +99,7 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   - 16 lutas (3 + 5 + 8);
   - vários dias com descanso no santuário e modos História, Aventura e Desafio (Desafio todo à noite);
   - demo do início até vencer The Rock.
-- **Bloco 2 concluído:** `docs/brainstorm-jogo.md`. Destaques:
+- **Bloco 2 concluído:** `docs/design/brainstorm-jogo.md`. Destaques:
   - Árvore Mãe narradora; folclore brasileiro nos subchefes;
   - 7 habilidades com espíritos animais (onça, jiboia, tatu, gavião-real);
   - runas purificáveis; XP só para a árvore de talentos;
@@ -107,8 +107,8 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   - controles setas, Espaço, A, S e QWER (R = transformação escolhida por runa);
   - US$14,99; PT-BR e inglês.
   - As habilidades mudaram em relação ao bloco 1; o doc do mundo tem um aviso "Revisado no bloco 2".
-- **Bloco 3 concluído:** `docs/estudio-e-cargos.md`. Sem freelancers, só Gabriel e IAs. Coordenação pelo AGENTS.md, mais `docs/TAREFAS.md` (a criar), e agentes por cargo quando a tarefa se repetir. Paperclip adiado.
-- **Bloco 4 concluído:** `docs/plano-de-negocio.md`. Decisões:
+- **Bloco 3 concluído:** `docs/producao/estudio-e-cargos.md`. Sem freelancers, só Gabriel e IAs. Coordenação pelo AGENTS.md, mais `docs/producao/TAREFAS.md` (a criar), e agentes por cargo quando a tarefa se repetir. Paperclip adiado.
+- **Bloco 4 concluído:** `docs/producao/plano-de-negocio.md`. Decisões:
   - pessoa física primeiro, conferindo o MEI e consultando um contador antes do lançamento;
   - Steam Direct US$100; US$14,99 com desconto de lançamento até cerca de US$9,99;
   - **The Rock passou a se chamar "D Rock"**, porque Dwayne Johnson é dono da marca; falta buscar no USPTO e no INPI;
@@ -118,16 +118,16 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   - canal Esquilo Otaku, que é de anime, só com menções.
 - **Brainstorm completo.** Os 4 documentos estão em `docs/`, cada um com uma lista de perguntas em aberto.
 - **Próximo passo sugerido:**
-  1. criar `docs/TAREFAS.md` e a linha de cargos no `AGENTS.md`;
+  1. criar `docs/producao/TAREFAS.md` e a linha de cargos no `AGENTS.md`;
   2. depois, programar o marco 1 (mundo interligado, santuários, minimapa) a partir dos documentos.
 - **Não verificado:** nada foi rodado no Godot; o documento é só de design. O protótipo continua linear.
-- **Ligação com a nota de arte acima:** o brainstorm decidiu a resolução como **pixel art 640×360, com Orion de uns 64 a 80 px** (`docs/brainstorm-jogo.md`, seção 5). As formas animais são pretas com detalhes verdes.
+- **Ligação com a nota de arte acima:** o brainstorm decidiu a resolução como **pixel art 640×360, com Orion de uns 64 a 80 px** (`docs/design/brainstorm-jogo.md`, seção 5). As formas animais são pretas com detalhes verdes.
 
 ## Ponto de retomada — 01/11/2026, noite (Claude, nuvem)
 
 - O brainstorm foi juntado ao `main` ([PR #1](https://github.com/Esquilotaku/two-souls/pull/1)).
 - **Feito:**
-  - criado `docs/TAREFAS.md`, o quadro de tarefas com os marcos, a arte e as decisões pendentes;
+  - criado `docs/producao/TAREFAS.md`, o quadro de tarefas com os marcos, a arte e as decisões pendentes;
   - o `AGENTS.md` ganhou a seção "Quem faz o quê", os documentos de `docs/` na lista de arquivos e a regra de marcar e atualizar tarefas no quadro.
 - **Pendente (O.1):** o Gabriel quer usar o **Orca** (`stablyai/orca`, app de desktop que roda Claude Code e Codex lado a lado) e a skill de orquestração dele. **Nada foi instalado.** Pela regra do AGENTS.md, o Gabriel lê antes; a instalação é feita na **sessão do PC**, onde os agentes rodam.
 - **Próximo passo:** tarefa 1.1 do quadro, o plano técnico do mundo interligado.
@@ -138,11 +138,11 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - **Feito:**
   - o Orca 1.4.245 foi instalado no PC;
   - a skill `orchestration` foi instalada pelo próprio Orca para o Claude e o Codex;
-  - detalhes, conferências e ressalvas estão em `docs/orca.md`, e há uma linha de uso no `AGENTS.md` (seção "Como verificar");
+  - detalhes, conferências e ressalvas estão em `docs/tecnico/orca.md`, e há uma linha de uso no `AGENTS.md` (seção "Como verificar");
   - a O.1 está marcada como feita no quadro.
 - **Verificado:** `orca status` ok, a skill aparece no Claude Code, e `orca skills get orchestration` e `orca orchestration run-list` funcionam.
 - **Não verificado:**
-  - se o Codex enxerga a skill (ela está em `~/.agents/skills`, sem link em `~/.codex/skills`). Depois disso foi instalado o **Codex CLI 0.166.0** (`npm -g @openai/codex`): logado com ChatGPT e `codex doctor` sem falhas. Depois de o Gabriel liberar scripts no PowerShell (RemoteSigned, só o usuário dele), o Orca abriu o Codex e ele **confirmou que vê a skill** em `~/.agents/skills`. O Orca abre o Codex em "YOLO mode", sem aprovação de comandos (ver `docs/orca.md`);
+  - se o Codex enxerga a skill (ela está em `~/.agents/skills`, sem link em `~/.codex/skills`). Depois disso foi instalado o **Codex CLI 0.166.0** (`npm -g @openai/codex`): logado com ChatGPT e `codex doctor` sem falhas. Depois de o Gabriel liberar scripts no PowerShell (RemoteSigned, só o usuário dele), o Orca abriu o Codex e ele **confirmou que vê a skill** em `~/.agents/skills`. O Orca abre o Codex em "YOLO mode", sem aprovação de comandos (ver `docs/tecnico/orca.md`);
   - um ciclo completo Claude → Codex → `worker_done`;
   - a telemetria do Orca continua **ligada**: o Gabriel precisa desligar em Settings → Privacy.
 - **Fora do git:** a pasta `txt/` (notas do Gabriel) continua sem commit; falta decidir se entra.
@@ -151,7 +151,7 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 ## Ponto de retomada — 01/11/2026, noite (Claude, tarefa A.1)
 
 - Branch `claude/folha-estilo`, saído de `claude/brainstorm-mundo`.
-- **Feito (aprovado pelo Gabriel):** `docs/folha-de-estilo-orion.md`. Decisões:
+- **Feito (aprovado pelo Gabriel):** `docs/design/folha-de-estilo-orion.md`. Decisões:
   - paleta de 28 cores, com pele, cabelo, túnica e couro medidos na referência aprovada (`Two Souls/art/orion-paleta.gpl`);
   - Orion com 72 px de altura, quadro de 128×96, pé em (64, 88);
   - contorno de fora de 1 px quase preto e, nas formas animais, verde-escuro;
@@ -197,7 +197,7 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 
 - Branch `claude/estrutura-mundo`, saído de `codex/orion-basico` (o Orion de 72 px). A arte foi pausada a pedido do Gabriel; a A.3 segue esperando revisão.
 - **Feito:**
-  - 1.1: plano técnico em `docs/plano-tecnico-mundo.md` (salas, portas, habilidades, santuários, save 5, controles, quem faz o quê).
+  - 1.1: plano técnico em `docs/tecnico/plano-tecnico-mundo.md` (salas, portas, habilidades, santuários, save 5, controles, quem faz o quê).
   - 1.2: o jogo deixou de ser 8 corredores em fila. Agora são **22 salas do mapa completo do 1.0** em blocos cinzas (`scripts/world/world_map.gd` e `world_room.gd`), com portas nos 4 lados, transição escurecendo a tela, bloqueios laranja por habilidade, ganchos pós-1.0 fechados, chefes e subchefes provisórios e altares.
   - 1.3: santuários (`scripts/world/shrine.gd`): ativar com E, descansar, morrer volta ao último ativado sem perder nada.
   - Save versão 5 com sala, santuário, salas visitadas, habilidades e chefes; save 4 migra para o início da Clareira mantendo nível, itens e talentos.
@@ -216,7 +216,7 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 
 ## Ponto de retomada - 01/11/2026 (Codex, runas)
 
-- Branch `codex/runas`, criado a partir do topo de `claude/estrutura-mundo`. A tarefa 1.8 foi implementada em `scripts/runes/rune_catalog.gd`, `scripts/runes/rune_state.gd`, `scripts/ui/rune_menu.gd` e `tests/test_runes.gd`; explicacao leiga em `docs/runas.md`.
+- Branch `codex/runas`, criado a partir do topo de `claude/estrutura-mundo`. A tarefa 1.8 foi implementada em `scripts/runes/rune_catalog.gd`, `scripts/runes/rune_state.gd`, `scripts/ui/rune_menu.gd` e `tests/test_runes.gd`; explicacao leiga em `docs/design/runas.md`.
 - Proposta: 10 runas, 2 espacos iniciais, maximo de 6, tres niveis e custos de 3 e 6 fragmentos por melhoria. Valores ainda provisórios conforme pergunta O.2 e precisam de balanceamento.
 - Verificado: importacao do projeto, carregamento headless e todos os testes automatizados, incluindo `test_runes.gd`; GitHub Actions `41353603483` passou. Sem teste manual de gameplay.
 - Integracao no save, concessao das runas/fragmentos e aplicacao dos bonus nas habilidades ficam para Claude; tarefa 1.8 aguarda essa ligacao.
@@ -226,11 +226,11 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 
 - Branch `claude/estrutura-mundo`. O Gabriel jogou e pediu: controles nas teclas definidas, um mapa só e maior, sensação de liberdade, pesquisa de level design, as runas e as ideias dos brainstorms, e as pastas organizadas.
 - **Feito:**
-  - controles da 1.6 juntados (branch `codex/controles`) e ligados; botão CONTROLES no título e na pausa. Corrigido: o Codex tinha estragado a acentuação do `docs/TAREFAS.md` (ficou a versão boa);
-  - tela 960×540, mapa inteiro numa cena (`world_scene.gd`), relevo nas áreas, HUD compacto (detalhes em `docs/plano-tecnico-mundo.md`, seção 14);
+  - controles da 1.6 juntados (branch `codex/controles`) e ligados; botão CONTROLES no título e na pausa. Corrigido: o Codex tinha estragado a acentuação do `docs/producao/TAREFAS.md` (ficou a versão boa);
+  - tela 960×540, mapa inteiro numa cena (`world_scene.gd`), relevo nas áreas, HUD compacto (detalhes em `docs/tecnico/plano-tecnico-mundo.md`, seção 14);
   - inimigo de perto só bate se estiver na mesma altura (antes atravessava o chão);
   - runas da 1.8 (branch `codex/runas`) juntadas e ligadas ao jogo e ao save;
-  - pesquisa em `docs/level-design-referencias.md`.
+  - pesquisa em `docs/design/level-design-referencias.md`.
 - **Codex trabalhando:** avaliação do MetSys (O.4) no branch `codex/avaliacao-metsys`, só documento.
 - **Verificado:** 5 testes passam (`test_world_map`, `test_world_flow` andando pelas 48 passagens e com runas no save, `test_runes`, `test_input_config`, `test_aseprite_frames`); fotos do título e de 3 áreas conferidas.
 - **Não verificado:** ninguém jogou a versão nova. Pulo pelas passagens do teto foi testado por script, não com a mão. Balanceamento das runas é provisório.

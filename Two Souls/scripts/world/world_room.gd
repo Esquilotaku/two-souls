@@ -1,6 +1,6 @@
 class_name WorldRoom
 extends Node2D
-## Monta uma sala em blocos cinzas a partir de WorldMap (docs/plano-tecnico-mundo.md, seções 3 a 5).
+## Monta uma sala em blocos cinzas a partir de WorldMap (docs/tecnico/plano-tecnico-mundo.md, seções 3 a 5).
 ## A sala fica com a origem em (0, 0); o game.gd carrega uma sala por vez.
 
 const DOOR_OPENING := 128.0
@@ -436,7 +436,7 @@ func _add_block(rect: Rect2, color: Color, text: String, solid: bool = true) -> 
 func _rect_polygon(rect: Rect2) -> PackedVector2Array:
 	return PackedVector2Array([rect.position, Vector2(rect.end.x, rect.position.y), rect.end, Vector2(rect.position.x, rect.end.y)])
 
-# --- Pedra de runa (runa corrompida escondida na área; docs/runas.md) ---
+# --- Pedra de runa (runa corrompida escondida na área; docs/design/runas.md) ---
 
 var rune_rect := Rect2()
 

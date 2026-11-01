@@ -17,7 +17,7 @@ Sessão de brainstorm entre o Gabriel e o Claude, iniciada em 01/11/2026. O mund
 
 ### Decisões
 
-- **Prólogo** [original, `twosouls/Cut Scenes.docx`]:
+- **Prólogo** [original, `material-original/twosouls/Cut Scenes.docx`]:
   - os gêmeos sob a Árvore Mãe;
   - a magia dos dois, "imbatível quando juntos";
   - o feiticeiro rompe a barreira, sequestra Aenia e deixa Orion inconsciente;

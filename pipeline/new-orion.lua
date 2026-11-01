@@ -1,4 +1,4 @@
--- Cria um .aseprite vazio do Orion seguindo docs/folha-de-estilo-orion.md:
+-- Cria um .aseprite vazio do Orion seguindo docs/design/folha-de-estilo-orion.md:
 -- 160x96, modo indexado com a paleta fixa, 12 quadros por segundo e uma tag por animação.
 -- Uso: aseprite -b --script-param dst="Two Souls\art\orion-novo.aseprite" --script pipeline\new-orion.lua
 -- Opcional: --script-param palette=caminho.gpl (padrão: "Two Souls/art/orion-paleta.gpl" ao lado deste script).

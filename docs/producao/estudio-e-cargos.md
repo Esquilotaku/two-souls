@@ -17,7 +17,7 @@ Brainstorm entre o Gabriel e o Claude, 01/11/2026.
 | Cargo | Quem | Ferramenta |
 |---|---|---|
 | Direção criativa | **Gabriel**, com a palavra final em tudo | caderno, `docs/` |
-| Produção (planejamento, STATUS, tarefas) | **Claude** organiza, **Gabriel** aprova | `Two Souls/STATUS.md`, `docs/TAREFAS.md` (a criar), GitHub |
+| Produção (planejamento, STATUS, tarefas) | **Claude** organiza, **Gabriel** aprova | `Two Souls/STATUS.md`, `docs/producao/TAREFAS.md` (a criar), GitHub |
 | Programação | **Codex e Claude**, em branches separados | Godot 4.7.2, GDScript, GitHub Actions |
 | Game design e roteiro | **Gabriel** cria, **Claude/Fable** escrevem e organizam | `docs/` |
 | Arte e animação | **Gabriel e IA** (fluxo abaixo) | Codex (imagem), Aseprite |
@@ -46,7 +46,7 @@ Brainstorm entre o Gabriel e o Claude, 01/11/2026.
 
 **Decisão (opção A)** [Gabriel]: continuar com o `AGENTS.md`, com estas melhorias:
 
-1. Criar `docs/TAREFAS.md`, o quadro de tarefas: quem pegou cada tarefa, o estado e o branch.
+1. Criar `docs/producao/TAREFAS.md`, o quadro de tarefas: quem pegou cada tarefa, o estado e o branch.
 2. Acrescentar ao `AGENTS.md` qual agente cuida de qual cargo, conforme a tabela acima.
 3. **Criar agentes especializados conforme a necessidade** [Gabriel]:
    - Regra [proposta]: só quando uma tarefa se repetir umas 3 vezes.

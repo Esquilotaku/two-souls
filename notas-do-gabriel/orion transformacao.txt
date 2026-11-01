@@ -1,0 +1,20 @@
+
+1. Lobo da Selva (Forma de Velocidade e Agilidade)
+
+• Visual: Um lobo completo de quatro patas, com crina de folhas verdes esmeralda (puxando o cabelo dele) e olhos brilhantes.
+• Mecânica 2D: Deixa a movimentação super rápida. Ele fica mais baixo para entrar em túneis estreitos e ganha um Dash (Arrancada) no ar para saltar abismos gigantescos.
+
+2. Urso de Casca de Árvore (Forma de Força e Destruição)
+
+• Visual: Um urso pardo colossal e pesado, com placas de casca de tronco rígido crescendo nas costas como uma armadura natural.
+• Mecânica 2D: Ele se move devagar, mas fica imune a espinhos no chão. Ele usa o Ground Pound (pisotear o chão) para quebrar plataformas de madeira frágil ou rachaduras no solo, abrindo portões pesados e revelando áreas secretas abaixo dele.
+
+3. Salamandra Mística (Forma Aquática)
+
+• Visual: Uma criatura anfíbia esguia com brânquias externas em formato de folhas verdes na cabeça (mantendo a identidade do cabelo dele) e marcas que brilham no escuro.
+• Mecânica 2D: Libera o nado livre em 360° para fases de água e cavernas inundadas. Ganha um impulso rápido embaixo d'água para desviar de obstáculos e a habilidade de andar no fundo do lago para empurrar caixas ou acionar botões.
+
+4. Cervo Majestoso (Forma de Salto / Fim de Jogo)
+
+• Visual: Um grande veado com galhadas imensas feitas de madeira viva que imitam perfeitamente os chifres que Orion já tem na forma humana.
+• Mecânica 2D: Focada em salto duplo ou pulos verticais massivos. Ele consegue alcançar plataformas extremamente altas no topo das árvores que nenhuma outra forma alcança, ideal para as fases mais avançadas do jogo, perto de onde a Aenia está presa.

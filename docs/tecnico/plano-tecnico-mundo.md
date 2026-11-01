@@ -1,6 +1,6 @@
 # Plano técnico do mundo interligado (tarefa 1.1)
 
-Escrito pelo Claude em 01/11/2026, a partir de `docs/brainstorm-mundo-interligado.md` (temas 1, 2 e 4) e `docs/brainstorm-jogo.md` (seções 3 e 7). O Gabriel aprovou: base no branch do Orion de 72 px, **mapa completo do 1.0 em blocos cinzas** e o Codex em paralelo só em partes isoladas.
+Escrito pelo Claude em 01/11/2026, a partir de `docs/design/brainstorm-mundo-interligado.md` (temas 1, 2 e 4) e `docs/design/brainstorm-jogo.md` (seções 3 e 7). O Gabriel aprovou: base no branch do Orion de 72 px, **mapa completo do 1.0 em blocos cinzas** e o Codex em paralelo só em partes isoladas.
 
 Este documento é a referência para o Claude e o Codex programarem o marco 1. Quando o código mudar uma decisão daqui, atualize este arquivo no mesmo commit.
 
@@ -187,7 +187,7 @@ Essas três podem ir para o Codex quando o núcleo estiver no branch, uma por ve
 - **Tela interna 960×540** (era 640×360). O Orion (72 px) ocupa 13% da altura. A janela abre em tela cheia; os menus, feitos para 640×360, são ampliados 1,5x (`UI_SCALE` no `game.gd`). Uma célula do mapa passou a ser 960×540.
 - **O mapa inteiro numa cena só** (`scripts/world/world_scene.gd`). As 22 áreas ficam nas posições reais; as aberturas de áreas vizinhas se encontram e não há mais tela preta nem "portas" que teleportam. Fora das áreas há rocha escura. O jogo descobre em que área o Orion está pela posição.
 - **Chefes** nascem quando o Orion entra na área deles e somem se ele sair sem vencer.
-- **Passagens no teto** sem plataforma atravessável (regra de Hollow Knight, ver `docs/level-design-referencias.md`): um apoio embaixo da abertura, a 104 px do teto, deixa o pulo passar uns 25 px acima do chão da área de cima.
+- **Passagens no teto** sem plataforma atravessável (regra de Hollow Knight, ver `docs/design/level-design-referencias.md`): um apoio embaixo da abertura, a 104 px do teto, deixa o pulo passar uns 25 px acima do chão da área de cima.
 - **Relevo provisório** em cada área (morros, plataformas soltas, rochas no teto nas regiões fechadas), sempre igual para a mesma área; arenas de chefe ficam planas. Vai ser trocado pelo desenho à mão.
-- **Runas ligadas** (`docs/runas.md`): cada chefe e subchefe deixa uma runa e 3 fragmentos; quatro áreas têm pedras roxas com runas; descansar num santuário abre o menu com purificação; a pausa tem o botão RUNAS. Efeitos aplicados: vida e magia (em corações), velocidade, recarga e chance de golpe forte. Fôlego e combo ainda não existem no jogo.
+- **Runas ligadas** (`docs/design/runas.md`): cada chefe e subchefe deixa uma runa e 3 fragmentos; quatro áreas têm pedras roxas com runas; descansar num santuário abre o menu com purificação; a pausa tem o botão RUNAS. Efeitos aplicados: vida e magia (em corações), velocidade, recarga e chance de golpe forte. Fôlego e combo ainda não existem no jogo.
 - **Teste de fluxo** agora anda de verdade (aperta as teclas) pelas 48 passagens.

@@ -1,6 +1,6 @@
 class_name WorldMap
 extends RefCounted
-## Dados do mundo interligado: regiões, salas e portas (docs/plano-tecnico-mundo.md, seções 3, 5 e 6).
+## Dados do mundo interligado: regiões, salas e portas (docs/tecnico/plano-tecnico-mundo.md, seções 3, 5 e 6).
 ## Cada célula do mapa é uma tela de 640x360. As salas são montadas por WorldRoom a partir destes dados.
 
 const SCREEN := Vector2(960.0, 540.0)

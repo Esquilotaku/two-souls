@@ -1,7 +1,7 @@
 GIMP Palette
 Name: Orion (Two Souls)
 Columns: 8
-# Paleta fixa do Orion. Fonte: docs/folha-de-estilo-orion.md
+# Paleta fixa do Orion. Fonte: docs/design/folha-de-estilo-orion.md
 # Índice 0 é a cor transparente do modo indexado; não pinte com ela.
 255   0 255	transparente
  10  12  11	contorno

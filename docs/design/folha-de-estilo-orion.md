@@ -1,8 +1,8 @@
 # Folha de estilo do Orion
 
-Aprovada pelo Gabriel em 01/11/2026 (tarefa A.1). Vale para todo quadro do Orion, feito à mão ou como rascunho de IA: **mande esta folha junto com cada pedido de rascunho**, como diz o fluxo de arte em `docs/estudio-e-cargos.md`.
+Aprovada pelo Gabriel em 01/11/2026 (tarefa A.1). Vale para todo quadro do Orion, feito à mão ou como rascunho de IA: **mande esta folha junto com cada pedido de rascunho**, como diz o fluxo de arte em `docs/producao/estudio-e-cargos.md`.
 
-Base: `docs/brainstorm-jogo.md`, seções 2 e 5 (pixel art com tela interna de 640×360 e Orion de 64 a 80 px). Referência visual aprovada: `Two Souls/assets/concepts/orion-aenia-approved-reference.png`.
+Base: `docs/design/brainstorm-jogo.md`, seções 2 e 5 (pixel art com tela interna de 640×360 e Orion de 64 a 80 px). Referência visual aprovada: `Two Souls/assets/concepts/orion-aenia-approved-reference.png`.
 
 ## Arquivos
 
@@ -49,7 +49,7 @@ Alternativas descartadas: 16 cores (túnica e contorno ficam iguais) e 32 cores,
 
 - O corpo usa só os índices 23 a 25 (pretos esverdeados).
 - O verde aparece só em detalhes: olhos, crina, folhas e marcas. Use o índice 27 no geral e o 28 só no ponto mais claro (o olho, por exemplo). No máximo cerca de 10% dos pixels do animal são verdes.
-- Os animais e as habilidades estão em `docs/brainstorm-jogo.md`, seção 3: onça-pintada preta, jiboia, tatu-canastra e gavião-real.
+- Os animais e as habilidades estão em `docs/design/brainstorm-jogo.md`, seção 3: onça-pintada preta, jiboia, tatu-canastra e gavião-real.
 
 ## Animações
 

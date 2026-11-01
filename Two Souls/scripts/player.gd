@@ -361,7 +361,7 @@ func _draw_sparkle(at: Vector2, color: Color) -> void:
 	draw_rect(Rect2(at.x - 3, at.y - 15, 6, 30), color)
 	draw_rect(Rect2(at.x - 15, at.y - 3, 30, 6), color)
 
-# --- Runas (docs/runas.md) ---
+# --- Runas (docs/design/runas.md) ---
 
 ## Bônus das runas equipadas, vindo de RuneState.total_bonuses() pelo game.gd.
 var rune_bonus: Dictionary = {}

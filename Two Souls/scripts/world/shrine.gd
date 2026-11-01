@@ -1,6 +1,6 @@
 class_name WorldShrine
 extends Node2D
-## Santuário fixo (docs/plano-tecnico-mundo.md, seção 7). Só vale como ponto de volta depois de ativado.
+## Santuário fixo (docs/tecnico/plano-tecnico-mundo.md, seção 7). Só vale como ponto de volta depois de ativado.
 ## A origem fica no chão; o game.gd confere a distância e a tecla de interação.
 
 const REACH := 56.0

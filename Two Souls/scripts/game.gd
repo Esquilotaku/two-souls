@@ -1,6 +1,6 @@
 extends Node2D
 ## Fluxo do jogo: título, mundo interligado em salas, santuários, save, HUD e menus.
-## O mapa e as salas vêm de WorldMap e WorldRoom (docs/plano-tecnico-mundo.md).
+## O mapa e as salas vêm de WorldMap e WorldRoom (docs/tecnico/plano-tecnico-mundo.md).
 
 const DAY_CYCLE_REAL_SECONDS := 900.0
 const UI_SCALE := 1.5
@@ -29,7 +29,7 @@ var visited_rooms: Dictionary = {}
 var activated_shrines: Dictionary = {}
 var abilities: Dictionary = {}
 var defeated_bosses: Dictionary = {}
-## Runas achadas, purificadas e equipadas (scripts/runes, docs/runas.md).
+## Runas achadas, purificadas e equipadas (scripts/runes, docs/design/runas.md).
 var runes := RuneState.new()
 var day := 1
 var mode := "aventura"

@@ -28,7 +28,7 @@ Também falta descobrir se o lagarto com capuz é o próprio feiticeiro, um alia
 
 **Revisão visual do Orion:** o PSD `run 1.psd` mostra Orion correndo enquanto carrega uma lança. Isso confirma que a lança fazia parte do equipamento/visual original. O arquivo não mostra o arremesso; a habilidade de lançar lanças e o fato de Orion aprendê-la continuam registrados como lembranças do criador, sem associação definida a um chefe.
 
-**Nova imagem enviada pelo criador (17/10/2026):** `F:\GAME\twosouls\referencias_novas\orion-lua-riscos-luminosos.png` mostra uma figura de cabelo verde, aparentemente Orion, de costas e com um braço erguido; ao fundo há uma lua grande e riscos azul-brancos luminosos, com uma borda de floresta escura em primeiro plano. Os riscos podem ser rastros de magia ou meteoros, mas isso não está confirmado. A origem da imagem também está em aberto: não sabemos se é arte/cena do jogo antigo ou uma referência externa. Não usar a imagem como prova de uma skill ou de um chefe específico.
+**Nova imagem enviada pelo criador (17/10/2026):** `F:\GAME\material-original\twosouls\referencias_novas\orion-lua-riscos-luminosos.png` mostra uma figura de cabelo verde, aparentemente Orion, de costas e com um braço erguido; ao fundo há uma lua grande e riscos azul-brancos luminosos, com uma borda de floresta escura em primeiro plano. Os riscos podem ser rastros de magia ou meteoros, mas isso não está confirmado. A origem da imagem também está em aberto: não sabemos se é arte/cena do jogo antigo ou uma referência externa. Não usar a imagem como prova de uma skill ou de um chefe específico.
 
 **Imagens embutidas em `Two Souls - Grupo 4.docx`:** o documento conserva uma captura do sprite de Orion com lança; sprites pequenos de monstros e plantas; uma criatura arbórea com galhos e olhos; e uma folha de animação de uma figura encapuzada, de rosto verde e focinho, segurando um cajado. Essa figura pode lembrar o lagarto/dragão encapuzado que o criador recorda da capa, mas a identificação não está confirmada. Depois da legenda “Processo criativo de ideias para o boss final”, há um esboço a lápis de uma criatura humanoide com cabeça semelhante à de uma ave e um cajado comprido; parece um estudo de conceito para o chefe final, não necessariamente o desenho aprovado. O documento não associa cada sprite a um nome ou fase, então os demais desenhos devem permanecer sem identificação por enquanto.
 
@@ -145,7 +145,7 @@ Esta é uma observação visual de um vídeo de gameplay da GameSpot, não uma s
 
 ## Fontes consultadas
 
-- Materiais de origem: F:\GAME\twosouls\Two Souls - Grupo 4.docx e F:\GAME\twosouls\Cut Scenes.docx.
+- Materiais de origem: F:\GAME\material-original\twosouls\Two Souls - Grupo 4.docx e F:\GAME\material-original\twosouls\Cut Scenes.docx.
 - [Ori and the Will of the Wisps — Xbox](https://www.xbox.com/en-US/games/ori-will-of-the-wisps) e [Steam](https://store.steampowered.com/app/1057090/Ori_and_the_Will_of_the_Wisps/).
 - [Dead Cells — página oficial](https://deadcells.com/) e [Steam](https://store.steampowered.com/app/588650/Dead_Cells/).
 - [Hollow Knight — página oficial](https://www.hollowknight.com/) e [Steam](https://store.steampowered.com/app/367520/Hollow_Knight/).

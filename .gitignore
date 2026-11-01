@@ -17,3 +17,6 @@ desktop.ini
 
 # Configuração local do Claude Code (aprovações pessoais)
 .claude/settings.local.json
+
+# Quarentena de arquivos (temporária; apagar só com ok do Gabriel)
+_QUARENTENA_*/
