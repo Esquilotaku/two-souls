@@ -30,7 +30,7 @@ A ordem segue os marcos do `docs/plano-de-negocio.md`, seção 6.
 
 | # | Tarefa | Responsável sugerido | Estado | Referência |
 |---|---|---|---|---|
-| A.1 | Folha de estilo do Orion em 640×360 (paleta, altura de 64 a 80 px, contorno, formas animais pretas com verde) | Gabriel + Claude | livre | jogo, seção 5; estúdio, fluxo de arte |
+| A.1 | Folha de estilo do Orion em 640×360 (paleta, altura de 64 a 80 px, contorno, formas animais pretas com verde) | Gabriel + Claude | em andamento (Claude, claude/folha-estilo) | jogo, seção 5; estúdio, fluxo de arte |
 | A.2 | Exportar os PSDs originais para PNG, como referência | Gabriel | livre | AGENTS.md, seção Aseprite |
 | A.3 | Orion básico no Aseprite (parado, correndo, pulando, atacando) e ligar no `player.gd` | Gabriel + Codex | livre | AGENTS.md, seção Aseprite |
 
