@@ -29,8 +29,16 @@
 - A skill aparece no Claude Code.
 - `orca skills get orchestration` e `orca orchestration run-list` funcionam sem ligar nada em Settings → Experimental.
 
+## Codex CLI (instalado na mesma noite)
+
+- O PC só tinha o app Codex da Microsoft Store, sem o comando `codex` no PATH, e o Orca abre o Codex por esse comando.
+- Instalado o oficial `npm install -g @openai/codex@0.166.0` (OpenAI, Apache-2.0, sem script de instalação, cerca de 500 MB). Comando em `%APPDATA%\npm\codex.cmd`.
+- `codex --version` → 0.166.0; `codex login status` → logado com ChatGPT (usa o mesmo `~/.codex` do app); `codex doctor` → 0 falhas. Os avisos são opcionais: exclusão do Codex no Microsoft Defender e Dev Drive.
+- O planejador do Orca (`orca skills install --dry-run`) não cria link em `~/.codex/skills`; ele conta com o Codex lendo a pasta compartilhada `~/.agents/skills`.
+
 ## Não verificado
 
-- Se o Codex enxerga a skill em `~/.agents/skills`: o Orca não criou link em `~/.codex/skills`.
+- Se o Codex enxerga a skill em `~/.agents/skills` de fato: falta abrir uma sessão do Codex e perguntar.
+- Se o Orca abre o Codex agora que o comando existe (`orca agent launch --agent codex`).
 - Um ciclo completo (Claude coordena e Codex entrega `worker_done`) ainda não foi testado.
 - A telemetria continuava ligada até o fim desta sessão: o Gabriel não achou a opção na configuração inicial.
