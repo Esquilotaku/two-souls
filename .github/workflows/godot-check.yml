@@ -29,6 +29,9 @@ jobs:
       - name: Rodar 600 quadros
         run: ./godot --headless --path "Two Souls" --quit-after 600 2>&1 | tee run.log
 
+      - name: Testar sprites do Aseprite
+        run: ./godot --headless --path "Two Souls" -s res://tests/test_aseprite_frames.gd
+
       - name: Procurar erros no log
         run: |
           if grep -E "SCRIPT ERROR|^ERROR:|Parse Error" import.log run.log; then

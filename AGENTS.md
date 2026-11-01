@@ -11,6 +11,16 @@ Este arquivo vale para qualquer agente de IA que trabalhe nesta pasta. Responda 
 - `twosouls/` e os `.psd` na raiz — material original da faculdade. Só leitura: nunca editar, mover ou apagar.
 - `tools/Godot4.7.2/` — executável do Godot (fora do git).
 
+## Arte com Aseprite
+
+- Aseprite 1.3.18.6 compilado localmente em `C:\dev\aseprite\build\bin\aseprite.exe` (uso pessoal pela EULA; nunca commitar o executável). Recompilar: `C:\dev\build-aseprite.cmd`.
+- Fonte da arte: `Two Souls/art/*.aseprite`. Cada tag vira uma animação no Godot.
+- Exportar para o jogo: `powershell -ExecutionPolicy Bypass -File pipeline\export-aseprite.ps1 [nome]`. Gera `assets/sprites/<nome>.png` + `.json`; commite os dois junto com o `.aseprite`.
+- No jogo: `AsepriteFrames.load_frames("res://assets/sprites/<nome>.json")` devolve um `SpriteFrames` para `AnimatedSprite2D`.
+- PNG → `.aseprite` com tag: `aseprite -b --script-param src=... --script-param dst=... --script-param tag=idle --script pipeline\new-from-png.lua`.
+- Este Aseprite **não abre os PSDs** do material original; exporte-os em PNG antes.
+- O Aseprite sai com código 0 mesmo quando falha: sempre confira o arquivo gerado.
+
 ## Regra de passagem entre agentes
 
 Claude e Codex não trabalham ao mesmo tempo nos mesmos arquivos.
@@ -25,6 +35,8 @@ Claude e Codex não trabalham ao mesmo tempo nos mesmos arquivos.
 - Checar se o projeto carrega sem erro de script:
   `tools/Godot4.7.2/Godot_v4.7.2-stable_win64_console.exe --headless --path "Two Souls" --quit`
 - O repositório privado `Esquilotaku/two-souls` roda o mesmo teste no GitHub Actions a cada `git push` (`.github/workflows/godot-check.yml`). Envie seus commits ao terminar e confira se o teste passou.
+- MCP do Godot (`@coding-solo/godot-mcp@0.1.1`, configurado em `.mcp.json`): ferramentas `run_project`, `get_debug_output`, `stop_project`, `create_scene`, `add_node`, `load_sprite` e outras. `run_project` abre a janela do jogo na tela do Gabriel; feche com `stop_project`. Testado com Godot 4.7.2 em 01/11/2026.
+  - Codex: para usar o mesmo servidor, o Gabriel adiciona em `~/.codex/config.toml`: `[mcp_servers.godot]` com `command = "cmd"`, `args = ["/c", "npx", "-y", "@coding-solo/godot-mcp@0.1.1"]` e `env = { GODOT_PATH = "F:\\GAME\\tools\\Godot4.7.2\\Godot_v4.7.2-stable_win64_console.exe" }`.
 - "Pronto" só depois de rodar e conferir o resultado. Se não rodou, escreva no STATUS que não foi verificado.
 
 ## Limites

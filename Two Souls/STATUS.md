@@ -77,6 +77,14 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - Depois da correção, o projeto carrega e roda 600 quadros sem janela (`--headless --quit-after 600`) sem erro. Isso **não** testa gameplay: ninguém jogou, apertou botões ou chegou nos chefes.
 - Próximo passo de código continua o mesmo: mundo de áreas interconectadas. Antes disso o Gabriel quer um brainstorm de design (modelo Fable, crédito de nuvem ainda a confirmar).
 
+## Ponto de retomada — 01/11/2026, tarde (Claude)
+
+- Repositório privado no GitHub: `Esquilotaku/two-souls`. O GitHub Actions abre o jogo sem janela a cada envio e roda `tests/test_aseprite_frames.gd`.
+- Aseprite 1.3.18.6 compilado em `C:\dev` e integrado (ver seção "Arte com Aseprite" no `AGENTS.md`). Primeiro arquivo: `art/orion.aseprite` (tag `idle`), exportado para `assets/sprites/orion.png/.json` e carregado com sucesso por `AsepriteFrames`. Ainda **não** está ligado ao `player.gd`, que continua usando `orion_idle.png`.
+- Atenção de arte: `orion_idle.png` tem 1218×1291 px, é ilustração e não sprite de pixel art. Antes das animações é preciso decidir a resolução dos personagens (ex.: 32–64 px de altura) e redesenhar no Aseprite.
+- Os PSDs originais não abrem no Aseprite; precisam ser exportados em PNG.
+- Um brainstorm completo (jogo, estúdio/cargos, plano de negócio) roda numa sessão na nuvem e deve entregar em `docs/` no branch `claude/brainstorm-mundo`.
+
 ## Ponto de retomada — 01/11/2026 (Claude, brainstorm de design)
 
 - Branch `claude/brainstorm-mundo`. Brainstorm de design com o Gabriel; nenhum código de jogo foi alterado.
@@ -113,3 +121,4 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   1. criar `docs/TAREFAS.md` e a linha de cargos no `AGENTS.md`;
   2. depois, programar o marco 1 (mundo interligado, santuários, minimapa) a partir dos documentos.
 - **Não verificado:** nada foi rodado no Godot; o documento é só de design. O protótipo continua linear.
+- **Ligação com a nota de arte acima:** o brainstorm decidiu a resolução como **pixel art 640×360, com Orion de uns 64 a 80 px** (`docs/brainstorm-jogo.md`, seção 5). As formas animais são pretas com detalhes verdes.

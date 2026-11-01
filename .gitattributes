@@ -3,3 +3,5 @@
 *.png binary
 *.capx binary
 *.docx binary
+*.aseprite binary
+*.ase binary
