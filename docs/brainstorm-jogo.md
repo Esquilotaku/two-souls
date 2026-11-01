@@ -9,6 +9,8 @@ Sessão de brainstorm entre o Gabriel e o Claude, iniciada em 01/11/2026. O mund
 - **[proposta]**: sugestão do Claude aprovada pelo Gabriel.
 - **[opinião]**: avaliação do Claude, não decidida.
 
+> **Nome do chefe:** a partir do bloco 4, **The Rock se chama D Rock**, com o grito "D ROCKKKK!" [Gabriel]. O motivo é o risco de marca, detalhado no `plano-de-negocio.md`. Neste documento, "The Rock" se refere ao mesmo personagem.
+
 ---
 
 ## 1. História

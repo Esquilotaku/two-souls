@@ -206,6 +206,8 @@ A distribuição dos subchefes e minibosses é **provisória**. A Serpe do Brejo
 
 ## Tema 5 — Escopo da demo e do 1.0
 
+> **Revisado no bloco 4** (`plano-de-negocio.md`): a demo **deixou de ser meta**. O foco é o jogo completo, sem data. A demo será o recorte abaixo, tirado do jogo pronto, no Next Fest anterior ao lançamento. **The Rock passou a se chamar D Rock**, por risco de marca.
+
 ### Decisões aprovadas
 
 1. **1.0:** 8 regiões, 16 lutas, 5 habilidades de travessia, 3 modos, de 12 a 18 horas (temas 1 a 4).

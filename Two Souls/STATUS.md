@@ -100,6 +100,16 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   - US$14,99; PT-BR e inglês.
   - As habilidades mudaram em relação ao bloco 1; o doc do mundo tem um aviso "Revisado no bloco 2".
 - **Bloco 3 concluído:** `docs/estudio-e-cargos.md`. Sem freelancers, só Gabriel e IAs. Coordenação pelo AGENTS.md, mais `docs/TAREFAS.md` (a criar), e agentes por cargo quando a tarefa se repetir. Paperclip adiado.
-- **A fazer:**
-  - bloco 4, `docs/plano-de-negocio.md`: empresa no Brasil, Steam Direct, impostos, banco, orçamento, cronograma, marketing e canal Esquilo Otaku. Só com fonte aberta; o que não for conferido fica marcado como "não verificado".
+- **Bloco 4 concluído:** `docs/plano-de-negocio.md`. Decisões:
+  - pessoa física primeiro, conferindo o MEI e consultando um contador antes do lançamento;
+  - Steam Direct US$100; US$14,99 com desconto de lançamento até cerca de US$9,99;
+  - **The Rock passou a se chamar "D Rock"**, porque Dwayne Johnson é dono da marca; falta buscar no USPTO e no INPI;
+  - sem freelancers; Claude Pro e ChatGPT Go;
+  - **sem data**: o foco é o jogo completo, e a demo será só um recorte para o Next Fest;
+  - página da Steam, Discord e posts só quando o jogo estiver pela metade;
+  - canal Esquilo Otaku, que é de anime, só com menções.
+- **Brainstorm completo.** Os 4 documentos estão em `docs/`, cada um com uma lista de perguntas em aberto.
+- **Próximo passo sugerido:**
+  1. criar `docs/TAREFAS.md` e a linha de cargos no `AGENTS.md`;
+  2. depois, programar o marco 1 (mundo interligado, santuários, minimapa) a partir dos documentos.
 - **Não verificado:** nada foi rodado no Godot; o documento é só de design. O protótipo continua linear.
