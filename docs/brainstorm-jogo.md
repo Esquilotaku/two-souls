@@ -59,6 +59,23 @@ Estas decisões prevalecem sobre o texto mais antigo deste documento.
 5. **desafio da carapuça**: na lenda popular, quem pega o gorro ganha um desejo; aqui a recompensa é uma **runa com o tornado do Saci**, ou outra coisa a definir;
 6. **assobio** quando ele está por perto.
 
+**Nomes (01/11, noite 2)** [Gabriel]
+- **Ele: Kaê** (antes Orion). Nome inventado, curto, que combina com o dela.
+  - A busca não achou fonte para "Kaê"; nomes parecidos (Kauã, Kauê) são ligados por sites de nomes a "gavião" em tupi, o que coincide com o último animal dele. As fontes são fracas.
+  - Tupã foi descartado por ser a principal divindade tupi-guarani.
+- **Ela: Aená** (antes Aenia).
+- **Título do jogo: em aberto.**
+  - Nome de trabalho: "Two Souls".
+  - Decidir antes da página da Steam (metade do jogo), com o método: o Gabriel cita 3 títulos que acha perfeitos, o Claude gera opções conferindo a Steam, o Gabriel escolhe e pode fazer enquete.
+  - Banco de ideias (sem compromisso): *Seiva*, *Twinroot*, *Last Rain*, *Rootborn*, *Seiva e Casca*, *Duas Almas de…*.
+  - Fato: já existe o jogo "Beyond: Two Souls" (de memória, não verificado).
+- **Nome da floresta: em aberto** (o Gabriel quer um nome nativo do Brasil e fácil).
+  - Opções levantadas: **Caá** (recomendação do Claude), **Ipê**, **Kaagui**.
+  - **Ka'aguy** (guarani, "floresta", [confirmado](https://www.ufrgs.br/educampolitoral/?p=6940)) foi achado difícil de falar.
+  - "Monte Ligna", do original, sai por não soar brasileiro. Em latim, *ligna* = madeiras.
+- **A história será reescrita** com os nomes e o contexto novos, mantendo a estrutura do texto original da faculdade (gêmeos, rapto, jornada).
+- A **referência visual aprovada** dos gêmeos continua valendo; só mudam os nomes.
+
 **HUD e fonte para o Steam Deck:** ficam para o final [Gabriel]. Primeiro o jogo bruto.
 
 ## 1. História
