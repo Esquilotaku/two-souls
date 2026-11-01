@@ -136,35 +136,23 @@ func _create_ui() -> void:
 	fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	fade_layer.add_child(fade_rect)
 
+## Teclas e botões do brainstorm-jogo.md (seção 7), com as trocas do jogador em user://controles.cfg.
 func _configure_controls() -> void:
-	_bind_keys("move_left", [KEY_A, KEY_LEFT])
-	_bind_keys("move_right", [KEY_D, KEY_RIGHT])
-	_bind_keys("jump", [KEY_SPACE, KEY_W, KEY_UP])
-	_bind_keys("attack", [KEY_J, KEY_X])
-	_bind_keys("magic", [KEY_K, KEY_C])
-	_bind_keys("throw_spear", [KEY_L])
-	_bind_keys("super_punch", [KEY_U])
-	_bind_keys("inventory", [KEY_I])
-	_bind_keys("skill_tree", [KEY_T])
-	_bind_keys("interact", [KEY_E])
-	_bind_keys("pause", [KEY_ESCAPE])
+	InputConfig.load_saved()
 
-func _bind_keys(action: String, keys: Array[int]) -> void:
-	if not InputMap.has_action(action):
-		InputMap.add_action(action)
-	for key in keys:
-		var event := InputEventKey.new()
-		event.keycode = key
-		InputMap.action_add_event(action, event)
-	var joy_axis := InputEventJoypadMotion.new()
-	if action == "move_left":
-		joy_axis.axis = JOY_AXIS_LEFT_X
-		joy_axis.axis_value = -1.0
-		InputMap.action_add_event(action, joy_axis)
-	elif action == "move_right":
-		joy_axis.axis = JOY_AXIS_LEFT_X
-		joy_axis.axis_value = 1.0
-		InputMap.action_add_event(action, joy_axis)
+## Nome curto da tecla de uma ação, para textos na tela (ex.: "Seta para cima").
+func _key_name(action: String) -> String:
+	return InputConfig.key_label(action)
+
+## Abre a tela de remapeamento; ao fechar, volta para a tela de onde veio.
+func _open_controls_menu(return_to: Callable) -> void:
+	_clear_ui()
+	var menu: Control = load("res://scripts/ui/controls_menu.gd").new()
+	menu.closed.connect(func():
+		menu.queue_free()
+		return_to.call()
+	)
+	ui_root.add_child(menu)
 
 func _show_title() -> void:
 	playing = false
@@ -223,7 +211,10 @@ func _show_title() -> void:
 	var how := _button("COMO JOGAR")
 	how.pressed.connect(_show_controls)
 	buttons.add_child(how)
-	var footer := _label("A / D ou setas  ·  Espaço pula  ·  J ataca  ·  K magia  ·  E santuário", 11, Color("bed2d6"), HORIZONTAL_ALIGNMENT_CENTER)
+	var keys := _button("CONTROLES")
+	keys.pressed.connect(func(): _open_controls_menu(_show_title))
+	buttons.add_child(keys)
+	var footer := _label("Setas andam  ·  %s pula  ·  %s ataca  ·  %s dash  ·  %s interage" % [_key_name("jump"), _key_name("attack"), _key_name("dash"), _key_name("interact")], 11, Color("bed2d6"), HORIZONTAL_ALIGNMENT_CENTER)
 	footer.position = Vector2(20, 333)
 	footer.size = Vector2(600, 18)
 	ui_root.add_child(footer)
@@ -274,7 +265,11 @@ func _show_controls() -> void:
 	title.position = Vector2(90, 42)
 	title.size = Vector2(460, 48)
 	ui_root.add_child(title)
-	var text := _label("Mova Orion com A/D ou as setas.\nPule com Espaço, W ou seta para cima.\nAtaque com J/X; magia com K/C.\nLança L e super soco U depois de ganhá-los.\nE ativa santuários e fala com Aenia.\nBlocos laranja pedem uma habilidade.\nI abre a bolsa; T abre talentos; Esc pausa.", 14, Color("d8e9e4"), HORIZONTAL_ALIGNMENT_CENTER)
+	var help := "Ande com as setas; %s pula.\n%s ataca; %s dash; %s magia.\n%s lança e %s super soco, depois de ganhá-los.\n%s ativa santuários e fala com Aenia.\nBlocos laranja pedem uma habilidade.\n%s bolsa; %s talentos; %s pausa." % [
+		_key_name("jump"), _key_name("attack"), _key_name("dash"), _key_name("magic"),
+		_key_name("throw_spear"), _key_name("super_punch"), _key_name("interact"),
+		_key_name("inventory"), _key_name("skill_tree"), _key_name("pause")]
+	var text := _label(help, 14, Color("d8e9e4"), HORIZONTAL_ALIGNMENT_CENTER)
 	text.position = Vector2(100, 112)
 	text.size = Vector2(440, 172)
 	ui_root.add_child(text)
@@ -618,7 +613,7 @@ func _show_aenia_dialogue() -> void:
 	dialogue.size = Vector2(342, 52)
 	dialogue.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	ui_root.add_child(dialogue)
-	var close := _button("FECHAR [E]")
+	var close := _button("FECHAR [%s]" % _key_name("interact"))
 	close.position = Vector2(430, 270)
 	close.size = Vector2(126, 28)
 	close.custom_minimum_size = Vector2(126, 28)
@@ -767,9 +762,9 @@ func _update_hud() -> void:
 		if world and is_instance_valid(world) and world.boss and is_instance_valid(world.boss):
 			objective = "DERROTE: " + str(world.boss.boss_name).to_upper()
 		elif world and is_instance_valid(world) and world.shrine and not world.shrine.active and world.shrine.is_player_near(player.global_position):
-			objective = "E · ATIVAR SANTUÁRIO"
+			objective = "%s · ATIVAR SANTUÁRIO" % _key_name("interact")
 		elif world and is_instance_valid(world) and world.shrine and world.shrine.is_player_near(player.global_position):
-			objective = "E · DESCANSAR"
+			objective = "%s · DESCANSAR" % _key_name("interact")
 		hud_objective.text = objective
 	if hud_time:
 		hud_time.text = "DIA %d · %s  ·  %s" % [day, _time_of_day_name(), _format_world_time()]
@@ -889,6 +884,9 @@ func _show_pause() -> void:
 			_show_message("Não foi possível salvar o progresso no disco.", 3.0)
 	)
 	buttons.add_child(restart)
+	var keys := _button("CONTROLES")
+	keys.pressed.connect(func(): _open_controls_menu(_show_pause))
+	buttons.add_child(keys)
 	var menu := _button("MENU PRINCIPAL")
 	menu.pressed.connect(_show_title)
 	buttons.add_child(menu)
