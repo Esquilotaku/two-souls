@@ -14,3 +14,6 @@ export/
 # Lixo do sistema
 Thumbs.db
 desktop.ini
+
+# Referências visuais de terceiros (baixadas no PC por pipeline/baixar-referencias.ps1)
+referencias/imagens/
