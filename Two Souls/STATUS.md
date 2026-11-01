@@ -76,3 +76,11 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - Verificação feita: o projeto **não compilava**. `foe.gd:47` e `boss.gd:83/164/265` usavam `var horizontal_distance :=` com valor sem tipo; trocado por `: float =`. Também foi preciso rodar `--import`, porque os sprites novos e o `ItemPickup` ainda não estavam no cache do Godot.
 - Depois da correção, o projeto carrega e roda 600 quadros sem janela (`--headless --quit-after 600`) sem erro. Isso **não** testa gameplay: ninguém jogou, apertou botões ou chegou nos chefes.
 - Próximo passo de código continua o mesmo: mundo de áreas interconectadas. Antes disso o Gabriel quer um brainstorm de design (modelo Fable, crédito de nuvem ainda a confirmar).
+
+## Ponto de retomada — 01/11/2026, tarde (Claude)
+
+- Repositório privado no GitHub: `Esquilotaku/two-souls`. O GitHub Actions abre o jogo sem janela a cada envio e roda `tests/test_aseprite_frames.gd`.
+- Aseprite 1.3.18.6 compilado em `C:\dev` e integrado (ver seção "Arte com Aseprite" no `AGENTS.md`). Primeiro arquivo: `art/orion.aseprite` (tag `idle`), exportado para `assets/sprites/orion.png/.json` e carregado com sucesso por `AsepriteFrames`. Ainda **não** está ligado ao `player.gd`, que continua usando `orion_idle.png`.
+- Atenção de arte: `orion_idle.png` tem 1218×1291 px, é ilustração e não sprite de pixel art. Antes das animações é preciso decidir a resolução dos personagens (ex.: 32–64 px de altura) e redesenhar no Aseprite.
+- Os PSDs originais não abrem no Aseprite; precisam ser exportados em PNG.
+- Um brainstorm completo (jogo, estúdio/cargos, plano de negócio) roda numa sessão na nuvem e deve entregar em `docs/` no branch `claude/brainstorm-mundo`.
