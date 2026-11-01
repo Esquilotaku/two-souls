@@ -34,6 +34,17 @@ A ordem segue os marcos do `docs/plano-de-negocio.md`, seção 6.
 | A.2 | Exportar os PSDs originais para PNG, como referência | Gabriel | livre | AGENTS.md, seção Aseprite |
 | A.3 | Orion básico no Aseprite (parado, correndo, pulando, atacando) e ligar no `player.gd` | Gabriel + Codex | livre | AGENTS.md, seção Aseprite |
 
+## Referências e decisões novas (da pesquisa de 01/11/2026)
+
+| # | Tarefa | Responsável sugerido | Estado | Referência |
+|---|---|---|---|---|
+| R.1 | Rodar `pipeline/baixar-referencias.ps1` no PC e conferir `referencias/imagens/INDICE.md` | Gabriel ou agente do PC | livre | `referencias/README.md` |
+| R.2 | Decidir viagem rápida, marcadores no mapa e se o mapa é comprado ou só revelado | Gabriel | livre | `referencias/checklist-do-jogo.md` |
+| R.3 | Escolher as lendas dos 5 subchefes e 8 minibosses, e de 20 a 25 inimigos comuns | Gabriel | livre | `referencias/lendas-do-brasil.md`, `referencias/bestiario-ideias.md` |
+| R.4 | Teste de arte: um quadro do Orion à mão, a IA completa a corrida com referência de pose 3D (Mixamo), ajuste no Aseprite | Gabriel + Codex | livre | `referencias/videos-e-aprendizados.md` |
+| R.5 | Avaliar addons (MetSys, LimboAI, Dialogue Manager, Phantom Camera); o Gabriel lê antes de instalar | Gabriel + Claude | livre | `referencias/codigo-aberto-godot.md` |
+| R.6 | Definir fonte e HUD pensando no Steam Deck (texto ≥ 9 px a 1280×800) | Gabriel + Claude | livre | `referencias/checklist-do-jogo.md`, seção 9 |
+
 ## Organização e decisões pendentes
 
 | # | Tarefa | Responsável sugerido | Estado | Referência |
@@ -48,4 +59,5 @@ A ordem segue os marcos do `docs/plano-de-negocio.md`, seção 6.
 |---|---|---|---|
 | — | Brainstorm completo (4 documentos em `docs/`) | Claude + Gabriel | 01/11/2026 |
 | — | Quadro de tarefas e cargos no `AGENTS.md` | Claude | 01/11/2026 |
+| — | Pesquisa de referências: jogos, ferramentas, vídeos, lendas, fauna, bestiário, código aberto, checklist (`referencias/`) | Claude | 01/11/2026 |
 | O.1 | Orca instalado e skill `orchestration` para Claude e Codex (`docs/orca.md`) | Claude + Gabriel | 01/11/2026 |

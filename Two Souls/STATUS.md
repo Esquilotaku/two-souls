@@ -147,3 +147,17 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   - a telemetria do Orca continua **ligada**: o Gabriel precisa desligar em Settings → Privacy.
 - **Fora do git:** a pasta `txt/` (notas do Gabriel) continua sem commit; falta decidir se entra.
 - **Próximo passo:** testar o Orca com uma tarefa pequena, por exemplo o Claude pedir ao Codex uma revisão e receber o resultado. Depois, a tarefa 1.1, o plano técnico do mundo interligado.
+
+## Ponto de retomada — 01/11/2026, noite 2 (Claude, nuvem: pesquisa de referências)
+
+- **Pasta nova `referencias/`** (comece por `referencias/README.md` e `referencias/checklist-do-jogo.md`):
+  - estudo de jogos e ferramentas;
+  - vídeos (transcrições lidas via vidIQ, com o ok do Gabriel);
+  - lendas do Brasil, biomas e fauna;
+  - bestiário com mais de 60 ideias de inimigos;
+  - código aberto para Godot;
+  - checklist do que o jogo precisa ter.
+- **Script `pipeline/baixar-referencias.ps1`:** baixa capturas oficiais da Steam de uns 50 jogos para `referencias/imagens/` (fora do git). **Não testado:** a nuvem não alcança a Steam. Rodar no PC (tarefa R.1).
+- **Decisões novas que a pesquisa levantou:** viagem rápida, marcadores no mapa, fonte e HUD para o Steam Deck, segunda rota para habilidades e alternativa para quem travar num chefe. Estão no `docs/TAREFAS.md` (R.2 a R.6).
+- **Bloqueios da nuvem:** a rede bloqueia `store.steampowered.com` e `youtube.com`. Os vídeos foram lidos pelo vidIQ (uns 50 créditos do vidIQ).
+- **Nada foi instalado e nenhum código do jogo mudou.**

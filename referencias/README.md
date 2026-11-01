@@ -1,6 +1,18 @@
 # Referências visuais — pixel art, metroidvania e HUD
 
-**Estudo completo dos jogos** (ferramentas, level design, HUD e lições): [`estudo-de-jogos.md`](estudo-de-jogos.md).
+## Índice da pasta
+
+| Arquivo | O que tem |
+|---|---|
+| [`checklist-do-jogo.md`](checklist-do-jogo.md) | **comece por aqui**: tudo o que o jogo precisa ter, o que está decidido e o que falta |
+| [`estudo-de-jogos.md`](estudo-de-jogos.md) | ferramentas (engine e arte) de cada jogo de referência, level design, HUD, lições |
+| [`videos-e-aprendizados.md`](videos-e-aprendizados.md) | os vídeos do Gabriel e os da pesquisa, com o que cada um ensina |
+| [`lendas-do-brasil.md`](lendas-do-brasil.md) | lendas por região, cuidados e proposta de subchefes e minibosses |
+| [`fauna-e-biomas.md`](fauna-e-biomas.md) | os 6 biomas, a fauna e os animais perigosos, e onde cada um entra no jogo |
+| [`bestiario-ideias.md`](bestiario-ideias.md) | mais de 60 ideias de inimigos por região, com arquétipos e avisos |
+| [`codigo-aberto-godot.md`](codigo-aberto-godot.md) | repositórios e addons de Godot (metroidvania, plataforma, luta, IA de inimigos, diálogo) |
+| `imagens/` | capturas da Steam, baixadas no PC pelo script (fora do git) |
+
 
 Pasta de estudo para o Gabriel, o Claude e o Codex. **Referência inspira, não é para copiar**: nada daqui entra no jogo (regra do `AGENTS.md`).
 
