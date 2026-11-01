@@ -213,3 +213,11 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - Padrões de controle: pulo A (inferior), ataque X (esquerdo), dash B (direito), lança LB, super soco RB, magia LT, transformação RT, interação Y, contexto RS, cura LS, mapa View, inventário Xbox/Guide e talentos/Pausa Menu. Movimento também usa direcional e analógico esquerdo. Setas para olhar, Espaço para pular, A/S/QWER, D/F, Enter, Tab/I/T e Esc no teclado.
 - Testados: carregamento headless do projeto, `tests/test_input_config.gd` e `tests/test_aseprite_frames.gd`; todos passaram. O GitHub Actions passou no run `41350609632`. Ainda não foi testado por pessoa apertando teclas nem com controle físico.
 - Próximo passo: Claude integrar no `game.gd`, incluindo carregamento das configurações e abertura/fechamento do menu; depois Gabriel validar os controles em teclado e controle físico.
+
+## Ponto de retomada - 01/11/2026 (Codex, runas)
+
+- Branch `codex/runas`, criado a partir do topo de `claude/estrutura-mundo`. A tarefa 1.8 foi implementada em `scripts/runes/rune_catalog.gd`, `scripts/runes/rune_state.gd`, `scripts/ui/rune_menu.gd` e `tests/test_runes.gd`; explicacao leiga em `docs/runas.md`.
+- Proposta: 10 runas, 2 espacos iniciais, maximo de 6, tres niveis e custos de 3 e 6 fragmentos por melhoria. Valores ainda provisórios conforme pergunta O.2 e precisam de balanceamento.
+- Verificado: importacao do projeto, teste dedicado `test_runes.gd`, carregamento headless apos importacao e testes automatizados. Sem teste manual de gameplay.
+- Integracao no save, concessao das runas/fragmentos e aplicacao dos bonus nas habilidades ficam para Claude; tarefa 1.8 aguarda essa ligacao.
+- Proximo passo: enviar o branch, conferir o GitHub Actions e integrar o RuneState no save e fluxo do jogo.
