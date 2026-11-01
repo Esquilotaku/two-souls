@@ -13,6 +13,54 @@ Sessão de brainstorm entre o Gabriel e o Claude, iniciada em 01/11/2026. O mund
 
 ---
 
+## 0. Decisões de 01/11/2026 (noite 2) — vilão, final verdadeiro, R, runas e Saci
+
+Estas decisões prevalecem sobre o texto mais antigo deste documento.
+
+**Ruínas dos santuários** [Gabriel]: foram construídas pela **tribo do D Rock**.
+
+**Feiticeiro: Tau** [Gabriel]
+- **Nome:** Tau, da mitologia guarani. Na lenda, Tau é um espírito maligno que **rapta Kerana**; no jogo, Tau **rapta Aenia** ([Wikipedia: Tau](https://Www.wikipedia.org/wiki/Tau_(mythology))).
+- **Lembrança do Gabriel:** o nome original era algo como "Sasar". Ficou como registro; o nome escolhido é Tau.
+- **Quem ele é** (opção A com um toque de C):
+  - **guardião caído da tribo do D Rock**, o escolhido para cuidar da Árvore Mãe;
+  - numa grande seca, quis o poder da Árvore "para salvar os seus" e foi **corrompido por um espírito da seca**;
+  - o D Rock testa Orion porque **o último escolhido caiu**;
+  - é trágico e convencido de que faz o certo.
+- **Fase 2:** vira o **Teju Jaguá**, lagarto com traços de cão, encapuzado, senhor das cavernas. A barra de vida mostra **"Tau, o Teju Jaguá"**.
+  - **Nota de mitologia:** na lenda guarani, o Teju Jaguá é **filho** de Tau e um guardião de cavernas e tesouros. Usá-lo como forma do próprio Tau é uma reinterpretação.
+- **Espírito da seca:** existe separado e foi quem corrompeu Tau. **Nome provisório: "Estiagem"** (sugestão do Claude, não confirmada).
+
+**Mbói Tu'ĩ** [Gabriel]: a serpente-papagaio, guardiã dos pântanos na mitologia guarani ([Wikipedia](https://en.wikipedia.org/wiki/Mb%C3%B3i_Tu%27%C4%A9)). **Substitui a Serpe do Brejo** como subchefe do Brejo, depois do 1.0.
+
+**Final verdadeiro (opção A)** [Gabriel]
+- **Condição:** vencer tudo e purificar todas as lendas.
+- **O que acontece:**
+  1. Depois de vencer Tau, o **espírito da Árvore Mãe aparece** e purifica Tau.
+  2. O **espírito da seca** sai do corpo dele, e acontece a **luta final verdadeira**: Orion e Aenia juntos, com a Árvore Mãe ajudando.
+  3. Na vitória, **a chuva volta à floresta**.
+  4. **Tau, curado, volta a ser guardião** junto com a tribo.
+  5. A Árvore Mãe se revela **a narradora** desde o início.
+- **Descartados:** só a cena, sem luta; o final agridoce em que os gêmeos se unem à Árvore.
+
+**Tecla R (recomendação do Claude, aprovada)**
+- **Onça:** corrida.
+- **Tatu:** bola blindada que rola, atropela inimigos pequenos e passa por espinhos baixos.
+- **Jiboia:** forma rasteira e furtiva, que passa por baixo de inimigos e sobe troncos.
+- **O gavião fica fora do R no 1.0**, para não quebrar os desafios de precisão. Entra depois, com o planar.
+
+**Runas (recomendação aprovada):** começam com **2 espaços** e chegam a **5**. Os 3 extras vêm de **lendas purificadas**.
+
+**Saci, NPC brincalhão:** todas as 6 brincadeiras aprovadas [Gabriel]:
+1. aparece no santuário e dá um **item aleatório** ou uma pegadinha;
+2. **rouba e foge**, e devolve com bônus quando pego;
+3. dá **dicas duvidosas**;
+4. **aparece rindo** no destino da viagem rápida;
+5. **desafio da carapuça**: na lenda popular, quem pega o gorro ganha um desejo; aqui a recompensa é uma **runa com o tornado do Saci**, ou outra coisa a definir;
+6. **assobio** quando ele está por perto.
+
+**HUD e fonte para o Steam Deck:** ficam para o final [Gabriel]. Primeiro o jogo bruto.
+
 ## 1. História
 
 ### Decisões

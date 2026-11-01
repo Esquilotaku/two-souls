@@ -43,14 +43,14 @@ A ordem segue os marcos do `docs/plano-de-negocio.md`, seção 6.
 | R.3 | Escolher as lendas dos 5 subchefes e 8 minibosses, e de 20 a 25 inimigos comuns | Gabriel | feito (01/11): lendas decididas; **todos os 50 inimigos comuns** entram no 1.0 (núcleo de 25 primeiro) | `referencias/lendas-do-brasil.md`, `referencias/bestiario-ideias.md` |
 | R.4 | Teste de arte: um quadro do Orion à mão, a IA completa a corrida com referência de pose 3D (Mixamo), ajuste no Aseprite | Gabriel + Codex | livre | `referencias/videos-e-aprendizados.md` |
 | R.5 | Avaliar addons (MetSys, LimboAI, Dialogue Manager, Phantom Camera); o Gabriel lê antes de instalar | Gabriel + Claude | livre | `referencias/codigo-aberto-godot.md` |
-| R.6 | Definir fonte e HUD pensando no Steam Deck (texto ≥ 9 px a 1280×800) | Gabriel + Claude | livre | `referencias/checklist-do-jogo.md`, seção 9 |
+| R.6 | Definir fonte e HUD pensando no Steam Deck (texto ≥ 9 px a 1280×800) | Gabriel + Claude | adiado para o final (decisão do Gabriel, 01/11) | `referencias/checklist-do-jogo.md`, seção 9 |
 
 ## Organização e decisões pendentes
 
 | # | Tarefa | Responsável sugerido | Estado | Referência |
 |---|---|---|---|---|
 | O.1 | Avaliar a skill de orquestração do Orca (`stablyai/orca`) para Claude e Codex trabalharem juntos. **O Gabriel lê antes de instalar**; a instalação é no PC | Gabriel + Claude (sessão do PC) | feito (01/11/2026) | `docs/orca.md` |
-| O.2 | Decidir as perguntas em aberto do design quando o assunto chegar (final verdadeiro, feiticeiro, subchefes do folclore, animais do R, espaços de runa) | Gabriel | livre | fim de cada doc em `docs/` |
+| O.2 | Decidir as perguntas em aberto do design quando o assunto chegar (final verdadeiro, feiticeiro, subchefes do folclore, animais do R, espaços de runa) | Gabriel | feito (01/11, ver `brainstorm-jogo.md`, seção 0); faltam o nome do espírito da seca e a decisão sobre os nomes de Orion, Aenia e do jogo | fim de cada doc em `docs/` |
 | O.3 | Antes da página da Steam: buscar a marca "D Rock" (USPTO/INPI), conferir o MEI para jogos e fazer a consulta com o contador | Gabriel + Claude | livre | negócio, seções 1 e 4 |
 
 ## Feito
