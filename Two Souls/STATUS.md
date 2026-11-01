@@ -84,3 +84,41 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - Atenção de arte: `orion_idle.png` tem 1218×1291 px, é ilustração e não sprite de pixel art. Antes das animações é preciso decidir a resolução dos personagens (ex.: 32–64 px de altura) e redesenhar no Aseprite.
 - Os PSDs originais não abrem no Aseprite; precisam ser exportados em PNG.
 - Um brainstorm completo (jogo, estúdio/cargos, plano de negócio) roda numa sessão na nuvem e deve entregar em `docs/` no branch `claude/brainstorm-mundo`.
+
+## Ponto de retomada — 01/11/2026 (Claude, brainstorm de design)
+
+- Branch `claude/brainstorm-mundo`. Brainstorm de design com o Gabriel; nenhum código de jogo foi alterado.
+- **Bloco 1 concluído:** `docs/brainstorm-mundo-interligado.md`. Decisões principais:
+  - mapa único com alturas híbridas;
+  - mapa grande lançado por partes (1.0 com 8 regiões, 12 a 18 h);
+  - rede de cavernas sob o mapa, atalhos de volta com pista e segredos escondidos;
+  - santuários fixos, que só valem se ativados; morrer não tira nada;
+  - 5 habilidades (lança cravada → super soco → pulo duplo e mergulho em qualquer ordem → purificação);
+  - The Rock antes da árvore, que guarda Aenia (decisão da refeitura);
+  - o feiticeiro vira o lagarto na 2ª fase;
+  - 16 lutas (3 + 5 + 8);
+  - vários dias com descanso no santuário e modos História, Aventura e Desafio (Desafio todo à noite);
+  - demo do início até vencer The Rock.
+- **Bloco 2 concluído:** `docs/brainstorm-jogo.md`. Destaques:
+  - Árvore Mãe narradora; folclore brasileiro nos subchefes;
+  - 7 habilidades com espíritos animais (onça, jiboia, tatu, gavião-real);
+  - runas purificáveis; XP só para a árvore de talentos;
+  - pixel art 640×360; trilha brasileira;
+  - controles setas, Espaço, A, S e QWER (R = transformação escolhida por runa);
+  - US$14,99; PT-BR e inglês.
+  - As habilidades mudaram em relação ao bloco 1; o doc do mundo tem um aviso "Revisado no bloco 2".
+- **Bloco 3 concluído:** `docs/estudio-e-cargos.md`. Sem freelancers, só Gabriel e IAs. Coordenação pelo AGENTS.md, mais `docs/TAREFAS.md` (a criar), e agentes por cargo quando a tarefa se repetir. Paperclip adiado.
+- **Bloco 4 concluído:** `docs/plano-de-negocio.md`. Decisões:
+  - pessoa física primeiro, conferindo o MEI e consultando um contador antes do lançamento;
+  - Steam Direct US$100; US$14,99 com desconto de lançamento até cerca de US$9,99;
+  - **The Rock passou a se chamar "D Rock"**, porque Dwayne Johnson é dono da marca; falta buscar no USPTO e no INPI;
+  - sem freelancers; Claude Pro e ChatGPT Go;
+  - **sem data**: o foco é o jogo completo, e a demo será só um recorte para o Next Fest;
+  - página da Steam, Discord e posts só quando o jogo estiver pela metade;
+  - canal Esquilo Otaku, que é de anime, só com menções.
+- **Brainstorm completo.** Os 4 documentos estão em `docs/`, cada um com uma lista de perguntas em aberto.
+- **Próximo passo sugerido:**
+  1. criar `docs/TAREFAS.md` e a linha de cargos no `AGENTS.md`;
+  2. depois, programar o marco 1 (mundo interligado, santuários, minimapa) a partir dos documentos.
+- **Não verificado:** nada foi rodado no Godot; o documento é só de design. O protótipo continua linear.
+- **Ligação com a nota de arte acima:** o brainstorm decidiu a resolução como **pixel art 640×360, com Orion de uns 64 a 80 px** (`docs/brainstorm-jogo.md`, seção 5). As formas animais são pretas com detalhes verdes.
