@@ -218,6 +218,6 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 
 - Branch `codex/runas`, criado a partir do topo de `claude/estrutura-mundo`. A tarefa 1.8 foi implementada em `scripts/runes/rune_catalog.gd`, `scripts/runes/rune_state.gd`, `scripts/ui/rune_menu.gd` e `tests/test_runes.gd`; explicacao leiga em `docs/runas.md`.
 - Proposta: 10 runas, 2 espacos iniciais, maximo de 6, tres niveis e custos de 3 e 6 fragmentos por melhoria. Valores ainda provisórios conforme pergunta O.2 e precisam de balanceamento.
-- Verificado: importacao do projeto, teste dedicado `test_runes.gd`, carregamento headless apos importacao e testes automatizados. Sem teste manual de gameplay.
+- Verificado: importacao do projeto, carregamento headless e todos os testes automatizados, incluindo `test_runes.gd`; GitHub Actions `41353603483` passou. Sem teste manual de gameplay.
 - Integracao no save, concessao das runas/fragmentos e aplicacao dos bonus nas habilidades ficam para Claude; tarefa 1.8 aguarda essa ligacao.
-- Proximo passo: enviar o branch, conferir o GitHub Actions e integrar o RuneState no save e fluxo do jogo.
+- O branch foi enviado para `origin/codex/runas`; proximo passo: Claude integrar o RuneState no save e fluxo do jogo.
