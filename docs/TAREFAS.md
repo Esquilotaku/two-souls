@@ -1,4 +1,4 @@
-﻿# Two Souls â€” quadro de tarefas
+# Two Souls â€” quadro de tarefas
 
 Regras (ver `AGENTS.md`):
 - Antes de comeÃ§ar, marque a tarefa com o seu nome e o branch.

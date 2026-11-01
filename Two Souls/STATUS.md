@@ -192,3 +192,10 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - Mundo inspecionado: o piso e as plataformas abertas não têm teto físico baixo; `tunnel_layer.gd` é decorativo e não está instanciado no protótipo. Alcances de ataque de chefe e velocidades de inimigos/chefes não foram balanceados jogando; as plataformas mais altas, passagens visuais e proporção do personagem em movimento não foram validadas com controle manual.
 - **Verificado:** Aseprite CLI refez o arquivo e exportou o PNG/JSON; Godot 4.7.2 headless abriu o projeto, `tests/test_aseprite_frames.gd` passou (1 JSON, 0 falhas) e o jogo rodou com `--quit-after 600`, sem erros de script.
 - **Pendente:** enviar o branch e conferir o GitHub Actions; não foi feito teste manual jogando. A aprovação visual da arte continua com o Gabriel.
+
+## Ponto de retomada — 01/11/2026 (Codex, tarefa 1.6)
+
+- Branch `codex/controles`. Implementados `scripts/input_config.gd`, `scripts/ui/controls_menu.gd` e `tests/test_input_config.gd`; a 1.6 está esperando Claude integrar a tela e chamar `InputConfig` no `game.gd`.
+- Padrões de controle: pulo A (inferior), ataque X (esquerdo), dash B (direito), lança LB, super soco RB, magia LT, transformação RT, interação Y, contexto RS, cura LS, mapa View, inventário Xbox/Guide e talentos/Pausa Menu. Movimento também usa direcional e analógico esquerdo. Setas para olhar, Espaço para pular, A/S/QWER, D/F, Enter, Tab/I/T e Esc no teclado.
+- Testados: carregamento headless do projeto, `tests/test_input_config.gd` e `tests/test_aseprite_frames.gd`; todos passaram. Ainda não foi testado por pessoa apertando teclas nem com controle físico, e o GitHub Actions depende do push.
+- Próximo passo: Claude integrar no `game.gd`, incluindo carregamento das configurações e abertura/fechamento do menu; depois Gabriel validar os controles em teclado e controle físico.
