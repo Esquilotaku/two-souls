@@ -60,6 +60,7 @@ Claude e Codex não trabalham ao mesmo tempo nos mesmos arquivos.
 - O repositório privado `Esquilotaku/two-souls` roda o mesmo teste no GitHub Actions a cada `git push` (`.github/workflows/godot-check.yml`). Envie seus commits ao terminar e confira se o teste passou.
 - MCP do Godot (`@coding-solo/godot-mcp@0.1.1`, configurado em `.mcp.json`): ferramentas `run_project`, `get_debug_output`, `stop_project`, `create_scene`, `add_node`, `load_sprite` e outras. `run_project` abre a janela do jogo na tela do Gabriel; feche com `stop_project`. Testado com Godot 4.7.2 em 01/11/2026.
   - Codex: para usar o mesmo servidor, o Gabriel adiciona em `~/.codex/config.toml`: `[mcp_servers.godot]` com `command = "cmd"`, `args = ["/c", "npx", "-y", "@coding-solo/godot-mcp@0.1.1"]` e `env = { GODOT_PATH = "F:\\GAME\\tools\\Godot4.7.2\\Godot_v4.7.2-stable_win64_console.exe" }`.
+- Orca (app que roda Claude e Codex lado a lado, v1.4.245): para um agente mandar trabalho ao outro e receber o resultado, use a skill `orchestration` (instalada em `~/.agents/skills`, ligada em `~/.claude/skills`). Antes de qualquer comando, rode `orca skills get orchestration`. O comando fica em `%LOCALAPPDATA%\Programs\orca\resources\bin\orca.exe` (o `orca` puro só funciona nos terminais do Orca). Avaliação e ressalvas em `docs/orca.md`.
 - "Pronto" só depois de rodar e conferir o resultado. Se não rodou, escreva no STATUS que não foi verificado.
 
 ## Limites

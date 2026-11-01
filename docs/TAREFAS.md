@@ -38,7 +38,7 @@ A ordem segue os marcos do `docs/plano-de-negocio.md`, seção 6.
 
 | # | Tarefa | Responsável sugerido | Estado | Referência |
 |---|---|---|---|---|
-| O.1 | Avaliar a skill de orquestração do Orca (`stablyai/orca`) para Claude e Codex trabalharem juntos. **O Gabriel lê antes de instalar**; a instalação é no PC | Gabriel + Claude (sessão do PC) | esperando Gabriel | `AGENTS.md`, Limites |
+| O.1 | Avaliar a skill de orquestração do Orca (`stablyai/orca`) para Claude e Codex trabalharem juntos. **O Gabriel lê antes de instalar**; a instalação é no PC | Gabriel + Claude (sessão do PC) | feito (01/11/2026) | `docs/orca.md` |
 | O.2 | Decidir as perguntas em aberto do design quando o assunto chegar (final verdadeiro, feiticeiro, subchefes do folclore, animais do R, espaços de runa) | Gabriel | livre | fim de cada doc em `docs/` |
 | O.3 | Antes da página da Steam: buscar a marca "D Rock" (USPTO/INPI), conferir o MEI para jogos e fazer a consulta com o contador | Gabriel + Claude | livre | negócio, seções 1 e 4 |
 
@@ -48,3 +48,4 @@ A ordem segue os marcos do `docs/plano-de-negocio.md`, seção 6.
 |---|---|---|---|
 | — | Brainstorm completo (4 documentos em `docs/`) | Claude + Gabriel | 01/11/2026 |
 | — | Quadro de tarefas e cargos no `AGENTS.md` | Claude | 01/11/2026 |
+| O.1 | Orca instalado e skill `orchestration` para Claude e Codex (`docs/orca.md`) | Claude + Gabriel | 01/11/2026 |
