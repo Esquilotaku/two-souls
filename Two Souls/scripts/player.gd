@@ -11,7 +11,6 @@ signal skills_changed
 
 const ITEM_CATALOG = preload("res://scripts/item_catalog.gd")
 const SKILL_CATALOG = preload("res://scripts/skill_catalog.gd")
-const ORION_IDLE_TEXTURE = preload("res://assets/sprites/orion_idle.png")
 
 const GRAVITY := 980.0
 const MOVE_SPEED := 152.0
@@ -33,6 +32,8 @@ var super_punch_cooldown := 0.0
 var super_punch_flash := 0.0
 var hurt_timer := 0.0
 var anim_time := 0.0
+var attack_animation_timer := 0.0
+var dash_animation_timer := 0.0
 var jump_count := 0
 var twin_magic := false
 var active := true
@@ -40,18 +41,21 @@ var inventory: Dictionary = ITEM_CATALOG.empty_inventory()
 var collected_pickups: Dictionary = {}
 var skill_points := 0
 var unlocked_skills: Dictionary = {}
-var character_sprite: Sprite2D
+var character_sprite: AnimatedSprite2D
 
 func _ready() -> void:
 	add_to_group("player")
 	collision_layer = 1
 	collision_mask = 1
-	character_sprite = Sprite2D.new()
+	character_sprite = AnimatedSprite2D.new()
 	character_sprite.name = "CharacterVisual"
-	character_sprite.texture = ORION_IDLE_TEXTURE
+	character_sprite.sprite_frames = AsepriteFrames.load_frames("res://assets/sprites/orion.json")
+	character_sprite.animation = "idle"
+	character_sprite.play()
 	character_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	character_sprite.scale = Vector2(0.037, 0.037)
-	character_sprite.position = Vector2(0.0, -1.0)
+	character_sprite.scale = Vector2.ONE / 3.0
+	# O ponto (64, 88) do quadro deve coincidir com o pé da colisão (y=12).
+	character_sprite.position = Vector2(0.0, 12.0 - 40.0 / 3.0)
 	character_sprite.z_index = -1
 	add_child(character_sprite)
 	var collision := CollisionShape2D.new()
@@ -73,6 +77,8 @@ func _physics_process(delta: float) -> void:
 		return
 	anim_time += delta
 	attack_timer = maxf(0.0, attack_timer - delta)
+	attack_animation_timer = maxf(0.0, attack_animation_timer - delta)
+	dash_animation_timer = maxf(0.0, dash_animation_timer - delta)
 	magic_timer = maxf(0.0, magic_timer - delta)
 	spear_cooldown = maxf(0.0, spear_cooldown - delta)
 	super_punch_cooldown = maxf(0.0, super_punch_cooldown - delta)
@@ -103,10 +109,29 @@ func _physics_process(delta: float) -> void:
 	if character_sprite:
 		character_sprite.flip_h = facing < 0
 		character_sprite.visible = not (hurt_timer > 0.0 and int(anim_time * 18.0) % 2 == 0)
+		_update_animation()
 	queue_redraw()
+
+func _update_animation() -> void:
+	var desired := "idle"
+	if dash_animation_timer > 0.0:
+		desired = "dash"
+	elif attack_animation_timer > 0.0:
+		desired = "attack"
+	elif not is_on_floor():
+		desired = "jump" if velocity.y < 0.0 else "fall"
+	elif absf(velocity.x) > 8.0:
+		desired = "run"
+	if character_sprite.animation != desired:
+		character_sprite.play(desired)
+
+func start_dash_animation(duration: float = 0.24) -> void:
+	# Ponto de entrada para o estado de dash quando a habilidade for acionada.
+	dash_animation_timer = maxf(dash_animation_timer, duration)
 
 func _attack() -> void:
 	attack_timer = 0.34
+	attack_animation_timer = 0.5
 	for target in get_tree().get_nodes_in_group("hostile"):
 		if not is_instance_valid(target):
 			continue
@@ -277,6 +302,7 @@ func _super_punch() -> void:
 	super_punch_cooldown = 3.8
 	super_punch_flash = 0.24
 	attack_timer = 0.34
+	attack_animation_timer = 0.5
 	for target in get_tree().get_nodes_in_group("hostile"):
 		if not is_instance_valid(target):
 			continue

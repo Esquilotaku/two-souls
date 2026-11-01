@@ -36,7 +36,10 @@ static func load_frames(json_path: String, loop: bool = true) -> SpriteFrames:
 	for tag: Dictionary in tags:
 		var anim := StringName(tag["name"])
 		frames.add_animation(anim)
-		frames.set_animation_loop(anim, loop)
+		# No JSON do Aseprite, repeat="1" significa uma única execução;
+		# tags sem repeat mantêm o loop configurado pelo chamador.
+		var repeats := loop and String(tag.get("repeat", "")) != "1"
+		frames.set_animation_loop(anim, repeats)
 		# Com 1 fps, a duração relativa de cada quadro vira segundos reais.
 		frames.set_animation_speed(anim, 1.0)
 		for index in range(int(tag["from"]), int(tag["to"]) + 1):
