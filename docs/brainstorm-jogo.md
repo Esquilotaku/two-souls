@@ -115,6 +115,29 @@ Opção C, a ponte entre as habilidades e as transformações [Gabriel]. A ordem
 
 ## 4. Inimigos
 
+> **Atualizado em 01/11 (noite)** [Gabriel]:
+> - **Todos os 50 inimigos comuns do `referencias/bestiario-ideias.md` (itens 1 a 54) entram no 1.0.**
+>   - A Matinta Pereira virou miniboss.
+>   - O aguapé, o cipó vivo e o meteoro menor entram como **perigos do cenário**.
+>   - As ideias das regiões novas (item 55 em diante) ficam para depois do 1.0.
+> - **Ordem de produção** [opinião do Claude, não decidida]: primeiro os **25 "núcleo"** (marcados abaixo), depois os outros 25, reaproveitando esqueleto e animação de bichos parecidos.
+>
+> **Núcleo:**
+>
+> | Região | Inimigos |
+> |---|---|
+> | Clareira | saúva-cortadeira, calango, vaga-lume |
+> | Trilha | lanceiro, arqueiro, cupinzeiro vivo |
+> | Floresta | jaguatirica, bugio, jararaca, perereca venenosa |
+> | Copas | tucano, macaco-aranha, casa de marimbondo |
+> | Cavernas e Túnel | morcegos, escorpião-amarelo, cascavel, tatu-peba |
+> | Lago | piranhas, poraquê, jacaré |
+> | Coração | corpo-seco, mandacaru, servo encapuzado |
+> | Covil | servo de elite, gárgula de pedra-raiz |
+>
+> O texto abaixo é da decisão anterior (de 20 a 25 tipos) e fica como histórico.
+
+
 - **Mistura, com base na fauna brasileira corrompida** (opção C) [Gabriel]:
   - Exemplos [proposta, não fechados]: saúvas gigantes, caranguejeiras, morcegos, queixadas, jacarés no Lago, plantas carnívoras, tomados pela corrupção.
   - **Servos do feiticeiro** perto do Coração Corrompido e do Covil.

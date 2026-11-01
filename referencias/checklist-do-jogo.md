@@ -48,7 +48,7 @@ Montado pelo Claude em 01/11/2026 a partir do brainstorm (`docs/`) e da pesquisa
   - [opinião] **Sugestão:**
     - viajar **entre santuários já ativados**, liberado depois do D Rock ou da onça;
     - no **Desafio**, a viagem pode custar algo ou ficar limitada.
-- 🆕❓ **Marcadores no mapa:** o jogador marca lugares para voltar depois. O Blasphemous e o Silksong têm. [opinião] Barato de fazer e muito pedido.
+- ✅ **Marcadores: manuais e automáticos; só manuais no Desafio** (01/11). (Histórico:) **Marcadores no mapa:** o jogador marca lugares para voltar depois. O Blasphemous e o Silksong têm. [opinião] Barato de fazer e muito pedido.
 - 🆕 **O mapa mostra as saídas ainda não exploradas** de cada sala. Isso permite "cutucar o mapa" quando o jogador trava ([vídeo GMTK Silksong](https://www.youtube.com/watch?v=l7xXW0EbK4g), [fórum Steam](https://steamcommunity.com/app/2230650/discussions/0/4033599336912482385)).
 - ✅ **O minimapa existe desde o início e se revela andando** (01/11). Sem compra.
 - 🆕 **Fechadura perto da chave.** A primeira utilidade de cada habilidade fica perto de onde ela é ganha ([GMTK Dread](https://www.youtube.com/watch?v=5pop-cc9kmY)).
@@ -69,7 +69,7 @@ Montado pelo Claude em 01/11/2026 a partir do brainstorm (`docs/`) e da pesquisa
 
 - ✅ 16 lutas: 3 principais, 5 subchefes, 8 minibosses.
 - ✅ **Lendas decididas** para os 5 subchefes e os 8 minibosses, e a regra vencer → acalmar → purificar → NPC (`docs/brainstorm-mundo-interligado.md`). O Saci é NPC.
-- ❓ Escolher de 20 a 25 inimigos comuns entre as mais de 60 ideias em [`bestiario-ideias.md`](bestiario-ideias.md).
+- ✅ **Todos os 50 inimigos comuns no 1.0** (01/11); produzir primeiro o núcleo de 25. (Histórico:) escolher de 20 a 25 inimigos comuns entre as mais de 60 ideias em [`bestiario-ideias.md`](bestiario-ideias.md).
 - 🆕 **Todo ataque tem aviso**, e a mesma cor tem sempre o mesmo significado (por exemplo, brilho roxo da corrupção = não dá para bloquear) ([fontes no bestiário](bestiario-ideias.md)).
 - 🆕 **Os chefes ensinam o próprio padrão**, com fases que mudam ataque ou ambiente.
 

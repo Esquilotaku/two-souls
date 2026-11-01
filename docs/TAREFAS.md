@@ -39,8 +39,8 @@ A ordem segue os marcos do `docs/plano-de-negocio.md`, seção 6.
 | # | Tarefa | Responsável sugerido | Estado | Referência |
 |---|---|---|---|---|
 | R.1 | Rodar `pipeline/baixar-referencias.ps1` no PC e conferir `referencias/imagens/INDICE.md` | Gabriel ou agente do PC | livre | `referencias/README.md` |
-| R.2 | Decidir viagem rápida, marcadores no mapa e se o mapa é comprado ou só revelado | Gabriel | viagem rápida SIM e mapa revelado andando (01/11); faltam os marcadores e como funciona a viagem | `referencias/checklist-do-jogo.md` |
-| R.3 | Escolher as lendas dos 5 subchefes e 8 minibosses, e de 20 a 25 inimigos comuns | Gabriel | lendas decididas (01/11); faltam os inimigos comuns | `referencias/lendas-do-brasil.md`, `referencias/bestiario-ideias.md` |
+| R.2 | Decidir viagem rápida, marcadores no mapa e se o mapa é comprado ou só revelado | Gabriel | feito (01/11): viagem rápida pelas raízes da Árvore Mãe, mapa revelado andando, marcadores manuais e automáticos (só manuais no Desafio) | `referencias/checklist-do-jogo.md` |
+| R.3 | Escolher as lendas dos 5 subchefes e 8 minibosses, e de 20 a 25 inimigos comuns | Gabriel | feito (01/11): lendas decididas; **todos os 50 inimigos comuns** entram no 1.0 (núcleo de 25 primeiro) | `referencias/lendas-do-brasil.md`, `referencias/bestiario-ideias.md` |
 | R.4 | Teste de arte: um quadro do Orion à mão, a IA completa a corrida com referência de pose 3D (Mixamo), ajuste no Aseprite | Gabriel + Codex | livre | `referencias/videos-e-aprendizados.md` |
 | R.5 | Avaliar addons (MetSys, LimboAI, Dialogue Manager, Phantom Camera); o Gabriel lê antes de instalar | Gabriel + Claude | livre | `referencias/codigo-aberto-godot.md` |
 | R.6 | Definir fonte e HUD pensando no Steam Deck (texto ≥ 9 px a 1280×800) | Gabriel + Claude | livre | `referencias/checklist-do-jogo.md`, seção 9 |

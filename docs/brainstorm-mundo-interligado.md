@@ -234,7 +234,15 @@ Fontes da pesquisa: `referencias/checklist-do-jogo.md`, `referencias/lendas-do-b
    - Como funciona ainda não foi decidido.
    - Sugestão do Claude: entre santuários já ativados; no modo Desafio, com custo ou limite.
 2. **Mapa** [Gabriel]: o **minimapa existe desde o início** e **vai se revelando conforme o jogador explora**. Não há mapa comprado nem achado. (O Claude interpretou assim a resposta; confirmar se houver dúvida.)
-3. **Marcadores no mapa:** pendente.
+3. **Marcadores no mapa (opção B)** [Gabriel]:
+   - **História e Aventura:** marcadores manuais (uns 4 tipos) e automáticos (santuários, chefes vencidos e bloqueios de habilidade já vistos, com o ícone do animal que abre).
+   - **Desafio:** só os manuais.
+3b. **Santuários e viagem rápida (opção B)** [Gabriel]:
+   - os santuários são **brotos da Árvore Mãe mesclados a ruínas de pedra construídas em volta**;
+   - a viagem rápida corre **pelas raízes**, de santuário ativado a santuário ativado, **liberada depois do D Rock**;
+   - no Desafio, a ideia do Claude (não decidida) é exigir que o santuário de destino tenha sido ativado naquela noite;
+   - o Saci pode zoar a viagem de vez em quando, sem atrapalhar.
+   - **Pergunta em aberto:** quem construiu as ruínas?
 4. **Subchefes = lendas, pacote A** [Gabriel, proposta do Claude]:
 
 | Subchefe | Região | Recompensa |
