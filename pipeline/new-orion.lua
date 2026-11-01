@@ -1,5 +1,5 @@
 -- Cria um .aseprite vazio do Orion seguindo docs/folha-de-estilo-orion.md:
--- 128x96, modo indexado com a paleta fixa, 12 quadros por segundo e uma tag por animação.
+-- 160x96, modo indexado com a paleta fixa, 12 quadros por segundo e uma tag por animação.
 -- Uso: aseprite -b --script-param dst="Two Souls\art\orion-novo.aseprite" --script pipeline\new-orion.lua
 -- Opcional: --script-param palette=caminho.gpl (padrão: "Two Souls/art/orion-paleta.gpl" ao lado deste script).
 -- Não sobrescreve arquivo existente.
@@ -12,7 +12,7 @@ local palettePath = app.params["palette"]
   or app.fs.joinPath(app.fs.filePath(scriptDir), "Two Souls/art/orion-paleta.gpl")
 if not app.fs.isFile(palettePath) then error("Paleta não encontrada: " .. palettePath) end
 
-local WIDTH, HEIGHT = 128, 96
+local WIDTH, HEIGHT = 160, 96
 local HEAD_Y, FOOT_Y, PIVOT_X = 16, 88, 64 -- Orion com 72 px, pé em (64, 88)
 local FRAME_SECONDS = 1 / 12
 

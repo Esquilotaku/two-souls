@@ -12,7 +12,7 @@ Base: `docs/brainstorm-jogo.md`, seções 2 e 5 (pixel art com tela interna de 6
 ## Tamanho
 
 - **Orion humano: 72 px de altura**, do topo do cabelo até a sola do pé, sem contar a lança. São 20% da altura da tela de 360 px.
-- **Quadro: 128×96 px**, o mesmo em todas as animações. A largura é para a lança e o ataque caberem sem mudar o tamanho do quadro.
+- **Quadro: 160×96 px**, o mesmo em todas as animações. A largura aumentou de 128 para 160 px para conter a lança nos quadros de dash sem reduzir o personagem; o pivô do pé permanece em (64, 88).
 - **Pivô no pé: ponto (64, 88).** A cabeça fica na linha 16 e a sola na linha 88. O Orion fica centrado no x 64 quando está parado.
 - O arquivo novo traz a camada escondida `guia`, com essas três linhas. Ela não entra no export.
 
