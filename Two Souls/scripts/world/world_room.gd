@@ -5,9 +5,12 @@ extends Node2D
 
 const DOOR_OPENING := 128.0
 const DOOR_TRIGGER := 24.0
-const STEP_HEIGHT := 130.0
+const STEP_HEIGHT := 90.0
 const STEP_WIDTH := 112.0
-const UP_LANDING_Y := 104.0
+const UP_LANDING_Y := 52.0
+## Céu das áreas a céu aberto; só as Cavernas têm teto de rocha (pedido do Gabriel, 01/11/2026).
+const SKY_COLOR := Color("8cc4e8")
+const REGIONS_WITH_CEILING := ["cavernas"]
 ## Relevo: espaço livre perto de portas, buracos, santuário e altar para não bloquear passagem.
 const RELIEF_CLEARANCE := 200.0
 const ITEM_PICKUP_SCRIPT = preload("res://scripts/item_pickup.gd")
@@ -96,7 +99,7 @@ func refresh_gates(abilities: Dictionary) -> void:
 func _add_background() -> void:
 	var back := Polygon2D.new()
 	back.polygon = _rect_polygon(Rect2(Vector2.ZERO, size_px))
-	back.color = _region_color.darkened(0.55)
+	back.color = _region_color.darkened(0.55) if has_ceiling() else SKY_COLOR.lerp(_region_color, 0.18)
 	back.z_index = -20
 	add_child(back)
 	# Linhas finas marcando cada tela, para dar noção de escala nos blocos cinzas.
@@ -131,7 +134,7 @@ func _add_shell() -> void:
 	for span in _spans(0.0, size_px.x, down_holes, DOOR_OPENING):
 		_add_solid(Rect2(span.x, size_px.y - floor_t, span.y - span.x, floor_t))
 	for span in _spans(0.0, size_px.x, up_holes, DOOR_OPENING):
-		_add_solid(Rect2(span.x, 0.0, span.y - span.x, wall_t))
+		_add_solid(Rect2(span.x, 0.0, span.y - span.x, wall_t), 0.0, has_ceiling())
 	_add_wall(0.0, west_rows)
 	_add_wall(size_px.x - wall_t, east_rows)
 	# Salas com mais de uma fileira: piso de apoio embaixo de cada porta lateral alta.
@@ -173,11 +176,11 @@ func _add_platforms() -> void:
 	# Escadas automáticas até cada porta alta (portas de cima e portas laterais das fileiras de cima).
 	for entry: Dictionary in data.get("doors", []):
 		if entry["side"] == "up":
-			# Apoio parte embaixo da abertura do teto: o pulo (~177 px) passa pela abertura e
-			# deixa o pé uns 25 px acima do chão da área de cima, dando tempo de andar para o lado.
+			# Apoio dentro da largura da abertura do teto: o pulo (120 px, ver player.gd) passa pela
+			# abertura e deixa o pé uns 20 px acima do chão da área de cima, dando tempo de andar para o lado.
 			var hole_x := _column_center(int(entry["col"]))
-			var landing := Vector2(hole_x - 24.0, UP_LANDING_Y)
-			_add_solid(Rect2(landing.x, landing.y, 120.0, 14.0), 0.18)
+			var landing := Vector2(hole_x - 56.0, UP_LANDING_Y)
+			_add_solid(Rect2(landing.x, landing.y, 112.0, 14.0), 0.18)
 			_add_stairs(landing)
 		elif entry["side"] in ["east", "west"] and int(entry["row"]) < int(data["size"].y) - 1:
 			var ledge_x := 200.0 if entry["side"] == "west" else size_px.x - 200.0 - STEP_WIDTH
@@ -200,17 +203,17 @@ func _add_relief() -> void:
 		var x := random.randf_range(WorldMap.WALL_THICKNESS, size_px.x - WorldMap.WALL_THICKNESS - width)
 		if _overlaps(Vector2(x - 120.0, x + width + 120.0), blocked) or _overlaps(Vector2(x - 120.0, x + width + 120.0), placed):
 			continue
-		var height: float = [48.0, 72.0, 96.0][random.randi_range(0, 2)]
+		var height: float = [40.0, 56.0, 72.0][random.randi_range(0, 2)]
 		_add_solid(Rect2(x, floor_top - height, width, height), 0.08)
 		placed.append(Vector2(x, x + width))
 	for screen in range(screens):
 		var width := random.randf_range(96.0, 160.0)
 		var x := screen * WorldMap.SCREEN.x + random.randf_range(120.0, WorldMap.SCREEN.x - 120.0 - width)
-		var y := floor_top - random.randf_range(150.0, 250.0)
+		var y := floor_top - random.randf_range(80.0, 110.0)
 		if _overlaps(Vector2(x, x + width), blocked):
 			continue
 		_add_solid(Rect2(x, y, width, 14.0), 0.18)
-	if data["region"] in ["cavernas", "lago", "coracao"]:
+	if has_ceiling():
 		var ceilings := _relief_blocked_spans(true)
 		for _i in range(screens):
 			var width := random.randf_range(96.0, 200.0)
@@ -374,7 +377,8 @@ func _add_boss(boss_key: String) -> void:
 
 # --- Peças ---
 
-func _add_solid(rect: Rect2, lighten: float = 0.0) -> StaticBody2D:
+## visible = false: só colisão (ex.: o limite de cima das áreas a céu aberto).
+func _add_solid(rect: Rect2, lighten: float = 0.0, visible_block: bool = true) -> StaticBody2D:
 	var body := StaticBody2D.new()
 	body.position = rect.get_center()
 	var collision := CollisionShape2D.new()
@@ -382,6 +386,9 @@ func _add_solid(rect: Rect2, lighten: float = 0.0) -> StaticBody2D:
 	shape.size = rect.size
 	collision.shape = shape
 	body.add_child(collision)
+	if not visible_block:
+		add_child(body)
+		return body
 	var fill := Polygon2D.new()
 	fill.polygon = _rect_polygon(Rect2(-rect.size * 0.5, rect.size))
 	fill.color = _solid_color.lightened(lighten)
@@ -448,3 +455,6 @@ func _add_rune_stone(rune_id: String) -> void:
 	rune_rect = Rect2(x - 24.0, floor_y() - 72.0, 48.0, 72.0)
 	var stone := _add_block(Rect2(x - 14.0, floor_y() - 34.0, 28.0, 34.0), Color("8a4fd1"), RuneCatalog.info(rune_id).get("name", "Runa"), false)
 	stone.name = "RuneStone"
+
+func has_ceiling() -> bool:
+	return data.get("region", "") in REGIONS_WITH_CEILING

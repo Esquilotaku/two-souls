@@ -3,7 +3,7 @@ extends Node2D
 ## O mapa e as salas vêm de WorldMap e WorldRoom (docs/tecnico/plano-tecnico-mundo.md).
 
 const DAY_CYCLE_REAL_SECONDS := 900.0
-const UI_SCALE := 1.5
+const UI_SCALE := 1.0
 const UI_SIZE := Vector2(640.0, 360.0)
 const TREE_ART = preload("res://assets/mother_tree_forest.png")
 const ORION_IDLE_TEXTURE = preload("res://assets/sprites/orion_idle.png")
@@ -43,17 +43,10 @@ var skill_tree_open := false
 var skill_tree_returns_to_pause := false
 var respawn_timer := 0.0
 var message_timer := 0.0
-var hud_health: Label
-var hud_magic: Label
-var hud_progress: Label
-var hud_stage: Label
-var hud_objective: Label
-var hud_message: Label
-var hud_inventory_button: Button
+var hud: GameHud
 var world_hour := 7.0
 var world_ambient: CanvasModulate
 var last_enemy_night_pressure := -1.0
-var hud_time: Label
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -106,8 +99,8 @@ func _process(delta: float) -> void:
 			return
 	_advance_world_time(delta)
 	message_timer = maxf(0.0, message_timer - delta)
-	if message_timer <= 0.0 and hud_message:
-		hud_message.text = ""
+	if message_timer <= 0.0 and hud:
+		hud.set_message("")
 	_update_aenia_companion(delta)
 	if player.health <= 0:
 		respawn_timer += delta
@@ -213,7 +206,7 @@ func _show_title() -> void:
 	keys.pressed.connect(func(): _open_controls_menu(_show_title))
 	keys.custom_minimum_size.y = 28
 	buttons.add_child(keys)
-	var footer := _label("Setas andam  ·  %s pula  ·  %s ataca  ·  %s dash  ·  %s interage" % [_key_name("jump"), _key_name("attack"), _key_name("dash"), _key_name("interact")], 11, Color("bed2d6"), HORIZONTAL_ALIGNMENT_CENTER)
+	var footer := _label("Setas andam  ·  %s pula  ·  %s ataca  ·  seta 2x dash  ·  %s interage" % [_key_name("jump"), _key_name("attack"), _key_name("interact")], 11, Color("bed2d6"), HORIZONTAL_ALIGNMENT_CENTER)
 	footer.position = Vector2(20, 333)
 	footer.size = Vector2(600, 18)
 	ui_root.add_child(footer)
@@ -265,7 +258,7 @@ func _show_controls() -> void:
 	title.size = Vector2(460, 48)
 	ui_root.add_child(title)
 	var help := "Ande com as setas; %s pula.\n%s ataca; %s dash; %s magia.\n%s lança e %s super soco, depois de ganhá-los.\n%s ativa santuários e fala com Aenia.\nBlocos laranja pedem uma habilidade.\n%s bolsa; %s talentos; %s pausa." % [
-		_key_name("jump"), _key_name("attack"), _key_name("dash"), _key_name("magic"),
+		_key_name("jump"), _key_name("attack"), _key_name("magic"),
 		_key_name("throw_spear"), _key_name("super_punch"), _key_name("interact"),
 		_key_name("inventory"), _key_name("skill_tree"), _key_name("pause")]
 	var text := _label(help, 14, Color("d8e9e4"), HORIZONTAL_ALIGNMENT_CENTER)
@@ -740,96 +733,53 @@ func _on_item_added(item_id: String, count: int) -> void:
 func _on_skills_changed() -> void:
 	_update_hud()
 
-# --- HUD ---
+# --- HUD (scripts/ui/hud.gd) ---
 
 func _show_hud() -> void:
 	_clear_ui()
-	var hud_panel := PanelContainer.new()
-	var panel_style := StyleBoxFlat.new()
-	panel_style.bg_color = Color(0.03, 0.07, 0.13, 0.82)
-	panel_style.border_color = Color(0.39, 0.81, 0.78, 0.62)
-	panel_style.set_border_width_all(1)
-	panel_style.set_corner_radius_all(4)
-	panel_style.content_margin_left = 8
-	panel_style.content_margin_right = 8
-	panel_style.content_margin_top = 4
-	panel_style.content_margin_bottom = 4
-	hud_panel.add_theme_stylebox_override("panel", panel_style)
-	hud_panel.position = Vector2(12, 10)
-	hud_panel.size = Vector2(176, 60)
-	ui_root.add_child(hud_panel)
-	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 1)
-	hud_panel.add_child(vbox)
-	hud_stage = _label("", 10, Color("e4fff2"))
-	vbox.add_child(hud_stage)
-	var status := HBoxContainer.new()
-	status.add_theme_constant_override("separation", 16)
-	vbox.add_child(status)
-	hud_health = _label("", 9, Color("ffb4a8"))
-	status.add_child(hud_health)
-	hud_magic = _label("", 9, Color("94eee5"))
-	status.add_child(hud_magic)
-	hud_progress = _label("", 8, Color("b7d6d9"))
-	vbox.add_child(hud_progress)
-	hud_time = _label("", 8, Color("f2d8a0"))
-	vbox.add_child(hud_time)
-	hud_objective = _label("", 11, Color("ffe2a0"))
-	hud_objective.position = Vector2(380, 32)
-	hud_objective.size = Vector2(250, 24)
-	hud_objective.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	ui_root.add_child(hud_objective)
-	hud_message = _label("", 16, Color("ecfff7"), HORIZONTAL_ALIGNMENT_CENTER)
-	hud_message.position = Vector2(40, 292)
-	hud_message.size = Vector2(560, 36)
-	hud_message.add_theme_color_override("font_shadow_color", Color(0.02, 0.04, 0.08, 0.85))
-	hud_message.add_theme_constant_override("shadow_offset_x", 1)
-	hud_message.add_theme_constant_override("shadow_offset_y", 2)
-	ui_root.add_child(hud_message)
-	var pause_button := _button("II")
-	pause_button.position = Vector2(604, 6)
-	pause_button.size = Vector2(28, 22)
-	pause_button.custom_minimum_size = Vector2(28, 22)
-	pause_button.add_theme_font_size_override("font_size", 9)
-	pause_button.pressed.connect(_show_pause)
-	ui_root.add_child(pause_button)
-	hud_inventory_button = _button("BOLSA [I]")
-	hud_inventory_button.position = Vector2(524, 6)
-	hud_inventory_button.size = Vector2(76, 22)
-	hud_inventory_button.custom_minimum_size = Vector2(76, 22)
-	hud_inventory_button.add_theme_font_size_override("font_size", 9)
-	hud_inventory_button.pressed.connect(func(): _open_inventory(false))
-	ui_root.add_child(hud_inventory_button)
+	hud = GameHud.new()
+	ui_root.add_child(hud)
 	_update_hud()
 
 func _update_hud() -> void:
-	if not hud_health or not player:
+	if not hud or not is_instance_valid(hud) or not player:
 		return
-	hud_health.text = "VIDA  " + "♥".repeat(player.health) + "·".repeat(player.max_health - player.health)
-	hud_magic.text = "MAGIA  " + "✦".repeat(player.magic) + "·".repeat(player.max_magic - player.magic)
-	if hud_progress:
-		hud_progress.text = "NÍVEL %02d · XP %d/%d · TALENTOS %d" % [player.level, player.experience, player.experience_to_next, player.skill_points]
-	if hud_stage and room_id != "":
+	hud.refresh(_hud_info())
+
+## Tudo o que o HUD mostra, num dicionário (o HUD não conhece o jogo).
+func _hud_info() -> Dictionary:
+	var place := ""
+	if room_id != "":
 		var region_label := WorldMap.region_name(room_id)
 		var room_label: String = WorldMap.room(room_id).get("name", "")
-		hud_stage.text = room_label if room_label == region_label else "%s · %s" % [region_label, room_label]
-	if hud_objective:
-		var objective := ""
-		var shrine_near := current != null and is_instance_valid(current) and current.shrine != null and current.shrine.is_player_near(_local_player())
-		if active_boss and is_instance_valid(active_boss):
-			objective = "DERROTE: " + str(active_boss.boss_name).to_upper()
-		elif shrine_near and not current.shrine.active:
-			objective = "%s · ATIVAR SANTUÁRIO" % _key_name("interact")
-		elif shrine_near:
-			objective = "%s · DESCANSAR" % _key_name("interact")
-		hud_objective.text = objective
-	if hud_time:
-		hud_time.text = "DIA %d · %s  ·  %s" % [day, _time_of_day_name(), _format_world_time()]
-	if hud_inventory_button:
-		var item_total := 0
-		for item_id in ITEM_CATALOG.item_ids():
-			item_total += int(player.inventory.get(item_id, 0))
-		hud_inventory_button.text = "BOLSA [I]  %d" % item_total
+		place = room_label if room_label == region_label else "%s · %s" % [region_label, room_label]
+	var objective := ""
+	var shrine_near := current != null and is_instance_valid(current) and current.shrine != null and current.shrine.is_player_near(_local_player())
+	if shrine_near and not current.shrine.active:
+		objective = "%s · ATIVAR SANTUÁRIO" % _key_name("interact")
+	elif shrine_near:
+		objective = "%s · DESCANSAR E RUNAS" % _key_name("interact")
+	var info := {
+		"health": player.health, "max_health": player.max_health,
+		"magic": player.magic, "max_magic": player.max_magic,
+		"level": player.level, "xp": player.experience, "xp_next": player.experience_to_next,
+		"place": place,
+		"time": "Dia %d · %s · %s" % [day, _time_of_day_name().capitalize(), _format_world_time()],
+		"objective": objective,
+		"skills": [
+			{"key": _key_name("throw_spear"), "short": "Lança", "unlocked": player.has_skill("spear_throw"),
+				"cooldown": player.spear_cooldown / maxf(0.01, 1.15 * player._cooldown_scale())},
+			{"key": _key_name("super_punch"), "short": "Soco", "unlocked": player.has_skill("super_punch"),
+				"cooldown": player.super_punch_cooldown / maxf(0.01, 3.8 * player._cooldown_scale())},
+			{"key": _key_name("magic"), "short": "Magia", "unlocked": player.magic > 0,
+				"cooldown": player.magic_timer / maxf(0.01, 0.58 * player._cooldown_scale())},
+		],
+	}
+	if active_boss and is_instance_valid(active_boss):
+		info["boss_name"] = str(active_boss.boss_name)
+		info["boss_health"] = int(active_boss.health)
+		info["boss_max"] = int(active_boss.max_health)
+	return info
 
 # --- Relógio ---
 
@@ -849,8 +799,6 @@ func _apply_world_time(force: bool) -> void:
 		for hostile in get_tree().get_nodes_in_group("hostile"):
 			if is_instance_valid(hostile) and hostile.has_method("set_time_difficulty"):
 				hostile.call("set_time_difficulty", pressure)
-	if hud_time:
-		hud_time.text = "DIA %d · %s  ·  %s" % [day, _time_of_day_name(), _format_world_time()]
 
 func _night_pressure() -> float:
 	if world_hour >= 21.0 or world_hour < 5.0:
@@ -893,10 +841,9 @@ func _ambient_color_for_hour(hour: float) -> Color:
 	return colors[0]
 
 func _show_message(text: String, seconds: float = 2.5) -> void:
-	if not hud_message:
-		return
-	hud_message.text = text
 	message_timer = seconds
+	if hud and is_instance_valid(hud):
+		hud.set_message(text)
 
 func _show_pause() -> void:
 	paused = true
@@ -1242,11 +1189,4 @@ func _clear_ui() -> void:
 	for child in ui_root.get_children():
 		ui_root.remove_child(child)
 		child.queue_free()
-	hud_health = null
-	hud_magic = null
-	hud_progress = null
-	hud_stage = null
-	hud_objective = null
-	hud_message = null
-	hud_inventory_button = null
-	hud_time = null
+	hud = null

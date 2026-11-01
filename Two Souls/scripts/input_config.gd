@@ -12,7 +12,14 @@ const ACTION_NAMES := {
 	"inventory": "Inventário", "skill_tree": "Árvore de talentos", "pause": "Pausar"
 }
 
+## Ações que ainda não fazem nada no jogo: ficam fora do menu e da ajuda até serem programadas.
+## O dash não tem tecla: é duplo toque na seta (player.gd).
+const NOT_READY := ["look_up", "look_down", "dash", "transform", "context", "quick_heal", "confirm", "map"]
+
 static var DEFAULTS: Dictionary = _make_defaults()
+
+static func visible_actions() -> Array:
+	return DEFAULTS.keys().filter(func(action): return not NOT_READY.has(action))
 
 static func _key(code: Key) -> InputEventKey:
 	var event := InputEventKey.new()

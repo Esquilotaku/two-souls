@@ -16,7 +16,15 @@ const WORLD_SCALE := 3.0
 const GRAVITY := 980.0 * WORLD_SCALE
 const MOVE_SPEED := 152.0 * WORLD_SCALE
 const ACCELERATION := 1180.0 * WORLD_SCALE
-const JUMP_SPEED := -340.0 * WORLD_SCALE
+## Pulo de ~120 px (1,7 vez a altura do Orion), proporção de jogo arcade na tela de 640x360.
+## Altura = JUMP_SPEED² / (2 * GRAVITY). O mundo (world_room.gd) conta com esse valor.
+const JUMP_SPEED := -840.0
+const JUMP_HEIGHT := 120.0
+## Dash por duplo toque na seta (como no Grand Chase): dois toques na mesma direção em até DASH_WINDOW.
+const DASH_WINDOW := 0.25
+const DASH_TIME := 0.18
+const DASH_SPEED := 1150.0
+const DASH_COOLDOWN := 0.35
 const COLLISION_SIZE := Vector2(22.0, 66.0)
 const SPRITE_PIVOT_OFFSET_X := 16.0
 
@@ -95,14 +103,22 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("move_left", "move_right")
 	if absf(direction) > 0.01:
 		facing = 1 if direction > 0.0 else -1
-	velocity.x = move_toward(velocity.x, direction * MOVE_SPEED * (1.0 + float(rune_bonus.get("move_speed", 0.0))), ACCELERATION * delta)
-	if not is_on_floor():
-		velocity.y += GRAVITY * delta
+	_check_dash_tap(delta)
+	if dash_time_left > 0.0:
+		# Durante o dash: reto, sem gravidade e sem frear.
+		dash_time_left -= delta
+		velocity = Vector2(dash_direction * DASH_SPEED * (1.0 + float(rune_bonus.get("dash_speed", 0.0))), 0.0)
 	else:
-		jump_count = 0
-	if Input.is_action_just_pressed("jump") and (is_on_floor() or (double_jump and jump_count < 1)):
+		velocity.x = move_toward(velocity.x, direction * MOVE_SPEED * (1.0 + float(rune_bonus.get("move_speed", 0.0))), ACCELERATION * delta)
+		if not is_on_floor():
+			velocity.y += GRAVITY * delta
+		else:
+			jump_count = 0
+	if Input.is_action_just_pressed("jump") and (is_on_floor() or (double_jump and jump_count < 2)):
 		velocity.y = JUMP_SPEED
-		jump_count += 1
+		# Cair de uma borda conta como o primeiro pulo: no ar sobra só o pulo duplo.
+		jump_count = maxi(jump_count, 0 if is_on_floor() else 1) + 1
+		dash_time_left = 0.0
 	if Input.is_action_just_pressed("attack") and attack_timer <= 0.0:
 		_attack()
 	if Input.is_action_just_pressed("magic") and magic_timer <= 0.0 and magic > 0:
@@ -378,3 +394,35 @@ func _cooldown_scale() -> float:
 ## O dano do jogo é em pontos inteiros; a runa de dano vira chance de um golpe forte (2 pontos).
 func _hit_amount() -> int:
 	return 2 if randf() < float(rune_bonus.get("damage", 0.0)) else 1
+
+# --- Dash por duplo toque ---
+
+var dash_time_left := 0.0
+var dash_cooldown := 0.0
+var dash_direction := 1
+var _last_tap_direction := 0
+var _last_tap_time := -10.0
+
+func is_dashing() -> bool:
+	return dash_time_left > 0.0
+
+func _check_dash_tap(delta: float) -> void:
+	dash_cooldown = maxf(0.0, dash_cooldown - delta)
+	var tapped := 0
+	if Input.is_action_just_pressed("move_left"):
+		tapped = -1
+	elif Input.is_action_just_pressed("move_right"):
+		tapped = 1
+	if tapped == 0:
+		return
+	var now := Time.get_ticks_msec() / 1000.0
+	if tapped == _last_tap_direction and now - _last_tap_time <= DASH_WINDOW and dash_cooldown <= 0.0:
+		dash_direction = tapped
+		facing = tapped
+		dash_time_left = DASH_TIME
+		dash_cooldown = DASH_TIME + DASH_COOLDOWN
+		start_dash_animation(DASH_TIME + 0.06)
+		_last_tap_direction = 0
+	else:
+		_last_tap_direction = tapped
+		_last_tap_time = now

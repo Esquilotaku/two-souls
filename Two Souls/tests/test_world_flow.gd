@@ -26,6 +26,7 @@ func _run() -> void:
 
 	await _test_gate_blocks()
 	await _test_shrine_and_death()
+	await _test_dash()
 	await _test_all_passages()
 	await _test_continue()
 	_test_v4_upgrade()
@@ -62,6 +63,9 @@ func _test_shrine_and_death() -> void:
 func _test_all_passages() -> void:
 	for ability in WorldMap.ABILITIES:
 		game.abilities[ability] = true
+	# As arenas ficam vazias: aqui se testa o mapa, não a luta.
+	for boss_key in WorldMap.BOSSES:
+		game.defeated_bosses[boss_key] = true
 	game._sync_player_abilities()
 	game.world.refresh_gates(game.abilities)
 	await _frames(2)
@@ -80,6 +84,8 @@ func _test_all_passages() -> void:
 
 func _cross(room_id: String, entry: Dictionary) -> bool:
 	_release_all()
+	# Sem isso, apertar "direita" em duas passagens seguidas vira duplo toque (dash).
+	game.player._last_tap_direction = 0
 	var room: WorldRoom = game.world.room(room_id)
 	var target: String = entry["to"]
 	match entry["side"]:
@@ -181,3 +187,27 @@ func _restore_saves() -> void:
 			DirAccess.remove_absolute(absolute)
 		if FileAccess.file_exists(path + ".antes_do_teste"):
 			DirAccess.rename_absolute(absolute + ".antes_do_teste", absolute)
+
+## Duplo toque rápido na seta dá dash; dois toques lentos não.
+func _test_dash() -> void:
+	var clareira: WorldRoom = game.world.room("clareira_inicio")
+	game._place_player("clareira_inicio", clareira.spawn_point())
+	await _frames(3)
+	game.player._last_tap_direction = 0
+	await _tap("move_right")
+	await _frames(2)
+	await _tap("move_right")
+	_expect(game.player.is_dashing(), "dois toques rápidos na seta dão dash")
+	await _seconds(0.6)
+	_release_all()
+	game.player._last_tap_direction = 0
+	await _tap("move_right")
+	await _seconds(0.4)
+	await _tap("move_right")
+	_expect(not game.player.is_dashing(), "dois toques lentos não dão dash")
+	_release_all()
+
+func _tap(action: String) -> void:
+	Input.action_press(action)
+	await _frames(2)
+	Input.action_release(action)

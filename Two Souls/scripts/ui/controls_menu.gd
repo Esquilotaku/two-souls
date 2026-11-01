@@ -40,7 +40,7 @@ func _build() -> void:
 	_list = VBoxContainer.new()
 	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_scroll.add_child(_list)
-	for action in InputConfig.DEFAULTS:
+	for action in InputConfig.visible_actions():
 		_add_row(action)
 	var footer := HBoxContainer.new()
 	footer.alignment = BoxContainer.ALIGNMENT_CENTER
