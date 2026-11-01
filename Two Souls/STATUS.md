@@ -249,3 +249,16 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - A pesquisa registra as variações entre personagens/classes/versões e deixa explícito que duração de fase e proporções de inimigos/chefes não têm média/medida pública confiável nas fontes abertas.
 - Não houve alteração em `Two Souls/` além deste STATUS; não rodei o jogo nem testes por ser entrega documental.
 - Tarefa O.5 aguarda Gabriel ler `docs/design/referencia-grand-chase.md`.
+## Ponto de retomada — 01/11/2026, noite (Claude, depois da segunda rodada de teste do Gabriel)
+
+- O Gabriel jogou e achou ruim: botões sem função, HUD bugado em tela cheia, teto, mapa pequeno (D Rock em ~1 min). Quer um metroidvania "arcade" com proporções e combos de comando como o Grand Chase, e mandou um vídeo de referência de HUD (canal Ninefir, "3 meses criando meu jogo RPG com IA").
+- **Recusado:** ler o código do Grand Chase que o Gabriel tem no PC (código da KOG, nunca aberto; seria vazado). O Codex fez a pesquisa só com fontes públicas: `docs/design/referencia-grand-chase.md`.
+- **Feito e testado:**
+  - tela 640×360 (o Orion ocupa 20% da altura; no print do Grand Chase o personagem tem 19%);
+  - superfície com céu aberto, só as Cavernas com teto;
+  - dash por duplo toque na seta (S ficou livre);
+  - pulo de 120 px e pulo duplo consertado (antes não funcionava depois de um pulo normal);
+  - HUD novo (`scripts/ui/hud.gd`): retrato, HP/MP com números, nível/XP, área e relógio, barra do chefe, Q/W/E com recarga, sem botões por cima. Conferido com foto da tela cheia 1920×1080;
+  - o menu de controles esconde ações ainda não programadas (`InputConfig.NOT_READY`).
+- **Não feito (próximas tarefas no quadro):** 2.1 combos (tabela em `docs/design/combos-proposta.md`, esperando aprovação), 2.2 mapa grande com andares (~160 telas até o D Rock), 2.3 inimigos grandes. O visual do mapa ainda é de blocos cinzas.
+- **Verificado:** todos os testes passam (inclusive 48 passagens andando e o dash). Ninguém jogou esta versão.
