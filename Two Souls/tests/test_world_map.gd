@@ -24,7 +24,9 @@ func _init() -> void:
 func _check_room(room_id: String, abilities: Dictionary, label: String) -> void:
 	var room := WorldRoom.new()
 	root.add_child(room)
-	room.build(room_id, abilities, {}, {}, func(_id: String) -> bool: return false)
+	room.build(room_id, abilities, {}, func(_id: String) -> bool: return false)
+	if room.boss:
+		_fail("%s: chefe nasceu antes do jogador entrar" % room_id)
 	var bounds := Rect2(Vector2.ZERO, room.size_px)
 	var expected := 0
 	for entry: Dictionary in room.data.get("doors", []):

@@ -3,7 +3,7 @@ extends RefCounted
 ## Dados do mundo interligado: regiões, salas e portas (docs/plano-tecnico-mundo.md, seções 3, 5 e 6).
 ## Cada célula do mapa é uma tela de 640x360. As salas são montadas por WorldRoom a partir destes dados.
 
-const SCREEN := Vector2(640.0, 360.0)
+const SCREEN := Vector2(960.0, 540.0)
 const FLOOR_THICKNESS := 48.0
 const WALL_THICKNESS := 32.0
 const START_ROOM := "clareira_inicio"
@@ -41,12 +41,12 @@ const FUTURE_REGIONS := {
 
 ## Chefes por sala. "boss_id" usa os comportamentos do boss.gd; os subchefes ainda são o genérico.
 const BOSSES := {
-	"the_rock": {"name": "D Rock", "boss_id": "the_rock", "tier": "major", "hour": 10.0, "health": 14, "variant": 2},
-	"onca_corrompida": {"name": "Onça Corrompida", "boss_id": "generic", "tier": "sub_boss", "health": 10, "variant": 1},
-	"jiboia_corrompida": {"name": "Jiboia Corrompida", "boss_id": "swamp_guardian", "tier": "sub_boss", "health": 12, "variant": 1},
-	"tatu_corrompido": {"name": "Tatu Corrompido", "boss_id": "generic", "tier": "sub_boss", "health": 12, "variant": 0},
-	"gaviao_corrompido": {"name": "Gavião Corrompido", "boss_id": "generic", "tier": "sub_boss", "health": 12, "variant": 2},
-	"corrupted_tree": {"name": "Árvore Corrompida", "boss_id": "corrupted_tree", "tier": "major", "hour": 18.0, "health": 16, "variant": 0},
+	"the_rock": {"rune": "mapinguari", "name": "D Rock", "boss_id": "the_rock", "tier": "major", "hour": 10.0, "health": 14, "variant": 2},
+	"onca_corrompida": {"rune": "onca", "name": "Onça Corrompida", "boss_id": "generic", "tier": "sub_boss", "health": 10, "variant": 1},
+	"jiboia_corrompida": {"rune": "jiboia", "name": "Jiboia Corrompida", "boss_id": "swamp_guardian", "tier": "sub_boss", "health": 12, "variant": 1},
+	"tatu_corrompido": {"rune": "tatu", "name": "Tatu Corrompido", "boss_id": "generic", "tier": "sub_boss", "health": 12, "variant": 0},
+	"gaviao_corrompido": {"rune": "gaviaoreal", "name": "Gavião Corrompido", "boss_id": "generic", "tier": "sub_boss", "health": 12, "variant": 2},
+	"corrupted_tree": {"rune": "curupira", "name": "Árvore Corrompida", "boss_id": "corrupted_tree", "tier": "major", "hour": 18.0, "health": 16, "variant": 0},
 	"hooded_sorcerer": {"name": "Feiticeiro Encapuzado", "boss_id": "hooded_sorcerer", "tier": "major", "hour": 22.0, "health": 18, "variant": 2},
 }
 
@@ -102,7 +102,7 @@ const ROOMS := {
 			{"id": "leste", "side": "east", "row": 0, "to": "clareira_inicio", "to_door": "oeste"},
 			{"id": "oeste", "side": "west", "row": 0, "to": "floresta_centro", "to_door": "leste"},
 		],
-		"foes": 2, "platforms": [[420.0, 220.0, 120.0], [760.0, 200.0, 100.0]],
+		"foes": 2, "rune": "saci", "platforms": [[420.0, 220.0, 120.0], [760.0, 200.0, 100.0]],
 	},
 	"floresta_centro": {
 		"region": "floresta", "name": "Coração da Floresta Antiga",
@@ -153,7 +153,7 @@ const ROOMS := {
 			{"id": "leste", "side": "east", "row": 0, "to": "cav_alagada", "to_door": "oeste"},
 			{"id": "baixo", "side": "down", "col": 1, "future": "ruinas"},
 		],
-		"foes": 2,
+		"foes": 2, "rune": "iara",
 	},
 	# --- Cavernas e Túnel ---
 	"cav_clareira": {
@@ -203,7 +203,7 @@ const ROOMS := {
 			{"id": "leste", "side": "east", "row": 0, "to": "cav_ninho", "to_door": "oeste"},
 			{"id": "baixo", "side": "down", "col": 1, "future": "raizes_profundas"},
 		],
-		"shrine": 1600.0, "foes": 3, "pickups": ["mana_seed"],
+		"shrine": 1600.0, "foes": 3, "pickups": ["mana_seed"], "rune": "boitata",
 	},
 	"cav_ninho": {
 		"region": "cavernas", "name": "Ninho do Gavião",
@@ -232,7 +232,7 @@ const ROOMS := {
 			{"id": "oeste", "side": "west", "row": 0, "to": "covil_portao", "to_door": "leste", "gate": "purificacao"},
 			{"id": "cima", "side": "up", "col": 0, "future": "pico_nevado"},
 		],
-		"shrine": 360.0, "platforms": [[240.0, 220.0, 100.0], [900.0, 200.0, 100.0]],
+		"shrine": 360.0, "platforms": [[240.0, 220.0, 100.0], [900.0, 200.0, 100.0]], "rune": "mboi",
 	},
 	# --- Coração Corrompido ---
 	"coracao_raizes": {
@@ -322,6 +322,8 @@ static func validate() -> Array[String]:
 			errors.append("%s: habilidade desconhecida %s" % [room_id, data["grants"]])
 		if data.has("boss") and not BOSSES.has(data["boss"]):
 			errors.append("%s: chefe desconhecido %s" % [room_id, data["boss"]])
+		if data.has("rune") and not RuneCatalog.has_rune(data["rune"]):
+			errors.append("%s: runa desconhecida %s" % [room_id, data["rune"]])
 		var door_ids := {}
 		for entry: Dictionary in data.get("doors", []):
 			var label := "%s/%s" % [room_id, entry.get("id", "?")]
@@ -355,6 +357,7 @@ static func validate() -> Array[String]:
 				errors.append("%s: lados das portas não se encaixam" % label)
 			elif door_cell(room_id, entry) + _side_step(side) != door_cell(entry["to"], back):
 				errors.append("%s: a porta de destino não fica na célula vizinha" % label)
+	_check_boss_runes(errors)
 	return errors
 
 ## Célula do mapa (em telas) onde fica uma porta.
@@ -374,6 +377,11 @@ static func door_cell(room_id: String, entry: Dictionary) -> Vector2i:
 
 static func _side_step(side: String) -> Vector2i:
 	return {"east": Vector2i.RIGHT, "west": Vector2i.LEFT, "up": Vector2i.UP, "down": Vector2i.DOWN}.get(side, Vector2i.ZERO)
+
+static func _check_boss_runes(errors: Array[String]) -> void:
+	for boss_key in BOSSES:
+		if BOSSES[boss_key].has("rune") and not RuneCatalog.has_rune(BOSSES[boss_key]["rune"]):
+			errors.append("chefe %s: runa desconhecida" % boss_key)
 
 static func _opposite(side: String) -> String:
 	return {"east": "west", "west": "east", "up": "down", "down": "up"}.get(side, "")

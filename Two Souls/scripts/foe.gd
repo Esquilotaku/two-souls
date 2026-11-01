@@ -53,9 +53,9 @@ func _physics_process(delta: float) -> void:
 			if absf(horizontal_distance) < 320.0 and vertical_distance < 73.0 and ranged_cooldown <= 0.0:
 				_throw_spear()
 				ranged_cooldown = lerpf(2.1, 1.55, time_difficulty)
-		elif absf(horizontal_distance) < 150.0:
+		elif absf(horizontal_distance) < 150.0 and vertical_distance < 90.0:
 			velocity.x = signf(horizontal_distance) * speed * 0.72
-			if absf(horizontal_distance) < 23.0 and attack_cooldown <= 0.0:
+			if absf(horizontal_distance) < 23.0 and vertical_distance < 60.0 and attack_cooldown <= 0.0:
 				player.call("take_damage", 1)
 				attack_cooldown = lerpf(1.0, 0.76, time_difficulty)
 	else:

@@ -7,6 +7,9 @@ const DOOR_OPENING := 128.0
 const DOOR_TRIGGER := 24.0
 const STEP_HEIGHT := 130.0
 const STEP_WIDTH := 112.0
+const UP_LANDING_Y := 104.0
+## Relevo: espaço livre perto de portas, buracos, santuário e altar para não bloquear passagem.
+const RELIEF_CLEARANCE := 200.0
 const ITEM_PICKUP_SCRIPT = preload("res://scripts/item_pickup.gd")
 
 var room_id := ""
@@ -22,8 +25,9 @@ var boss: Node2D
 var _region_color := Color("3f6b4f")
 var _solid_color := Color("5b6670")
 
-## abilities, defeated_bosses e activated_shrines são conjuntos (Dictionary id -> true) do estado do jogo.
-func build(id: String, abilities: Dictionary, defeated_bosses: Dictionary, activated_shrines: Dictionary, collected_pickups: Callable) -> void:
+## abilities e activated_shrines são conjuntos (Dictionary id -> true) do estado do jogo.
+## O chefe não nasce aqui: o mundo chama spawn_boss() quando o jogador entra na área.
+func build(id: String, abilities: Dictionary, activated_shrines: Dictionary, collected_pickups: Callable) -> void:
 	room_id = id
 	name = "Room_" + id
 	data = WorldMap.room(id)
@@ -33,15 +37,34 @@ func build(id: String, abilities: Dictionary, defeated_bosses: Dictionary, activ
 	_add_background()
 	_add_shell()
 	_add_platforms()
+	_add_relief()
 	_add_doors(abilities)
 	if data.has("shrine"):
 		_add_shrine(float(data["shrine"]), activated_shrines.has(room_id))
 	if data.has("altar") and data.has("grants") and not abilities.has(data["grants"]):
 		_add_altar(float(data["altar"]), data["grants"])
+	if data.has("rune") and not collected_pickups.call("rune:" + data["rune"]):
+		_add_rune_stone(data["rune"])
 	_add_pickups(collected_pickups)
 	_add_foes()
-	if data.has("boss") and not defeated_bosses.has(data["boss"]):
-		_add_boss(data["boss"])
+
+## Faz o chefe da área aparecer (se ela tiver um e ele ainda não foi vencido). Devolve o chefe ou null.
+func spawn_boss(defeated_bosses: Dictionary) -> Node2D:
+	if boss and is_instance_valid(boss):
+		return boss
+	if not data.has("boss") or defeated_bosses.has(data["boss"]):
+		return null
+	_add_boss(data["boss"])
+	return boss
+
+## Tira o chefe quando o jogador sai da área sem vencê-lo; ele volta inteiro na próxima entrada.
+func despawn_boss() -> void:
+	if boss and is_instance_valid(boss):
+		boss.queue_free()
+	boss = null
+
+func contains_local(point: Vector2) -> bool:
+	return Rect2(Vector2.ZERO, size_px).has_point(point)
 
 func floor_y() -> float:
 	return size_px.y - WorldMap.FLOOR_THICKNESS
@@ -150,13 +173,84 @@ func _add_platforms() -> void:
 	# Escadas automáticas até cada porta alta (portas de cima e portas laterais das fileiras de cima).
 	for entry: Dictionary in data.get("doors", []):
 		if entry["side"] == "up":
+			# Apoio parte embaixo da abertura do teto: o pulo (~177 px) passa pela abertura e
+			# deixa o pé uns 25 px acima do chão da área de cima, dando tempo de andar para o lado.
 			var hole_x := _column_center(int(entry["col"]))
-			var landing := Vector2(hole_x + DOOR_OPENING * 0.5 + 8.0, 150.0)
+			var landing := Vector2(hole_x - 24.0, UP_LANDING_Y)
 			_add_solid(Rect2(landing.x, landing.y, 120.0, 14.0), 0.18)
 			_add_stairs(landing)
 		elif entry["side"] in ["east", "west"] and int(entry["row"]) < int(data["size"].y) - 1:
 			var ledge_x := 200.0 if entry["side"] == "west" else size_px.x - 200.0 - STEP_WIDTH
 			_add_stairs(Vector2(ledge_x, WorldMap.row_floor_y(int(entry["row"]))))
+
+## Relevo provisório para o blockout não ficar um corredor reto: morros no chão, plataformas soltas e,
+## nas regiões fechadas, rochas penduradas no teto. Sempre igual para a mesma sala (semente = id).
+## As arenas de chefe ficam planas. Será substituído pelo desenho à mão de cada sala.
+func _add_relief() -> void:
+	if data.has("boss"):
+		return
+	var random := RandomNumberGenerator.new()
+	random.seed = hash(room_id)
+	var blocked := _relief_blocked_spans()
+	var screens: int = data["size"].x
+	var floor_top := floor_y()
+	var placed: Array[Vector2] = []
+	for _i in range(screens * 2):
+		var width := random.randf_range(160.0, 320.0)
+		var x := random.randf_range(WorldMap.WALL_THICKNESS, size_px.x - WorldMap.WALL_THICKNESS - width)
+		if _overlaps(Vector2(x - 120.0, x + width + 120.0), blocked) or _overlaps(Vector2(x - 120.0, x + width + 120.0), placed):
+			continue
+		var height: float = [48.0, 72.0, 96.0][random.randi_range(0, 2)]
+		_add_solid(Rect2(x, floor_top - height, width, height), 0.08)
+		placed.append(Vector2(x, x + width))
+	for screen in range(screens):
+		var width := random.randf_range(96.0, 160.0)
+		var x := screen * WorldMap.SCREEN.x + random.randf_range(120.0, WorldMap.SCREEN.x - 120.0 - width)
+		var y := floor_top - random.randf_range(150.0, 250.0)
+		if _overlaps(Vector2(x, x + width), blocked):
+			continue
+		_add_solid(Rect2(x, y, width, 14.0), 0.18)
+	if data["region"] in ["cavernas", "lago", "coracao"]:
+		var ceilings := _relief_blocked_spans(true)
+		for _i in range(screens):
+			var width := random.randf_range(96.0, 200.0)
+			var x := random.randf_range(WorldMap.WALL_THICKNESS + 80.0, size_px.x - WorldMap.WALL_THICKNESS - 80.0 - width)
+			if _overlaps(Vector2(x - 40.0, x + width + 40.0), ceilings):
+				continue
+			_add_solid(Rect2(x, WorldMap.WALL_THICKNESS, width, random.randf_range(60.0, 140.0)), -0.05)
+
+## Trechos de x onde o relevo não pode ficar: perto das paredes laterais, dos buracos do chão
+## (ou do teto, com ceiling = true), do santuário, do altar e do ponto inicial.
+func _relief_blocked_spans(ceiling: bool = false) -> Array[Vector2]:
+	var spans: Array[Vector2] = [Vector2(0.0, RELIEF_CLEARANCE), Vector2(size_px.x - RELIEF_CLEARANCE, size_px.x)]
+	for entry: Dictionary in data.get("doors", []):
+		if entry["side"] in ["up", "down"]:
+			var center := _column_center(int(entry["col"]))
+			if ceiling and entry["side"] == "down":
+				continue
+			spans.append(Vector2(center - DOOR_OPENING * 0.5 - RELIEF_CLEARANCE, center + DOOR_OPENING * 0.5 + RELIEF_CLEARANCE))
+	if data.has("rune"):
+		spans.append(Vector2(_rune_x() - 80.0, _rune_x() + 80.0))
+	for key in ["shrine", "altar"]:
+		if data.has(key):
+			spans.append(Vector2(float(data[key]) - RELIEF_CLEARANCE, float(data[key]) + RELIEF_CLEARANCE))
+	if data.has("spawn"):
+		var spawn: Vector2 = data["spawn"]
+		spans.append(Vector2(spawn.x - RELIEF_CLEARANCE, spawn.x + RELIEF_CLEARANCE))
+	var items: Array = data.get("pickups", [])
+	for index in range(items.size()):
+		var item_x := _pickup_x(index, items.size())
+		spans.append(Vector2(item_x - 60.0, item_x + 60.0))
+	return spans
+
+func _pickup_x(index: int, count: int) -> float:
+	return size_px.x * (index + 1) / (count + 1) + 60.0
+
+func _overlaps(span: Vector2, spans: Array[Vector2]) -> bool:
+	for other in spans:
+		if span.x < other.y and other.x < span.y:
+			return true
+	return false
 
 ## Degraus do chão até target (topo do último apoio), alternando de lado.
 func _add_stairs(target: Vector2) -> void:
@@ -241,7 +335,7 @@ func _add_pickups(collected_pickups: Callable) -> void:
 		var pickup: ItemPickup = ITEM_PICKUP_SCRIPT.new()
 		pickup.item_id = items[index]
 		pickup.pickup_id = pickup_id
-		pickup.position = Vector2(size_px.x * (index + 1) / (items.size() + 1) + 60.0, floor_y() - 22.0)
+		pickup.position = Vector2(_pickup_x(index, items.size()), floor_y() - 22.0)
 		pickup.process_mode = Node.PROCESS_MODE_PAUSABLE
 		add_child(pickup)
 
@@ -251,7 +345,8 @@ func _add_foes() -> void:
 	for index in range(count):
 		var foe := ForestFoe.new()
 		foe.drop_id = "%s:foe:%d" % [room_id, index]
-		foe.position = Vector2(200.0 + usable * (index + 0.5) / count, floor_y() - 10.0)
+		# Nasce no alto e cai: assim pousa no chão ou em cima do relevo, nunca dentro dele.
+		foe.position = Vector2(200.0 + usable * (index + 0.5) / count, floor_y() - 120.0)
 		foe.floor_y = floor_y()
 		foe.speed = 27.0 + float(index % 3) * 5.0
 		foe.patrol_span = 74.0 + float((index % 2) * 40)
@@ -340,3 +435,16 @@ func _add_block(rect: Rect2, color: Color, text: String, solid: bool = true) -> 
 
 func _rect_polygon(rect: Rect2) -> PackedVector2Array:
 	return PackedVector2Array([rect.position, Vector2(rect.end.x, rect.position.y), rect.end, Vector2(rect.position.x, rect.end.y)])
+
+# --- Pedra de runa (runa corrompida escondida na área; docs/runas.md) ---
+
+var rune_rect := Rect2()
+
+func _rune_x() -> float:
+	return size_px.x * 0.5 + 40.0
+
+func _add_rune_stone(rune_id: String) -> void:
+	var x := _rune_x()
+	rune_rect = Rect2(x - 24.0, floor_y() - 72.0, 48.0, 72.0)
+	var stone := _add_block(Rect2(x - 14.0, floor_y() - 34.0, 28.0, 34.0), Color("8a4fd1"), RuneCatalog.info(rune_id).get("name", "Runa"), false)
+	stone.name = "RuneStone"

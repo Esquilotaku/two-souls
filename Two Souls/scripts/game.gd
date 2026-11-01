@@ -3,8 +3,8 @@ extends Node2D
 ## O mapa e as salas vêm de WorldMap e WorldRoom (docs/plano-tecnico-mundo.md).
 
 const DAY_CYCLE_REAL_SECONDS := 900.0
-const DOOR_COOLDOWN := 0.35
-const FADE_SECONDS := 0.12
+const UI_SCALE := 1.5
+const UI_SIZE := Vector2(640.0, 360.0)
 const TREE_ART = preload("res://assets/mother_tree_forest.png")
 const ORION_IDLE_TEXTURE = preload("res://assets/sprites/orion_idle.png")
 const AENIA_IDLE_TEXTURE = preload("res://assets/sprites/aenia_idle.png")
@@ -17,8 +17,10 @@ const ABILITY_SKILLS := {"spear_wall": "spear_throw", "super_punch": "super_punc
 
 var ui_layer: CanvasLayer
 var ui_root: Control
-var fade_rect: ColorRect
-var world: WorldRoom
+var world: WorldScene
+## Área onde o Orion está agora e o chefe dela (se houver).
+var current: WorldRoom
+var active_boss: Node2D
 var player: Orion
 var aenia_companion: Node2D
 var room_id := ""
@@ -27,6 +29,8 @@ var visited_rooms: Dictionary = {}
 var activated_shrines: Dictionary = {}
 var abilities: Dictionary = {}
 var defeated_bosses: Dictionary = {}
+## Runas achadas, purificadas e equipadas (scripts/runes, docs/runas.md).
+var runes := RuneState.new()
 var day := 1
 var mode := "aventura"
 var rock_recruited := false
@@ -39,8 +43,6 @@ var skill_tree_open := false
 var skill_tree_returns_to_pause := false
 var respawn_timer := 0.0
 var message_timer := 0.0
-var door_cooldown := 0.0
-var transitioning := false
 var hud_health: Label
 var hud_magic: Label
 var hud_progress: Label
@@ -92,7 +94,7 @@ func _process(delta: float) -> void:
 			_open_skill_tree(true)
 		elif not inventory_open:
 			_open_skill_tree(false)
-	if not playing or paused or transitioning:
+	if not playing or paused:
 		return
 	if not player or not is_instance_valid(player) or not world or not is_instance_valid(world):
 		return
@@ -106,35 +108,28 @@ func _process(delta: float) -> void:
 	message_timer = maxf(0.0, message_timer - delta)
 	if message_timer <= 0.0 and hud_message:
 		hud_message.text = ""
-	door_cooldown = maxf(0.0, door_cooldown - delta)
 	_update_aenia_companion(delta)
 	if player.health <= 0:
 		respawn_timer += delta
 		if respawn_timer >= 1.0:
 			_respawn_player()
 		return
+	_track_room()
 	_check_altar()
-	_check_doors()
+	_check_rune_stone()
 	_update_hud()
 
 func _create_ui() -> void:
 	ui_layer = CanvasLayer.new()
 	ui_layer.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(ui_layer)
+	# Os menus foram desenhados para 640x360; com a tela de 960x540 a camada inteira é ampliada 1,5x.
+	ui_layer.scale = Vector2.ONE * UI_SCALE
 	ui_root = Control.new()
-	ui_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	ui_root.position = Vector2.ZERO
+	ui_root.size = UI_SIZE
 	ui_root.mouse_filter = Control.MOUSE_FILTER_PASS
 	ui_layer.add_child(ui_root)
-	# Camada própria para escurecer a tela na troca de sala, acima dos menus.
-	var fade_layer := CanvasLayer.new()
-	fade_layer.layer = 10
-	fade_layer.process_mode = Node.PROCESS_MODE_ALWAYS
-	add_child(fade_layer)
-	fade_rect = ColorRect.new()
-	fade_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	fade_rect.color = Color(0.0, 0.0, 0.0, 0.0)
-	fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	fade_layer.add_child(fade_rect)
 
 ## Teclas e botões do brainstorm-jogo.md (seção 7), com as trocas do jogador em user://controles.cfg.
 func _configure_controls() -> void:
@@ -175,44 +170,48 @@ func _show_title() -> void:
 	shade.color = Color(0.02, 0.04, 0.12, 0.63)
 	ui_root.add_child(shade)
 	var title := _label("TWO SOULS", 48, Color("e7fff6"), HORIZONTAL_ALIGNMENT_CENTER)
-	title.position = Vector2(70, 44)
+	title.position = Vector2(70, 24)
 	title.size = Vector2(500, 66)
 	title.add_theme_color_override("font_shadow_color", Color("1d8c9e"))
 	title.add_theme_constant_override("shadow_offset_x", 3)
 	title.add_theme_constant_override("shadow_offset_y", 4)
 	ui_root.add_child(title)
 	var subtitle := _label("A JORNADA DE ORION", 16, Color("b8e9e1"), HORIZONTAL_ALIGNMENT_CENTER)
-	subtitle.position = Vector2(70, 105)
+	subtitle.position = Vector2(70, 82)
 	subtitle.size = Vector2(500, 30)
 	ui_root.add_child(subtitle)
 	var rule := ColorRect.new()
 	rule.color = Color("6edcca")
-	rule.position = Vector2(238, 143)
+	rule.position = Vector2(238, 116)
 	rule.size = Vector2(164, 2)
 	ui_root.add_child(rule)
 	var story := _label("Quando o feiticeiro levou Aenia, a floresta perdeu sua luz.\nOrion segue o rastro até o coração de Monte Ligna.", 16, Color("e2e0d4"), HORIZONTAL_ALIGNMENT_CENTER)
-	story.position = Vector2(90, 158)
+	story.position = Vector2(90, 126)
 	story.size = Vector2(460, 52)
 	story.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	ui_root.add_child(story)
 	var buttons := VBoxContainer.new()
 	var has_save := SAVE_MANAGER.has_save()
-	buttons.position = Vector2(224, 204 if has_save else 220)
-	buttons.size = Vector2(192, 126 if has_save else 110)
-	buttons.add_theme_constant_override("separation", 8)
+	buttons.position = Vector2(224, 188 if has_save else 200)
+	buttons.size = Vector2(192, 130 if has_save else 96)
+	buttons.add_theme_constant_override("separation", 6)
 	ui_root.add_child(buttons)
 	if has_save:
 		var continue_button := _button("CONTINUAR")
+		continue_button.custom_minimum_size.y = 28
 		continue_button.pressed.connect(_continue_game)
 		buttons.add_child(continue_button)
 	var start := _button("NOVA JORNADA" if has_save else "INICIAR JORNADA")
+	start.custom_minimum_size.y = 28
 	start.pressed.connect(_request_new_game)
 	buttons.add_child(start)
 	var how := _button("COMO JOGAR")
+	how.custom_minimum_size.y = 28
 	how.pressed.connect(_show_controls)
 	buttons.add_child(how)
 	var keys := _button("CONTROLES")
 	keys.pressed.connect(func(): _open_controls_menu(_show_title))
+	keys.custom_minimum_size.y = 28
 	buttons.add_child(keys)
 	var footer := _label("Setas andam  ·  %s pula  ·  %s ataca  ·  %s dash  ·  %s interage" % [_key_name("jump"), _key_name("attack"), _key_name("dash"), _key_name("interact")], 11, Color("bed2d6"), HORIZONTAL_ALIGNMENT_CENTER)
 	footer.position = Vector2(20, 333)
@@ -290,8 +289,10 @@ func _start_new_game() -> void:
 	activated_shrines.clear()
 	abilities.clear()
 	defeated_bosses.clear()
+	runes = RuneState.new()
 	_begin_play()
-	_enter_room(WorldMap.START_ROOM, "")
+	_build_world()
+	_place_at_shrine()
 	_apply_world_time(true)
 	_show_hud()
 	if _save_campaign():
@@ -314,6 +315,8 @@ func _continue_game() -> void:
 	activated_shrines = _to_set(save_data["activated_shrines"])
 	abilities = _to_set(save_data["abilities"])
 	defeated_bosses = _to_set(save_data["defeated_bosses"])
+	runes = RuneState.new()
+	runes.from_save(save_data.get("runes", {}))
 	_begin_play()
 	player.set_skill_state(int(save_data.get("skill_points", 0)), save_data.get("unlocked_skills", []))
 	player.health = clampi(int(save_data["health"]), 1, player.max_health)
@@ -326,10 +329,8 @@ func _continue_game() -> void:
 	player.set_collected_pickups(save_data.get("collected_pickups", []))
 	_sync_player_abilities()
 	# A campanha sempre recomeça no último santuário ativado (ou no início da Clareira).
-	if shrine_room != "" and WorldMap.has_room(shrine_room):
-		_enter_room(shrine_room, "", true)
-	else:
-		_enter_room(WorldMap.START_ROOM, "")
+	_build_world()
+	_place_at_shrine()
 	_apply_world_time(true)
 	_show_hud()
 	_show_message("Campanha retomada no último santuário", 3.0)
@@ -342,8 +343,6 @@ func _begin_play() -> void:
 	paused = false
 	inventory_open = false
 	skill_tree_open = false
-	transitioning = false
-	fade_rect.color.a = 0.0
 	get_tree().paused = false
 	respawn_timer = 0.0
 	_create_player()
@@ -367,81 +366,132 @@ func _to_set(values: Variant) -> Dictionary:
 			result[str(value)] = true
 	return result
 
-# --- Salas ---
+# --- Mundo ---
 
-## Troca a sala atual. Com door_id vazio, o jogador aparece no santuário (at_shrine) ou no início da sala.
-func _enter_room(next_room: String, door_id: String, at_shrine: bool = false) -> void:
+## Monta o mapa inteiro de novo (no início, ao continuar e ao descansar, para os inimigos voltarem).
+func _build_world() -> void:
 	if world and is_instance_valid(world):
 		remove_child(world)
 		world.queue_free()
 	aenia_companion = null
-	room_id = next_room
-	visited_rooms[room_id] = true
-	world = WorldRoom.new()
+	active_boss = null
+	current = null
+	world = WorldScene.new()
 	world.process_mode = Node.PROCESS_MODE_PAUSABLE
 	add_child(world)
 	move_child(world, 1)
-	world.build(room_id, abilities, defeated_bosses, activated_shrines, player.has_collected_pickup)
-	var arrival := world.spawn_point()
-	if door_id != "":
-		arrival = world.arrival_point(door_id)
-	elif at_shrine:
-		arrival = world.shrine_point()
-	player.global_position = arrival
-	player.velocity = Vector2.ZERO
-	player.active = true
-	respawn_timer = 0.0
-	player.fall_limit_y = world.size_px.y + 120.0
+	world.build(abilities, activated_shrines, _is_collected)
+	player.fall_limit_y = world.bounds.end.y + 200.0
 	var camera: Camera2D = player.get_node("Camera2D")
-	camera.limit_left = 0
-	camera.limit_top = 0
-	camera.limit_right = int(world.size_px.x)
-	camera.limit_bottom = int(world.size_px.y)
-	camera.reset_smoothing()
-	if world.boss:
-		_start_boss(world.boss)
+	camera.limit_left = int(world.bounds.position.x)
+	camera.limit_top = int(world.bounds.position.y)
+	camera.limit_right = int(world.bounds.end.x)
+	camera.limit_bottom = int(world.bounds.end.y)
 	if rock_recruited:
 		_add_rock_companion()
 	if player.twin_magic:
 		_add_aenia_companion()
+
+## Põe o Orion num ponto de uma área e atualiza a área atual.
+func _place_player(target_room: String, local_point: Vector2) -> void:
+	player.global_position = world.to_world(target_room, local_point)
+	player.velocity = Vector2.ZERO
+	player.active = true
+	respawn_timer = 0.0
+	room_id = ""
+	_on_room_changed(target_room)
+	player.get_node("Camera2D").reset_smoothing()
 	_apply_world_time(true)
-	door_cooldown = DOOR_COOLDOWN
 	_update_hud()
 
-func _check_doors() -> void:
-	if door_cooldown > 0.0:
-		return
-	for trigger in world.door_triggers:
-		if (trigger["rect"] as Rect2).has_point(player.global_position):
-			var entry: Dictionary = trigger["door"]
-			if entry.has("gate") and not abilities.has(entry["gate"]):
-				continue
-			_go_through_door(entry["to"], entry["to_door"])
-			return
+## Põe o Orion no último santuário ativado, ou no início da Clareira se nenhum foi ativado.
+func _place_at_shrine() -> void:
+	if shrine_room != "" and WorldMap.has_room(shrine_room):
+		_place_player(shrine_room, world.room(shrine_room).shrine_point())
+	else:
+		_place_player(WorldMap.START_ROOM, world.room(WorldMap.START_ROOM).spawn_point())
 
-func _go_through_door(next_room: String, door_id: String) -> void:
-	transitioning = true
-	player.active = false
-	var keep_velocity_x := player.velocity.x
-	var tween := create_tween()
-	tween.tween_property(fade_rect, "color:a", 1.0, FADE_SECONDS)
-	await tween.finished
-	_enter_room(next_room, door_id)
-	player.velocity.x = keep_velocity_x
-	var back := create_tween()
-	back.tween_property(fade_rect, "color:a", 0.0, FADE_SECONDS)
-	await back.finished
-	transitioning = false
+## Descobre em que área o Orion está; ao mudar de área, troca o chefe e marca a área como visitada.
+func _track_room() -> void:
+	var here := world.room_at(player.global_position)
+	if here != "" and here != room_id:
+		_on_room_changed(here)
+
+func _on_room_changed(next_room: String) -> void:
+	if current and active_boss and is_instance_valid(active_boss):
+		current.despawn_boss()
+	active_boss = null
+	room_id = next_room
+	current = world.room(room_id)
+	visited_rooms[room_id] = true
+	var fighter := current.spawn_boss(defeated_bosses)
+	if fighter:
+		_start_boss(fighter)
+	_update_hud()
+
+## Ponto do Orion nas coordenadas da área atual.
+func _local_player() -> Vector2:
+	return player.global_position - current.position
 
 func _check_altar() -> void:
-	if world.altar_rect.size == Vector2.ZERO or not world.altar_rect.has_point(player.global_position):
+	if current.altar_rect.size == Vector2.ZERO or not current.altar_rect.has_point(_local_player()):
 		return
-	var ability: String = world.data["grants"]
-	world.altar_rect = Rect2()
-	var altar := world.get_node_or_null("Altar")
+	var ability: String = current.data["grants"]
+	current.altar_rect = Rect2()
+	var altar := current.get_node_or_null("Altar")
 	if altar:
 		altar.queue_free()
 	_grant_ability(ability)
+
+## Itens e runas já pegos não voltam a aparecer no mapa ("rune:<id>" para as pedras de runa).
+func _is_collected(pickup_id: String) -> bool:
+	if pickup_id.begins_with("rune:"):
+		var rune_id := pickup_id.trim_prefix("rune:")
+		return runes.found_runes.has(rune_id) or runes.purified_runes.has(rune_id)
+	return player.has_collected_pickup(pickup_id)
+
+func _check_rune_stone() -> void:
+	if current.rune_rect.size == Vector2.ZERO or not current.rune_rect.has_point(_local_player()):
+		return
+	current.rune_rect = Rect2()
+	var stone := current.get_node_or_null("RuneStone")
+	if stone:
+		stone.queue_free()
+	_find_rune(current.data["rune"])
+
+## Runa achada (sempre corrompida): só vale depois de purificada num santuário.
+func _find_rune(rune_id: String, fragments: int = 0) -> void:
+	var is_new := runes.found(rune_id)
+	if fragments > 0:
+		runes.add_fragments(fragments)
+	var saved := _save_campaign()
+	var name_text: String = RuneCatalog.info(rune_id).get("name", "Runa")
+	var message := "%s (corrompida) · purifique num santuário" % name_text if is_new else "+%d fragmentos de runa" % fragments
+	if not saved:
+		message += " · não foi possível salvar"
+	_show_message(message, 3.6)
+
+func _drop_boss_rune(boss_key: String) -> void:
+	var info: Dictionary = WorldMap.BOSSES.get(boss_key, {})
+	if info.has("rune"):
+		_find_rune(info["rune"], 3)
+
+## Menu de runas. No santuário dá para purificar; fora dele, só equipar e melhorar.
+func _open_rune_menu(at_shrine: bool) -> void:
+	paused = true
+	get_tree().paused = true
+	player.active = false
+	_clear_ui()
+	var menu: Control = load("res://scripts/ui/rune_menu.gd").new()
+	ui_root.add_child(menu)
+	menu.setup(runes, at_shrine)
+	menu.closed.connect(func():
+		menu.queue_free()
+		player.apply_rune_bonuses(runes.total_bonuses(), true)
+		_save_campaign()
+		_resume_game()
+		player.active = player.health > 0
+	)
 
 func _grant_ability(ability: String) -> void:
 	if abilities.has(ability):
@@ -468,12 +518,13 @@ func _sync_player_abilities() -> void:
 			changed = true
 	if changed:
 		player.set_skill_state(player.skill_points, learned)
+	player.apply_rune_bonuses(runes.total_bonuses())
 
 # --- Santuários ---
 
 func _try_shrine() -> bool:
-	var shrine := world.shrine
-	if not shrine or not shrine.is_player_near(player.global_position):
+	var shrine := current.shrine
+	if not shrine or not shrine.is_player_near(_local_player()):
 		return false
 	if not shrine.active:
 		shrine.active = true
@@ -482,12 +533,14 @@ func _try_shrine() -> bool:
 		player.restore(99)
 		_show_message("Santuário ativado · campanha salva" if _save_campaign() else "Santuário ativado, mas a gravação falhou.", 3.0)
 	else:
-		# Descansar: salva, enche vida e magia e faz os inimigos voltarem (a sala é montada de novo).
+		# Descansar: salva, enche vida e magia e faz os inimigos voltarem (o mapa é montado de novo).
 		shrine_room = room_id
 		player.restore(99)
 		var saved := _save_campaign()
-		_enter_room(room_id, "", true)
+		_build_world()
+		_place_at_shrine()
 		_show_message("Você descansou · os inimigos voltaram" if saved else "Você descansou, mas a gravação falhou.", 3.0)
+		_open_rune_menu(true)
 	return true
 
 func _respawn_player() -> void:
@@ -495,10 +548,7 @@ func _respawn_player() -> void:
 	player.health = player.max_health
 	player.magic = player.max_magic
 	player.hurt_timer = 1.4
-	if shrine_room != "" and WorldMap.has_room(shrine_room):
-		_enter_room(shrine_room, "", true)
-	else:
-		_enter_room(WorldMap.START_ROOM, "")
+	_place_at_shrine()
 	player.health_changed.emit(player.health)
 	_show_message("Orion desperta no último santuário", 2.6)
 
@@ -508,6 +558,7 @@ func _on_player_defeated() -> void:
 # --- Chefes ---
 
 func _start_boss(fighter: Node2D) -> void:
+	active_boss = fighter
 	var boss_key: String = fighter.get_meta("boss_key")
 	var info: Dictionary = WorldMap.BOSSES[boss_key]
 	fighter.defeated.connect(_on_boss_defeated.bind(boss_key))
@@ -518,6 +569,8 @@ func _start_boss(fighter: Node2D) -> void:
 
 func _on_boss_defeated(boss_key: String) -> void:
 	defeated_bosses[boss_key] = true
+	_drop_boss_rune(boss_key)
+	active_boss = null
 	player.restore(2)
 	player.grant_skill_point()
 	if boss_key == "the_rock":
@@ -526,23 +579,23 @@ func _on_boss_defeated(boss_key: String) -> void:
 		player.unlock_twin_magic()
 		player.restore(5)
 		_add_aenia_companion()
-	if world.data.has("grants"):
-		_grant_ability(world.data["grants"])
+	if current.data.has("grants"):
+		_grant_ability(current.data["grants"])
 	var saved := _save_campaign()
-	if world.data.get("final", false):
+	if current.data.get("final", false):
 		_show_ending()
 		return
 	if boss_key == "the_rock":
 		_show_message("D Rock virou aliado. +1 ponto de talento." if saved else "D Rock virou aliado, mas não foi possível salvar o progresso.", 4.0)
 	elif boss_key == "corrupted_tree":
-		_show_message("Aenia está livre! Pressione E para conversar." if saved else "Aenia está livre, mas não foi possível salvar o progresso.", 4.0)
+		_show_message("Aenia está livre! Pressione %s para conversar." % _key_name("interact") if saved else "Aenia está livre, mas não foi possível salvar o progresso.", 4.0)
 
 func _add_rock_companion() -> void:
 	var companion := CorruptedBoss.new()
 	companion.boss_id = "the_rock"
 	companion.boss_name = "D Rock"
 	companion.is_ally = true
-	companion.floor_y = world.floor_y()
+	companion.floor_y = player.global_position.y + 33.0
 	companion.position = Vector2(player.position.x - 64.0, player.position.y - 30.0)
 	companion.process_mode = Node.PROCESS_MODE_PAUSABLE
 	companion.collision_layer = 0
@@ -656,7 +709,8 @@ func _save_campaign() -> bool:
 		"inventory": player.inventory.duplicate(true),
 		"collected_pickups": player.get_collected_pickup_ids(),
 		"skill_points": player.skill_points,
-		"unlocked_skills": player.get_unlocked_skill_ids()
+		"unlocked_skills": player.get_unlocked_skill_ids(),
+		"runes": runes.to_save()
 	}
 	return SAVE_MANAGER.save_campaign(save_data)
 
@@ -696,32 +750,32 @@ func _show_hud() -> void:
 	panel_style.border_color = Color(0.39, 0.81, 0.78, 0.62)
 	panel_style.set_border_width_all(1)
 	panel_style.set_corner_radius_all(4)
-	panel_style.content_margin_left = 12
-	panel_style.content_margin_right = 12
-	panel_style.content_margin_top = 7
-	panel_style.content_margin_bottom = 7
+	panel_style.content_margin_left = 8
+	panel_style.content_margin_right = 8
+	panel_style.content_margin_top = 4
+	panel_style.content_margin_bottom = 4
 	hud_panel.add_theme_stylebox_override("panel", panel_style)
 	hud_panel.position = Vector2(12, 10)
-	hud_panel.size = Vector2(260, 94)
+	hud_panel.size = Vector2(176, 60)
 	ui_root.add_child(hud_panel)
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 3)
+	vbox.add_theme_constant_override("separation", 1)
 	hud_panel.add_child(vbox)
-	hud_stage = _label("", 14, Color("e4fff2"))
+	hud_stage = _label("", 10, Color("e4fff2"))
 	vbox.add_child(hud_stage)
 	var status := HBoxContainer.new()
 	status.add_theme_constant_override("separation", 16)
 	vbox.add_child(status)
-	hud_health = _label("", 13, Color("ffb4a8"))
+	hud_health = _label("", 9, Color("ffb4a8"))
 	status.add_child(hud_health)
-	hud_magic = _label("", 13, Color("94eee5"))
+	hud_magic = _label("", 9, Color("94eee5"))
 	status.add_child(hud_magic)
-	hud_progress = _label("", 11, Color("b7d6d9"))
+	hud_progress = _label("", 8, Color("b7d6d9"))
 	vbox.add_child(hud_progress)
-	hud_time = _label("", 10, Color("f2d8a0"))
+	hud_time = _label("", 8, Color("f2d8a0"))
 	vbox.add_child(hud_time)
 	hud_objective = _label("", 11, Color("ffe2a0"))
-	hud_objective.position = Vector2(330, 17)
+	hud_objective.position = Vector2(380, 32)
 	hud_objective.size = Vector2(250, 24)
 	hud_objective.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	ui_root.add_child(hud_objective)
@@ -732,16 +786,18 @@ func _show_hud() -> void:
 	hud_message.add_theme_constant_override("shadow_offset_x", 1)
 	hud_message.add_theme_constant_override("shadow_offset_y", 2)
 	ui_root.add_child(hud_message)
-	var pause_button := _button("Ⅱ")
-	pause_button.position = Vector2(588, 8)
-	pause_button.size = Vector2(40, 32)
+	var pause_button := _button("II")
+	pause_button.position = Vector2(604, 6)
+	pause_button.size = Vector2(28, 22)
+	pause_button.custom_minimum_size = Vector2(28, 22)
+	pause_button.add_theme_font_size_override("font_size", 9)
 	pause_button.pressed.connect(_show_pause)
 	ui_root.add_child(pause_button)
 	hud_inventory_button = _button("BOLSA [I]")
-	hud_inventory_button.position = Vector2(474, 44)
-	hud_inventory_button.size = Vector2(106, 32)
-	hud_inventory_button.custom_minimum_size = Vector2(106, 32)
-	hud_inventory_button.add_theme_font_size_override("font_size", 11)
+	hud_inventory_button.position = Vector2(524, 6)
+	hud_inventory_button.size = Vector2(76, 22)
+	hud_inventory_button.custom_minimum_size = Vector2(76, 22)
+	hud_inventory_button.add_theme_font_size_override("font_size", 9)
 	hud_inventory_button.pressed.connect(func(): _open_inventory(false))
 	ui_root.add_child(hud_inventory_button)
 	_update_hud()
@@ -759,11 +815,12 @@ func _update_hud() -> void:
 		hud_stage.text = room_label if room_label == region_label else "%s · %s" % [region_label, room_label]
 	if hud_objective:
 		var objective := ""
-		if world and is_instance_valid(world) and world.boss and is_instance_valid(world.boss):
-			objective = "DERROTE: " + str(world.boss.boss_name).to_upper()
-		elif world and is_instance_valid(world) and world.shrine and not world.shrine.active and world.shrine.is_player_near(player.global_position):
+		var shrine_near := current != null and is_instance_valid(current) and current.shrine != null and current.shrine.is_player_near(_local_player())
+		if active_boss and is_instance_valid(active_boss):
+			objective = "DERROTE: " + str(active_boss.boss_name).to_upper()
+		elif shrine_near and not current.shrine.active:
 			objective = "%s · ATIVAR SANTUÁRIO" % _key_name("interact")
-		elif world and is_instance_valid(world) and world.shrine and world.shrine.is_player_near(player.global_position):
+		elif shrine_near:
 			objective = "%s · DESCANSAR" % _key_name("interact")
 		hud_objective.text = objective
 	if hud_time:
@@ -875,16 +932,16 @@ func _show_pause() -> void:
 		paused = false
 		player.health = player.max_health
 		player.magic = player.max_magic
-		if shrine_room != "" and WorldMap.has_room(shrine_room):
-			_enter_room(shrine_room, "", true)
-		else:
-			_enter_room(WorldMap.START_ROOM, "")
+		_place_at_shrine()
 		_show_hud()
 		if not _save_campaign():
 			_show_message("Não foi possível salvar o progresso no disco.", 3.0)
 	)
 	buttons.add_child(restart)
 	var keys := _button("CONTROLES")
+	var rune_button := _button("RUNAS")
+	rune_button.pressed.connect(func(): _open_rune_menu(false))
+	buttons.add_child(rune_button)
 	keys.pressed.connect(func(): _open_controls_menu(_show_pause))
 	buttons.add_child(keys)
 	var menu := _button("MENU PRINCIPAL")

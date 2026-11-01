@@ -95,7 +95,7 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("move_left", "move_right")
 	if absf(direction) > 0.01:
 		facing = 1 if direction > 0.0 else -1
-	velocity.x = move_toward(velocity.x, direction * MOVE_SPEED, ACCELERATION * delta)
+	velocity.x = move_toward(velocity.x, direction * MOVE_SPEED * (1.0 + float(rune_bonus.get("move_speed", 0.0))), ACCELERATION * delta)
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 	else:
@@ -147,17 +147,17 @@ func _attack() -> void:
 			continue
 		var offset: Vector2 = target.global_position - global_position
 		if absf(offset.x) < 48.0 * WORLD_SCALE and absf(offset.y) < 42.0 * WORLD_SCALE and offset.x * facing > -12.0 * WORLD_SCALE:
-			target.call("take_hit", 1)
+			target.call("take_hit", _hit_amount())
 	for target in get_tree().get_nodes_in_group("attackable_scenery"):
 		if not is_instance_valid(target):
 			continue
 		var offset: Vector2 = target.global_position - global_position
 		if absf(offset.x) < 50.0 * WORLD_SCALE and absf(offset.y) < 62.0 * WORLD_SCALE and offset.x * facing > -12.0 * WORLD_SCALE:
-			target.call("take_hit", 1)
+			target.call("take_hit", _hit_amount())
 
 func _cast_magic() -> void:
 	magic -= 1
-	magic_timer = 0.58
+	magic_timer = 0.58 * _cooldown_scale()
 	var bolt: MagicBolt = MagicBolt.new()
 	bolt.position = global_position + Vector2(facing * 17.0, -3.0)
 	bolt.direction = facing
@@ -238,8 +238,8 @@ func grant_skill_point(amount: int = 1) -> void:
 func _refresh_skill_stats(replenish_increase: bool) -> void:
 	var previous_max_health := max_health
 	var previous_max_magic := max_magic
-	max_health = 5 + (1 if has_skill("vitality") else 0)
-	max_magic = 5 + (1 if has_skill("mana_reserve") else 0)
+	max_health = 5 + (1 if has_skill("vitality") else 0) + int(rune_bonus.get("max_health", 0))
+	max_magic = 5 + (1 if has_skill("mana_reserve") else 0) + int(rune_bonus.get("max_magic", 0))
 	if replenish_increase:
 		health += maxi(0, max_health - previous_max_health)
 		magic += maxi(0, max_magic - previous_max_magic)
@@ -299,7 +299,7 @@ func use_item(item_id: String) -> bool:
 	return true
 
 func _throw_spear() -> void:
-	spear_cooldown = 1.15
+	spear_cooldown = 1.15 * _cooldown_scale()
 	var spear := MagicBolt.new()
 	spear.projectile_kind = "spear"
 	spear.speed = 360.0 * WORLD_SCALE
@@ -309,7 +309,7 @@ func _throw_spear() -> void:
 	get_parent().add_child(spear)
 
 func _super_punch() -> void:
-	super_punch_cooldown = 3.8
+	super_punch_cooldown = 3.8 * _cooldown_scale()
 	super_punch_flash = 0.24
 	attack_timer = 0.34
 	attack_animation_timer = 0.5
@@ -360,3 +360,21 @@ func _draw() -> void:
 func _draw_sparkle(at: Vector2, color: Color) -> void:
 	draw_rect(Rect2(at.x - 3, at.y - 15, 6, 30), color)
 	draw_rect(Rect2(at.x - 15, at.y - 3, 30, 6), color)
+
+# --- Runas (docs/runas.md) ---
+
+## Bônus das runas equipadas, vindo de RuneState.total_bonuses() pelo game.gd.
+var rune_bonus: Dictionary = {}
+
+func apply_rune_bonuses(bonuses: Dictionary, fill_new_slots: bool = false) -> void:
+	rune_bonus = bonuses.duplicate(true)
+	_refresh_skill_stats(fill_new_slots)
+	skills_changed.emit()
+
+## Recarga das habilidades: as runas de recarga dão valores negativos (ex.: -0,09 = 9% mais rápido).
+func _cooldown_scale() -> float:
+	return maxf(0.4, 1.0 + float(rune_bonus.get("cooldown", 0.0)))
+
+## O dano do jogo é em pontos inteiros; a runa de dano vira chance de um golpe forte (2 pontos).
+func _hit_amount() -> int:
+	return 2 if randf() < float(rune_bonus.get("damage", 0.0)) else 1

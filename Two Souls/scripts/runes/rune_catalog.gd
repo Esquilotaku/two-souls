@@ -9,12 +9,12 @@ const UPGRADE_COSTS := {1: 3, 2: 6} # custo para passar do nível indicado ao pr
 const RUNES := {
 	"onca": {"name": "Runa da Onça", "effect": "Velocidade de dash", "bonus": "dash_speed", "values": [0.12, 0.20, 0.30]},
 	"curupira": {"name": "Runa do Curupira", "effect": "Velocidade de movimento", "bonus": "move_speed", "values": [0.06, 0.10, 0.15]},
-	"boitata": {"name": "Runa do Boitatá", "effect": "Dano", "bonus": "damage", "values": [0.08, 0.14, 0.22]},
-	"iara": {"name": "Runa da Iara", "effect": "Magia máxima", "bonus": "max_magic", "values": [5, 10, 16]},
-	"mapinguari": {"name": "Runa do Mapinguari", "effect": "Vida máxima", "bonus": "max_health", "values": [8, 14, 22]},
+	"boitata": {"name": "Runa do Boitatá", "effect": "Chance de golpe forte", "bonus": "damage", "values": [0.08, 0.14, 0.22]},
+	"iara": {"name": "Runa da Iara", "effect": "Magia máxima", "bonus": "max_magic", "values": [1, 2, 3]},
+	"mapinguari": {"name": "Runa do Mapinguari", "effect": "Vida máxima", "bonus": "max_health", "values": [1, 1, 2]},
 	"saci": {"name": "Runa do Saci", "effect": "Recarga das habilidades", "bonus": "cooldown", "values": [-0.05, -0.09, -0.14]},
 	"tatu": {"name": "Runa do Tatu", "effect": "Fôlego máximo", "bonus": "stamina", "values": [5, 9, 14]},
-	"gaviaoreal": {"name": "Runa do Gavião-real", "effect": "Dano da lança", "bonus": "damage", "values": [0.06, 0.11, 0.18]},
+	"gaviaoreal": {"name": "Runa do Gavião-real", "effect": "Chance de golpe forte", "bonus": "damage", "values": [0.06, 0.11, 0.18]},
 	"jiboia": {"name": "Runa da Jiboia", "effect": "Recarga da magia", "bonus": "cooldown", "values": [-0.04, -0.08, -0.12]},
 	"mboi": {"name": "Runa do Mboi-tatá", "effect": "Desbloqueia um combo extra", "bonus": "combo", "values": [1, 1, 1]}
 }

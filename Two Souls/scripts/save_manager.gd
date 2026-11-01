@@ -96,9 +96,9 @@ static func _is_valid(data: Dictionary) -> bool:
 		return false
 	if not _is_id_list(data.get("defeated_bosses"), WorldMap.BOSSES.keys()):
 		return false
-	if int(data["health"]) < 1 or int(data["health"]) > 6:
+	if int(data["health"]) < 1 or int(data["health"]) > 12:
 		return false
-	if int(data["magic"]) < 0 or int(data["magic"]) > 6:
+	if int(data["magic"]) < 0 or int(data["magic"]) > 12:
 		return false
 	if int(data["level"]) < 1 or int(data["experience"]) < 0 or int(data["experience_to_next"]) < 1:
 		return false
@@ -107,6 +107,8 @@ static func _is_valid(data: Dictionary) -> bool:
 	for field in ["rock_recruited", "twin_magic"]:
 		if typeof(data.get(field)) != TYPE_BOOL:
 			return false
+	if data.has("runes") and typeof(data["runes"]) != TYPE_DICTIONARY:
+		return false
 	var inventory: Variant = data.get("inventory")
 	if typeof(inventory) != TYPE_DICTIONARY:
 		return false
