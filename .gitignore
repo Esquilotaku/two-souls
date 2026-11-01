@@ -1,0 +1,16 @@
+# Cache do Godot (recriado ao abrir o projeto)
+.godot/
+*.import.tmp
+
+# Engine e instaladores (baixáveis de novo, grandes demais pro repositório)
+tools/
+*.zip
+
+# Builds exportados
+builds/
+export/
+*.pck
+
+# Lixo do sistema
+Thumbs.db
+desktop.ini
