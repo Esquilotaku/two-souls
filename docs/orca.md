@@ -36,9 +36,15 @@
 - `codex --version` → 0.166.0; `codex login status` → logado com ChatGPT (usa o mesmo `~/.codex` do app); `codex doctor` → 0 falhas. Os avisos são opcionais: exclusão do Codex no Microsoft Defender e Dev Drive.
 - O planejador do Orca (`orca skills install --dry-run`) não cria link em `~/.codex/skills`; ele conta com o Codex lendo a pasta compartilhada `~/.agents/skills`.
 
+## Teste final (01/11/2026)
+
+- O Gabriel liberou scripts no PowerShell só para o usuário dele: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`, conferido com `Get-ExecutionPolicy`.
+- `orca agent launch --agent codex` abriu o Codex 0.166.0 em `F:\GAME`. Ele respondeu que tem a skill `orchestration`, carregada de `C:/Users/Gabriel/.agents/skills/orchestration/SKILL.md`.
+- **Atenção:** o Orca abriu o Codex em **"YOLO mode"**, sem pedir aprovação de comandos e sem sandbox. Antes de dar tarefas de escrita ao Codex pelo Orca, decidir se isso fica assim, ver nas configurações de agentes do Orca, e manter tudo em branch `codex/...`.
+
 ## Não verificado
 
-- Se o Codex enxerga a skill em `~/.agents/skills` de fato: falta abrir uma sessão do Codex e perguntar.
-- Se o Orca abre o Codex agora que o comando existe. Teste de 01/11/2026: `orca agent launch --agent codex` abriu o terminal, mas o PowerShell bloqueou o `codex.ps1` do npm ("a execução de scripts foi desabilitada", política de execução do Windows). Saídas: trocar o shell do Orca para Prompt de Comando ou Git Bash (usam `codex.cmd`), ou o Gabriel liberar scripts do usuário no PowerShell. Isso é uma configuração de segurança, então quem decide e faz é ele.
+- Um ciclo completo de orquestração: o Claude cria a tarefa, o Codex trabalha e manda `worker_done`, e o Claude recebe.
+- Primeira tentativa, antes da liberação do PowerShell: `orca agent launch --agent codex` abriu o terminal, mas o PowerShell bloqueou o `codex.ps1` do npm ("a execução de scripts foi desabilitada", política de execução do Windows). Saídas: trocar o shell do Orca para Prompt de Comando ou Git Bash (usam `codex.cmd`), ou o Gabriel liberar scripts do usuário no PowerShell. Isso é uma configuração de segurança, então quem decide e faz é ele.
 - Um ciclo completo (Claude coordena e Codex entrega `worker_done`) ainda não foi testado.
 - A telemetria continuava ligada até o fim desta sessão: o Gabriel não achou a opção na configuração inicial.

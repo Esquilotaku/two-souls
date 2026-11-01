@@ -142,7 +142,7 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   - a O.1 está marcada como feita no quadro.
 - **Verificado:** `orca status` ok, a skill aparece no Claude Code, e `orca skills get orchestration` e `orca orchestration run-list` funcionam.
 - **Não verificado:**
-  - se o Codex enxerga a skill (ela está em `~/.agents/skills`, sem link em `~/.codex/skills`). Depois disso foi instalado o **Codex CLI 0.166.0** (`npm -g @openai/codex`): logado com ChatGPT e `codex doctor` sem falhas. Ainda falta abrir o Codex pelo Orca;
+  - se o Codex enxerga a skill (ela está em `~/.agents/skills`, sem link em `~/.codex/skills`). Depois disso foi instalado o **Codex CLI 0.166.0** (`npm -g @openai/codex`): logado com ChatGPT e `codex doctor` sem falhas. Depois de o Gabriel liberar scripts no PowerShell (RemoteSigned, só o usuário dele), o Orca abriu o Codex e ele **confirmou que vê a skill** em `~/.agents/skills`. O Orca abre o Codex em "YOLO mode", sem aprovação de comandos (ver `docs/orca.md`);
   - um ciclo completo Claude → Codex → `worker_done`;
   - a telemetria do Orca continua **ligada**: o Gabriel precisa desligar em Settings → Privacy.
 - **Fora do git:** a pasta `txt/` (notas do Gabriel) continua sem commit; falta decidir se entra.
