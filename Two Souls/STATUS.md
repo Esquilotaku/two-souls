@@ -236,3 +236,9 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - **Não verificado:** ninguém jogou a versão nova. Pulo pelas passagens do teto foi testado por script, não com a mão. Balanceamento das runas é provisório.
 - **Organização das pastas:** inventário feito (148 arquivos, 336 MB, na Área de Trabalho do Gabriel). Plano proposto, nada movido ainda: espera o ok do Gabriel.
 - **Próximo passo:** o Gabriel joga; aprovar o plano de pastas; minimapa (1.4), relógio e modos (1.5), mecânicas reais dos bloqueios (1.7) e salas desenhadas à mão região por região.
+## Ponto de retomada — 01/11/2026 (Codex, avaliação MetSys)
+
+- Criada a avaliação em `docs/tecnico/avaliacao-metsys.md`, com comparação ao mundo atual, fontes oficiais, compatibilidade declarada e recomendação parcial para Gabriel decidir.
+- MetSys não foi instalado; nenhum arquivo de código do jogo foi alterado. Apenas este STATUS, `docs/TAREFAS.md` e o documento de avaliação fazem parte desta tarefa.
+- Não foi verificada a compatibilidade do addon no Godot 4.7.2 nem foi rodada verificação do jogo; esta tarefa foi de leitura e documentação. A compatibilidade real permanece a confirmar em cópia isolada, caso Gabriel decida avaliar uma adoção.
+- Tarefa O.4 aguarda Gabriel ler `docs/tecnico/avaliacao-metsys.md` e decidir se quer protótipo do editor de mapa/minimapa.
