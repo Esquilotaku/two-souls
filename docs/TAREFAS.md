@@ -32,7 +32,7 @@ A ordem segue os marcos do `docs/plano-de-negocio.md`, seção 6.
 |---|---|---|---|---|
 | A.1 | Folha de estilo do Orion em 640×360 (paleta, altura de 64 a 80 px, contorno, formas animais pretas com verde) | Gabriel + Claude | feito (01/11/2026) | `docs/folha-de-estilo-orion.md` |
 | A.2 | Exportar os PSDs originais para PNG, como referência | Gabriel | livre | AGENTS.md, seção Aseprite |
-| A.3 | Orion básico no Aseprite (parado, correndo, pulando, atacando) e ligar no `player.gd` | Gabriel + Codex | em andamento (Codex, codex/orion-basico) | AGENTS.md, seção Aseprite |
+  | A.3 | Orion básico no Aseprite (parado, correndo, pulando, atacando) e ligar no `player.gd` | Gabriel + Codex | esperando Gabriel | AGENTS.md, seção Aseprite |
 
 ## Organização e decisões pendentes
 

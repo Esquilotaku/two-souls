@@ -171,3 +171,13 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - A CLI Aseprite criou o esqueleto `Two Souls/art/orion.aseprite` com 29 quadros e seis tags, mas não abriu os PNGs para montagem. A conversão pela interface foi iniciada, mas só o rascunho idle virou `.aseprite`; o run ficou aberto para salvar. O arquivo atual de destino ainda não tem os sprites desenhados.
 - **Não verificado/não feito:** desenho final e indexação dos quadros, export `orion.png`/`orion.json`, integração no player, tratamento de `repeat`, testes Godot e de frames, execução do jogo, push e Actions.
 - **Próximo passo:** retomar a conversão/montagem das folhas no Aseprite, conferir a paleta e os pivôs e só então integrar e rodar as verificações. A arte precisa ser mostrada ao Gabriel; a A.3 deve passar a “esperando Gabriel” depois da conclusão técnica.
+
+## Ponto de retomada — 01/11/2026 (Codex, A.3 concluída para revisão)
+
+- Branch `codex/orion-basico`, criado sobre `claude/folha-estilo`. A A.3 está em **esperando Gabriel** para revisar a arte.
+- Usei 6 imagens geradas pela ferramenta integrada do ChatGPT/Codex; nenhuma chave de API nem serviço cobrado. As seis folhas PNG brutas estão em `Two Souls/art/rascunhos/`, junto da ilustração antiga preservada como `orion-ilustracao-antiga.aseprite`.
+- `Two Souls/art/orion.aseprite` agora tem 29 quadros 128×96, em modo indexado com a paleta aprovada, seis tags e contorno externo de 1 px. `assets/sprites/orion.png` e `orion.json` foram exportados; o JSON confirma idle/run/jump/fall/attack/dash com 6/8/3/2/6/4 quadros.
+- `player.gd` usa `AnimatedSprite2D`, escolhe idle/run/jump/fall/attack, espelha pela direção e alinha o pivô (64,88) ao pé da colisão. A função `start_dash_animation()` fornece a entrada visual para dash; o protótipo ainda não tinha ação/estado de dash existente para chamar essa função.
+- `aseprite_frames.gd` lê `repeat="1"` como animação sem loop e usa o loop padrão nas tags sem esse campo.
+- **Verificado:** após importar os recursos no editor headless, `Godot --headless --path "Two Souls" --quit` carregou sem erros; `tests/test_aseprite_frames.gd` passou (1 JSON, 0 falhas); o jogo rodou com `--quit-after 600` sem erro. A inspeção Aseprite confirmou 29 quadros, 3 camadas (`guia` oculta), 27 cores opacas usadas da paleta indexada e 6 tags com as faixas corretas.
+- **Pendente:** o Gabriel precisa avaliar a arte; não foi feita revisão visual dentro do jogo. Também falta enviar o branch e conferir o GitHub Actions. Se o dash for ativado no protótipo, ligar a ação de gameplay a `start_dash_animation()`.
