@@ -1,51 +1,34 @@
 extends Node2D
-## Main flow for the first playable production build.
+## Fluxo do jogo: título, mundo interligado em salas, santuários, save, HUD e menus.
+## O mapa e as salas vêm de WorldMap e WorldRoom (docs/plano-tecnico-mundo.md).
 
-const LEVEL_WIDTH := 2700.0
-const FLOOR_Y := 304.0
 const DAY_CYCLE_REAL_SECONDS := 900.0
+const DOOR_COOLDOWN := 0.35
+const FADE_SECONDS := 0.12
 const TREE_ART = preload("res://assets/mother_tree_forest.png")
 const ORION_IDLE_TEXTURE = preload("res://assets/sprites/orion_idle.png")
 const AENIA_IDLE_TEXTURE = preload("res://assets/sprites/aenia_idle.png")
 const SAVE_MANAGER = preload("res://scripts/save_manager.gd")
-const CORRUPTION_BARRIER_SCRIPT = preload("res://scripts/corruption_barrier.gd")
-const ITEM_PICKUP_SCRIPT = preload("res://scripts/item_pickup.gd")
 const ITEM_CATALOG = preload("res://scripts/item_catalog.gd")
 const SKILL_CATALOG = preload("res://scripts/skill_catalog.gd")
 
-const STAGES := [
-	{"title":"Trilha da Raiz", "sub":"O guardião testa quem entra na floresta", "ground":"18363c", "grass":"6bc184", "glow":"72e6d0", "boss":"The Rock", "boss_id":"the_rock", "boss_hour":10.0, "boss_tier":"major"},
-	{"title":"Bosque das Lanternas", "sub":"Luzes perdidas entre as copas", "ground":"263849", "grass":"81bd76", "glow":"f5cb74", "boss":""},
-	{"title":"Ruínas Afogadas", "sub":"Raízes corrompidas fecham o caminho", "ground":"29343e", "grass":"67a99a", "glow":"64d4df", "boss":"Árvore Corrompida", "boss_id":"corrupted_tree", "boss_hour":18.0, "boss_tier":"major"},
-	{"title":"Garganta das Brumas", "sub":"A trilha desaparece na névoa", "ground":"263346", "grass":"8a9db5", "glow":"b5d9f3", "boss":""},
-	{"title":"Jardim de Vidro", "sub":"Espinhos cantam ao vento", "ground":"3b3042", "grass":"ba8c76", "glow":"f8b76e", "boss":""},
-	{"title":"Pântano das Cinzas", "sub":"A sentinela guarda a passagem", "ground":"34343a", "grass":"a28a62", "glow":"cfa06b", "boss":"Serpe do Brejo", "boss_id":"swamp_guardian", "boss_tier":"sub_boss"},
-	{"title":"Coração Corrompido", "sub":"A magia dos gêmeos volta a brilhar", "ground":"392c41", "grass":"a973a0", "glow":"cf96ff", "boss":""},
-	{"title":"Árvore Mãe", "sub":"A última noite de Monte Ligna", "ground":"202438", "grass":"795fc0", "glow":"80f6e9", "boss":"Feiticeiro Encapuzado", "boss_id":"hooded_sorcerer", "boss_hour":22.0, "boss_tier":"major"}
-]
-
-const PLATFORM_LAYOUTS := [
-	[[250, 250, 96], [478, 215, 88], [790, 255, 128], [1030, 224, 88], [1365, 246, 104], [1640, 208, 94], [1910, 250, 112]],
-	[[225, 242, 104], [450, 205, 92], [715, 234, 130], [970, 195, 110], [1240, 246, 94], [1510, 206, 120], [1855, 222, 100]],
-	[[245, 242, 112], [490, 205, 100], [755, 233, 96], [1000, 198, 128], [1330, 228, 102], [1620, 194, 105], [1870, 236, 115]],
-	[[210, 242, 96], [465, 215, 120], [775, 192, 90], [1020, 233, 114], [1340, 205, 100], [1590, 240, 125], [1870, 198, 96]],
-	[[248, 230, 102], [500, 193, 104], [750, 234, 120], [1010, 193, 86], [1290, 221, 100], [1560, 194, 108], [1880, 228, 112]],
-	[[230, 245, 116], [490, 210, 90], [745, 239, 122], [1030, 199, 100], [1320, 235, 104], [1610, 193, 110], [1890, 226, 120]],
-	[[215, 233, 100], [470, 197, 112], [760, 228, 94], [1020, 194, 108], [1300, 232, 116], [1580, 199, 92], [1880, 225, 120]],
-	[[235, 235, 112], [500, 197, 94], [770, 226, 120], [1040, 188, 96], [1320, 220, 112], [1600, 190, 118], [1910, 229, 110]]
-]
+## Habilidade de travessia -> talento do player.gd que ela libera.
+const ABILITY_SKILLS := {"spear_wall": "spear_throw", "super_punch": "super_punch"}
 
 var ui_layer: CanvasLayer
 var ui_root: Control
-var world: Node2D
+var fade_rect: ColorRect
+var world: WorldRoom
 var player: Orion
 var aenia_companion: Node2D
-var stage_index := 0
-var checkpoint_x := 72.0
-var checkpoint_marker := 0
-var boss_spawned := false
-var boss_defeated := false
-var current_boss_id := ""
+var room_id := ""
+var shrine_room := ""
+var visited_rooms: Dictionary = {}
+var activated_shrines: Dictionary = {}
+var abilities: Dictionary = {}
+var defeated_bosses: Dictionary = {}
+var day := 1
+var mode := "aventura"
 var rock_recruited := false
 var playing := false
 var paused := false
@@ -56,6 +39,8 @@ var skill_tree_open := false
 var skill_tree_returns_to_pause := false
 var respawn_timer := 0.0
 var message_timer := 0.0
+var door_cooldown := 0.0
+var transitioning := false
 var hud_health: Label
 var hud_magic: Label
 var hud_progress: Label
@@ -63,9 +48,6 @@ var hud_stage: Label
 var hud_objective: Label
 var hud_message: Label
 var hud_inventory_button: Button
-var glow_lights: Array[PointLight2D] = []
-var light_origins: Array[Vector2] = []
-var stage_start_time := 0.0
 var world_hour := 7.0
 var world_ambient: CanvasModulate
 var last_enemy_night_pressure := -1.0
@@ -110,30 +92,30 @@ func _process(delta: float) -> void:
 			_open_skill_tree(true)
 		elif not inventory_open:
 			_open_skill_tree(false)
-	if Input.is_action_just_pressed("interact") and playing and not paused and player and is_instance_valid(player) and player.health > 0 and aenia_companion and is_instance_valid(aenia_companion) and player.global_position.distance_to(aenia_companion.global_position) <= 88.0:
-		_open_aenia_dialogue()
+	if not playing or paused or transitioning:
 		return
-	if not playing or paused:
+	if not player or not is_instance_valid(player) or not world or not is_instance_valid(world):
 		return
+	if Input.is_action_just_pressed("interact") and player.health > 0:
+		if _try_shrine():
+			return
+		if aenia_companion and is_instance_valid(aenia_companion) and player.global_position.distance_to(aenia_companion.global_position) <= 120.0:
+			_open_aenia_dialogue()
+			return
 	_advance_world_time(delta)
 	message_timer = maxf(0.0, message_timer - delta)
 	if message_timer <= 0.0 and hud_message:
 		hud_message.text = ""
-	if player and is_instance_valid(player):
-		_update_aenia_companion(delta)
-		for i in range(glow_lights.size()):
-			var light := glow_lights[i]
-			light.position.y = light_origins[i].y + sin(Time.get_ticks_msec() * 0.0017 + i * 2.1) * 5.0
-			light.energy = 0.9 + sin(Time.get_ticks_msec() * 0.0024 + i) * 0.18
-		if player.health <= 0:
-			respawn_timer += delta
-			if respawn_timer >= 1.0:
-				_respawn_player()
-		_check_checkpoints()
-		_check_boss_trigger()
-		if player.global_position.x >= LEVEL_WIDTH - 88.0 and (STAGES[stage_index].boss == "" or boss_defeated):
-			_clear_stage()
-		_update_hud()
+	door_cooldown = maxf(0.0, door_cooldown - delta)
+	_update_aenia_companion(delta)
+	if player.health <= 0:
+		respawn_timer += delta
+		if respawn_timer >= 1.0:
+			_respawn_player()
+		return
+	_check_altar()
+	_check_doors()
+	_update_hud()
 
 func _create_ui() -> void:
 	ui_layer = CanvasLayer.new()
@@ -143,6 +125,16 @@ func _create_ui() -> void:
 	ui_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	ui_root.mouse_filter = Control.MOUSE_FILTER_PASS
 	ui_layer.add_child(ui_root)
+	# Camada própria para escurecer a tela na troca de sala, acima dos menus.
+	var fade_layer := CanvasLayer.new()
+	fade_layer.layer = 10
+	fade_layer.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(fade_layer)
+	fade_rect = ColorRect.new()
+	fade_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	fade_rect.color = Color(0.0, 0.0, 0.0, 0.0)
+	fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fade_layer.add_child(fade_rect)
 
 func _configure_controls() -> void:
 	_bind_keys("move_left", [KEY_A, KEY_LEFT])
@@ -231,7 +223,7 @@ func _show_title() -> void:
 	var how := _button("COMO JOGAR")
 	how.pressed.connect(_show_controls)
 	buttons.add_child(how)
-	var footer := _label("A / D ou setas  ·  Espaço pula  ·  J ataca  ·  K magia", 11, Color("bed2d6"), HORIZONTAL_ALIGNMENT_CENTER)
+	var footer := _label("A / D ou setas  ·  Espaço pula  ·  J ataca  ·  K magia  ·  E santuário", 11, Color("bed2d6"), HORIZONTAL_ALIGNMENT_CENTER)
 	footer.position = Vector2(20, 333)
 	footer.size = Vector2(600, 18)
 	ui_root.add_child(footer)
@@ -282,7 +274,7 @@ func _show_controls() -> void:
 	title.position = Vector2(90, 42)
 	title.size = Vector2(460, 48)
 	ui_root.add_child(title)
-	var text := _label("Mova Orion com A/D ou as setas.\nPule com Espaço, W ou seta para cima.\nAtaque com J/X; magia com K/C.\nLança L e super soco U após aprendê-los.\nE conversa com Aenia após o resgate.\nI abre a bolsa; T abre talentos; Esc pausa.\nRecolha essência, itens e pontos de talento.", 14, Color("d8e9e4"), HORIZONTAL_ALIGNMENT_CENTER)
+	var text := _label("Mova Orion com A/D ou as setas.\nPule com Espaço, W ou seta para cima.\nAtaque com J/X; magia com K/C.\nLança L e super soco U depois de ganhá-los.\nE ativa santuários e fala com Aenia.\nBlocos laranja pedem uma habilidade.\nI abre a bolsa; T abre talentos; Esc pausa.", 14, Color("d8e9e4"), HORIZONTAL_ALIGNMENT_CENTER)
 	text.position = Vector2(100, 112)
 	text.size = Vector2(440, 172)
 	ui_root.add_child(text)
@@ -293,23 +285,18 @@ func _show_controls() -> void:
 	ui_root.add_child(back)
 
 func _start_new_game() -> void:
-	stage_index = 0
 	rock_recruited = false
 	world_hour = 7.0
+	day = 1
+	mode = "aventura"
 	last_enemy_night_pressure = -1.0
-	checkpoint_x = 72.0
-	checkpoint_marker = 0
-	if player and is_instance_valid(player):
-		player.queue_free()
-	player = null
-	playing = true
-	paused = false
-	inventory_open = false
-	skill_tree_open = false
-	get_tree().paused = false
-	respawn_timer = 0.0
-	_create_player()
-	_build_stage()
+	shrine_room = ""
+	visited_rooms.clear()
+	activated_shrines.clear()
+	abilities.clear()
+	defeated_bosses.clear()
+	_begin_play()
+	_enter_room(WorldMap.START_ROOM, "")
 	_apply_world_time(true)
 	_show_hud()
 	if _save_campaign():
@@ -322,18 +309,17 @@ func _continue_game() -> void:
 	if save_data.is_empty():
 		_show_title()
 		return
-	stage_index = int(save_data["stage_index"])
 	rock_recruited = bool(save_data["rock_recruited"])
 	world_hour = fposmod(float(save_data.get("world_hour", 7.0)), 24.0)
+	day = int(save_data["day"])
+	mode = str(save_data["mode"])
 	last_enemy_night_pressure = -1.0
-	if player and is_instance_valid(player):
-		player.queue_free()
-	player = null
-	playing = true
-	paused = false
-	get_tree().paused = false
-	respawn_timer = 0.0
-	_create_player()
+	shrine_room = str(save_data["shrine_room"])
+	visited_rooms = _to_set(save_data["visited_rooms"])
+	activated_shrines = _to_set(save_data["activated_shrines"])
+	abilities = _to_set(save_data["abilities"])
+	defeated_bosses = _to_set(save_data["defeated_bosses"])
+	_begin_play()
 	player.set_skill_state(int(save_data.get("skill_points", 0)), save_data.get("unlocked_skills", []))
 	player.health = clampi(int(save_data["health"]), 1, player.max_health)
 	player.magic = clampi(int(save_data["magic"]), 0, player.max_magic)
@@ -343,20 +329,33 @@ func _continue_game() -> void:
 	player.twin_magic = bool(save_data["twin_magic"])
 	player.set_inventory(save_data.get("inventory", {}))
 	player.set_collected_pickups(save_data.get("collected_pickups", []))
-	_build_stage()
+	_sync_player_abilities()
+	# A campanha sempre recomeça no último santuário ativado (ou no início da Clareira).
+	if shrine_room != "" and WorldMap.has_room(shrine_room):
+		_enter_room(shrine_room, "", true)
+	else:
+		_enter_room(WorldMap.START_ROOM, "")
 	_apply_world_time(true)
-	checkpoint_x = clampf(float(save_data["checkpoint_x"]), 72.0, LEVEL_WIDTH - 88.0)
-	checkpoint_marker = clampi(int(save_data["checkpoint_marker"]), 0, 2)
-	player.global_position = Vector2(checkpoint_x, FLOOR_Y - 33.0)
-	boss_defeated = bool(save_data["boss_defeated"])
-	boss_spawned = boss_defeated
 	_show_hud()
 	_show_message("Campanha retomada no último santuário", 3.0)
+
+func _begin_play() -> void:
+	if player and is_instance_valid(player):
+		player.queue_free()
+	player = null
+	playing = true
+	paused = false
+	inventory_open = false
+	skill_tree_open = false
+	transitioning = false
+	fade_rect.color.a = 0.0
+	get_tree().paused = false
+	respawn_timer = 0.0
+	_create_player()
 
 func _create_player() -> void:
 	player = Orion.new()
 	player.process_mode = Node.PROCESS_MODE_PAUSABLE
-	player.position = Vector2(72, FLOOR_Y - 33)
 	player.health_changed.connect(_on_health_changed)
 	player.leveled_up.connect(_on_level_up)
 	player.defeated.connect(_on_player_defeated)
@@ -364,256 +363,210 @@ func _create_player() -> void:
 	player.item_added.connect(_on_item_added)
 	player.skills_changed.connect(_on_skills_changed)
 	add_child(player)
+	_sync_player_abilities()
 
-func _build_stage() -> void:
+func _to_set(values: Variant) -> Dictionary:
+	var result := {}
+	if typeof(values) == TYPE_ARRAY:
+		for value in values:
+			result[str(value)] = true
+	return result
+
+# --- Salas ---
+
+## Troca a sala atual. Com door_id vazio, o jogador aparece no santuário (at_shrine) ou no início da sala.
+func _enter_room(next_room: String, door_id: String, at_shrine: bool = false) -> void:
 	if world and is_instance_valid(world):
 		remove_child(world)
 		world.queue_free()
 	aenia_companion = null
-	world = Node2D.new()
+	room_id = next_room
+	visited_rooms[room_id] = true
+	world = WorldRoom.new()
 	world.process_mode = Node.PROCESS_MODE_PAUSABLE
 	add_child(world)
-	move_child(world, 0)
-	var stage: Dictionary = STAGES[stage_index]
-	boss_spawned = false
-	boss_defeated = false
-	current_boss_id = ""
-	checkpoint_x = 72.0
-	checkpoint_marker = 0
-	respawn_timer = 0.0
-	stage_start_time = Time.get_ticks_msec() / 1000.0
-	player.position = Vector2(72, FLOOR_Y - 33)
+	move_child(world, 1)
+	world.build(room_id, abilities, defeated_bosses, activated_shrines, player.has_collected_pickup)
+	var arrival := world.spawn_point()
+	if door_id != "":
+		arrival = world.arrival_point(door_id)
+	elif at_shrine:
+		arrival = world.shrine_point()
+	player.global_position = arrival
 	player.velocity = Vector2.ZERO
 	player.active = true
-	var palette_index := stage_index
-	_add_background(stage, palette_index)
-	_add_terrain(stage)
-	_add_platforms(stage_index, stage)
-	_add_portal(stage)
-	_add_enemies(stage_index)
-	_add_item_pickups(stage_index)
+	respawn_timer = 0.0
+	player.fall_limit_y = world.size_px.y + 120.0
+	var camera: Camera2D = player.get_node("Camera2D")
+	camera.limit_left = 0
+	camera.limit_top = 0
+	camera.limit_right = int(world.size_px.x)
+	camera.limit_bottom = int(world.size_px.y)
+	camera.reset_smoothing()
+	if world.boss:
+		_start_boss(world.boss)
 	if rock_recruited:
 		_add_rock_companion()
 	if player.twin_magic:
 		_add_aenia_companion()
-	_add_checkpoint_lights()
-	player.get_node("Camera2D").limit_right = int(LEVEL_WIDTH)
-	player.get_node("Camera2D").reset_smoothing()
-	if hud_stage:
-		hud_stage.text = "%02d  ·  %s" % [stage_index + 1, stage.title]
-	if hud_objective:
-		hud_objective.text = "" if stage.boss == "" else "DERROTE: " + stage.boss.to_upper()
+	_apply_world_time(true)
+	door_cooldown = DOOR_COOLDOWN
 	_update_hud()
 
-func _add_background(stage: Dictionary, palette_index: int) -> void:
-	var far := Parallax2D.new()
-	far.scroll_scale = Vector2(0.075, 0.0)
-	far.repeat_size = Vector2.ZERO
-	far.z_index = -100
-	world.add_child(far)
-	var art := Sprite2D.new()
-	art.centered = false
-	art.texture = TREE_ART
-	art.position = Vector2(-22, -28)
-	art.scale = Vector2(0.61, 0.42)
-	art.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	var tints := [Color("a7c5d8"), Color("c1bfc2"), Color("a9bec4"), Color("b6c0da"), Color("d8b7a5"), Color("c8b9a4"), Color("b99fcb"), Color("98ced2")]
-	art.modulate = tints[palette_index]
-	far.add_child(art)
-	_add_forest_layer(0, 0.15, -82, Color("273d65"), Color("678db7"))
-	_add_forest_layer(1, 0.29, -62, Color("1b4056"), Color("70aeb3"))
-	_add_forest_layer(2, 0.48, -42, Color("163e42"), Color("5bb39b"))
-	_add_forest_layer(3, 0.78, -22, Color("152c35"), Color(stage.glow))
-	var modulate := CanvasModulate.new()
-	modulate.color = Color("d8edff") if stage_index < 2 else Color("bdc3e6")
-	world.add_child(modulate)
-	_add_glow_lights(stage)
-
-func _add_forest_layer(index: int, scroll: float, z: int, tint: Color, accent: Color) -> void:
-	var parallax := Parallax2D.new()
-	parallax.scroll_scale = Vector2(scroll, 0.0)
-	parallax.repeat_size = Vector2(960.0, 0.0)
-	parallax.z_index = z
-	world.add_child(parallax)
-	var painter := ForestLayerPainter.new()
-	painter.layer_index = index
-	painter.tint = tint
-	painter.accent = accent
-	parallax.add_child(painter)
-
-func _add_glow_lights(stage: Dictionary) -> void:
-	glow_lights.clear()
-	light_origins.clear()
-	var texture := _make_glow_texture()
-	var random := RandomNumberGenerator.new()
-	random.seed = 900 + stage_index * 49
-	for i in range(13):
-		var light := PointLight2D.new()
-		light.texture = texture
-		light.color = Color(stage.glow)
-		light.energy = random.randf_range(0.65, 1.0)
-		light.texture_scale = random.randf_range(1.4, 2.6)
-		light.position = Vector2(random.randf_range(60, LEVEL_WIDTH - 80), random.randf_range(145, 280))
-		light.z_index = -10
-		world.add_child(light)
-		glow_lights.append(light)
-		light_origins.append(light.position)
-
-func _make_glow_texture() -> Texture2D:
-	var image := Image.create(64, 64, false, Image.FORMAT_RGBA8)
-	for y in range(64):
-		for x in range(64):
-			var distance := Vector2(x - 31.5, y - 31.5).length() / 32.0
-			var alpha := clampf(1.0 - distance, 0.0, 1.0)
-			alpha = alpha * alpha * (3.0 - 2.0 * alpha)
-			image.set_pixel(x, y, Color(1, 1, 1, alpha))
-	return ImageTexture.create_from_image(image)
-
-func _add_terrain(stage: Dictionary) -> void:
-	var terrain := TerrainPainter.new()
-	terrain.world_width = LEVEL_WIDTH
-	terrain.floor_y = FLOOR_Y
-	terrain.ground = Color(stage.ground)
-	terrain.grass = Color(stage.grass)
-	terrain.glow = Color(stage.glow)
-	terrain.z_index = -5
-	world.add_child(terrain)
-	var floor := StaticBody2D.new()
-	floor.position = Vector2(LEVEL_WIDTH * 0.5, FLOOR_Y + 80.0)
-	var collision := CollisionShape2D.new()
-	var shape := RectangleShape2D.new()
-	shape.size = Vector2(LEVEL_WIDTH + 40.0, 160.0)
-	collision.shape = shape
-	floor.add_child(collision)
-	world.add_child(floor)
-
-func _add_platforms(index: int, stage: Dictionary) -> void:
-	for item in PLATFORM_LAYOUTS[index]:
-		_add_platform(float(item[0]), float(item[1]), float(item[2]), stage)
-	# Low roots and raised paths break up long stretches of flat ground.
-	_add_platform(680, FLOOR_Y - 14, 74, stage, 13)
-	_add_platform(1150, FLOOR_Y - 17, 58, stage, 16)
-	_add_platform(1775, FLOOR_Y - 13, 86, stage, 12)
-
-func _add_platform(x: float, y: float, width: float, stage: Dictionary, height: float = 14.0) -> void:
-	var body := StaticBody2D.new()
-	body.position = Vector2(x + width * 0.5, y)
-	var collision := CollisionShape2D.new()
-	var shape := RectangleShape2D.new()
-	shape.size = Vector2(width, height)
-	collision.shape = shape
-	body.add_child(collision)
-	var color := Color(stage.ground).lightened(0.22)
-	var top := Polygon2D.new()
-	top.polygon = PackedVector2Array([
-		Vector2(-width * 0.5, -height * 0.5), Vector2(width * 0.5, -height * 0.5),
-		Vector2(width * 0.5, height * 0.5), Vector2(-width * 0.5, height * 0.5)
-	])
-	top.color = color
-	body.add_child(top)
-	var rim := Polygon2D.new()
-	rim.polygon = PackedVector2Array([
-		Vector2(-width * 0.5, -height * 0.5), Vector2(width * 0.5, -height * 0.5),
-		Vector2(width * 0.5, -height * 0.5 + 3), Vector2(-width * 0.5, -height * 0.5 + 3)
-	])
-	rim.color = Color(stage.grass)
-	body.add_child(rim)
-	world.add_child(body)
-
-func _add_portal(stage: Dictionary) -> void:
-	var portal := Node2D.new()
-	portal.position = Vector2(LEVEL_WIDTH - 48.0, FLOOR_Y - 25.0)
-	portal.z_index = -2
-	var arch := Polygon2D.new()
-	arch.polygon = PackedVector2Array([
-		Vector2(-27, 25), Vector2(-27, -11), Vector2(-21, -22), Vector2(-11, -29),
-		Vector2(11, -29), Vector2(21, -22), Vector2(27, -11), Vector2(27, 25)
-	])
-	arch.color = Color(stage.glow).darkened(0.15)
-	portal.add_child(arch)
-	var core := Polygon2D.new()
-	core.polygon = PackedVector2Array([Vector2(-19, 25), Vector2(-19, -9), Vector2(-12, -19), Vector2(0, -23), Vector2(13, -18), Vector2(19, -8), Vector2(19, 25)])
-	core.color = Color("d5fff0")
-	core.modulate.a = 0.7
-	portal.add_child(core)
-	var shadow := Polygon2D.new()
-	shadow.polygon = PackedVector2Array([Vector2(-16, 22), Vector2(-16, -7), Vector2(-9, -15), Vector2(0, -18), Vector2(10, -14), Vector2(16, -5), Vector2(16, 22)])
-	shadow.color = Color("284462")
-	portal.add_child(shadow)
-	world.add_child(portal)
-	var light := PointLight2D.new()
-	light.texture = _make_glow_texture()
-	light.color = Color(stage.glow)
-	light.energy = 1.5
-	light.texture_scale = 2.0
-	light.position = portal.position + Vector2(0, -6)
-	world.add_child(light)
-
-func _add_enemies(index: int) -> void:
-	if index == 2:
-		var barrier: StaticBody2D = CORRUPTION_BARRIER_SCRIPT.new()
-		barrier.position = Vector2(640.0, FLOOR_Y - 48.0)
-		barrier.process_mode = Node.PROCESS_MODE_PAUSABLE
-		world.add_child(barrier)
-	var positions := [410.0, 910.0, 1310.0, 1790.0, 2170.0]
-	for i in range(positions.size()):
-		var enemy := ForestFoe.new()
-		enemy.drop_id = "stage_%02d_foe_%02d" % [index + 1, i + 1]
-		enemy.position = Vector2(positions[i] + float(index % 3) * 24.0, FLOOR_Y - 10.0)
-		enemy.speed = 27.0 + float((index + i) % 3) * 5.0
-		enemy.patrol_span = 74.0 + float((i % 2) * 40)
-		if index == 0 and (i == 1 or i == 3):
-			enemy.ranged = true
-			enemy.tribal = true
-		enemy.process_mode = Node.PROCESS_MODE_PAUSABLE
-		world.add_child(enemy)
-		enemy.set_time_difficulty(_night_pressure())
-		if i == 1 or i == 3:
-			var high_enemy := ForestFoe.new()
-			high_enemy.drop_id = "stage_%02d_foe_%02d_upper" % [index + 1, i + 1]
-			high_enemy.position = Vector2(positions[i] + 38.0, 205.0)
-			high_enemy.speed = 18.0
-			high_enemy.patrol_span = 50.0
-			world.add_child(high_enemy)
-			high_enemy.set_time_difficulty(_night_pressure())
-
-func _add_item_pickups(index: int) -> void:
-	_add_item_pickup("luminous_herb", Vector2(570.0, FLOOR_Y - 22.0), "stage_%02d_herb" % (index + 1))
-	_add_item_pickup("mana_seed", Vector2(1510.0 + float(index % 2) * 90.0, FLOOR_Y - 22.0), "stage_%02d_mana" % (index + 1))
-
-func _add_item_pickup(item_id: String, at: Vector2, pickup_id: String) -> void:
-	if player.has_collected_pickup(pickup_id):
+func _check_doors() -> void:
+	if door_cooldown > 0.0:
 		return
-	var pickup: ItemPickup = ITEM_PICKUP_SCRIPT.new()
-	pickup.item_id = item_id
-	pickup.pickup_id = pickup_id
-	pickup.position = at
-	pickup.process_mode = Node.PROCESS_MODE_PAUSABLE
-	world.add_child(pickup)
+	for trigger in world.door_triggers:
+		if (trigger["rect"] as Rect2).has_point(player.global_position):
+			var entry: Dictionary = trigger["door"]
+			if entry.has("gate") and not abilities.has(entry["gate"]):
+				continue
+			_go_through_door(entry["to"], entry["to_door"])
+			return
+
+func _go_through_door(next_room: String, door_id: String) -> void:
+	transitioning = true
+	player.active = false
+	var keep_velocity_x := player.velocity.x
+	var tween := create_tween()
+	tween.tween_property(fade_rect, "color:a", 1.0, FADE_SECONDS)
+	await tween.finished
+	_enter_room(next_room, door_id)
+	player.velocity.x = keep_velocity_x
+	var back := create_tween()
+	back.tween_property(fade_rect, "color:a", 0.0, FADE_SECONDS)
+	await back.finished
+	transitioning = false
+
+func _check_altar() -> void:
+	if world.altar_rect.size == Vector2.ZERO or not world.altar_rect.has_point(player.global_position):
+		return
+	var ability: String = world.data["grants"]
+	world.altar_rect = Rect2()
+	var altar := world.get_node_or_null("Altar")
+	if altar:
+		altar.queue_free()
+	_grant_ability(ability)
+
+func _grant_ability(ability: String) -> void:
+	if abilities.has(ability):
+		return
+	abilities[ability] = true
+	_sync_player_abilities()
+	world.refresh_gates(abilities)
+	var saved := _save_campaign()
+	var message := "Nova habilidade: %s" % WorldMap.ABILITIES.get(ability, ability)
+	if not saved:
+		message += " · não foi possível salvar"
+	_show_message(message, 3.6)
+
+## Liga as habilidades de travessia ao player: talentos equivalentes e o pulo duplo do gavião.
+func _sync_player_abilities() -> void:
+	if not player:
+		return
+	player.double_jump = abilities.has("gaviao")
+	var learned: Array = player.get_unlocked_skill_ids()
+	var changed := false
+	for ability in ABILITY_SKILLS:
+		if abilities.has(ability) and not learned.has(ABILITY_SKILLS[ability]):
+			learned.append(ABILITY_SKILLS[ability])
+			changed = true
+	if changed:
+		player.set_skill_state(player.skill_points, learned)
+
+# --- Santuários ---
+
+func _try_shrine() -> bool:
+	var shrine := world.shrine
+	if not shrine or not shrine.is_player_near(player.global_position):
+		return false
+	if not shrine.active:
+		shrine.active = true
+		activated_shrines[room_id] = true
+		shrine_room = room_id
+		player.restore(99)
+		_show_message("Santuário ativado · campanha salva" if _save_campaign() else "Santuário ativado, mas a gravação falhou.", 3.0)
+	else:
+		# Descansar: salva, enche vida e magia e faz os inimigos voltarem (a sala é montada de novo).
+		shrine_room = room_id
+		player.restore(99)
+		var saved := _save_campaign()
+		_enter_room(room_id, "", true)
+		_show_message("Você descansou · os inimigos voltaram" if saved else "Você descansou, mas a gravação falhou.", 3.0)
+	return true
+
+func _respawn_player() -> void:
+	respawn_timer = -999.0
+	player.health = player.max_health
+	player.magic = player.max_magic
+	player.hurt_timer = 1.4
+	if shrine_room != "" and WorldMap.has_room(shrine_room):
+		_enter_room(shrine_room, "", true)
+	else:
+		_enter_room(WorldMap.START_ROOM, "")
+	player.health_changed.emit(player.health)
+	_show_message("Orion desperta no último santuário", 2.6)
+
+func _on_player_defeated() -> void:
+	respawn_timer = 0.01
+
+# --- Chefes ---
+
+func _start_boss(fighter: Node2D) -> void:
+	var boss_key: String = fighter.get_meta("boss_key")
+	var info: Dictionary = WorldMap.BOSSES[boss_key]
+	fighter.defeated.connect(_on_boss_defeated.bind(boss_key))
+	if info.has("hour"):
+		world_hour = fposmod(float(info["hour"]), 24.0)
+		_apply_world_time(true)
+	_show_message(info["name"] + " bloqueia a passagem!", 3.0)
+
+func _on_boss_defeated(boss_key: String) -> void:
+	defeated_bosses[boss_key] = true
+	player.restore(2)
+	player.grant_skill_point()
+	if boss_key == "the_rock":
+		rock_recruited = true
+	if boss_key == "corrupted_tree":
+		player.unlock_twin_magic()
+		player.restore(5)
+		_add_aenia_companion()
+	if world.data.has("grants"):
+		_grant_ability(world.data["grants"])
+	var saved := _save_campaign()
+	if world.data.get("final", false):
+		_show_ending()
+		return
+	if boss_key == "the_rock":
+		_show_message("D Rock virou aliado. +1 ponto de talento." if saved else "D Rock virou aliado, mas não foi possível salvar o progresso.", 4.0)
+	elif boss_key == "corrupted_tree":
+		_show_message("Aenia está livre! Pressione E para conversar." if saved else "Aenia está livre, mas não foi possível salvar o progresso.", 4.0)
 
 func _add_rock_companion() -> void:
 	var companion := CorruptedBoss.new()
 	companion.boss_id = "the_rock"
-	companion.boss_name = "The Rock"
+	companion.boss_name = "D Rock"
 	companion.is_ally = true
-	companion.position = Vector2(player.position.x - 48.0, FLOOR_Y - 24.0)
+	companion.floor_y = world.floor_y()
+	companion.position = Vector2(player.position.x - 64.0, player.position.y - 30.0)
 	companion.process_mode = Node.PROCESS_MODE_PAUSABLE
 	companion.collision_layer = 0
 	companion.collision_mask = 0
 	world.add_child(companion)
 
 func _add_aenia_companion() -> void:
+	if aenia_companion and is_instance_valid(aenia_companion):
+		return
 	var companion := Node2D.new()
 	companion.name = "AeniaCompanion"
 	companion.process_mode = Node.PROCESS_MODE_PAUSABLE
-	companion.position = world.to_local(player.global_position) + Vector2(44.0, 0.0)
+	companion.position = world.to_local(player.global_position) + Vector2(56.0, -10.0)
 	companion.z_index = 1
 	var sprite := Sprite2D.new()
 	sprite.name = "AeniaSprite"
 	sprite.texture = AENIA_IDLE_TEXTURE
 	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	sprite.scale = Vector2(0.032, 0.032)
-	sprite.position = Vector2(0.0, -1.0)
+	sprite.scale = Vector2(0.056, 0.056)
 	companion.add_child(sprite)
 	world.add_child(companion)
 	aenia_companion = companion
@@ -622,12 +575,12 @@ func _update_aenia_companion(delta: float) -> void:
 	if not aenia_companion or not is_instance_valid(aenia_companion) or not player or not is_instance_valid(player):
 		return
 	var direction := 1.0 if player.facing >= 0 else -1.0
-	var target := player.global_position + Vector2(44.0 * direction, 0.0)
-	aenia_companion.global_position = aenia_companion.global_position.move_toward(target, 180.0 * delta)
+	var target := player.global_position + Vector2(56.0 * direction, -10.0)
+	aenia_companion.global_position = aenia_companion.global_position.move_toward(target, 540.0 * delta)
 	var sprite := aenia_companion.get_node_or_null("AeniaSprite") as Sprite2D
 	if sprite:
 		sprite.flip_h = direction < 0.0
-		sprite.position.y = -1.0 + sin(Time.get_ticks_msec() * 0.004) * 1.4
+		sprite.position.y = sin(Time.get_ticks_msec() * 0.004) * 3.0
 
 func _open_aenia_dialogue() -> void:
 	dialogue_open = true
@@ -682,102 +635,7 @@ func _close_aenia_dialogue() -> void:
 		player.active = player.health > 0
 	_show_hud()
 
-func _check_boss_trigger() -> void:
-	var stage: Dictionary = STAGES[stage_index]
-	if stage.boss == "" or boss_spawned or player.position.x < LEVEL_WIDTH - 610.0:
-		return
-	boss_spawned = true
-	var boss_hour := float(stage.get("boss_hour", -1.0))
-	if boss_hour >= 0.0:
-		world_hour = fposmod(boss_hour, 24.0)
-		_apply_world_time(true)
-		_save_campaign()
-	var boss := CorruptedBoss.new()
-	boss.boss_name = stage.boss
-	boss.boss_id = stage.get("boss_id", "generic")
-	boss.encounter_tier = str(stage.get("boss_tier", "major"))
-	current_boss_id = boss.boss_id
-	boss.variant = 0 if stage_index == 2 else (1 if stage_index == 5 else 2)
-	boss.max_health = 14 if boss.boss_id == "the_rock" else (16 if boss.boss_id == "corrupted_tree" else (12 if stage_index < 7 else 18))
-	boss.health = boss.max_health
-	boss.position = Vector2(LEVEL_WIDTH - 340.0, FLOOR_Y - 24.0)
-	boss.process_mode = Node.PROCESS_MODE_PAUSABLE
-	boss.defeated.connect(_on_boss_defeated)
-	world.add_child(boss)
-	_show_message(stage.boss + " bloqueia a passagem!", 3.0)
-
-func _add_checkpoint_lights() -> void:
-	for x in [1040.0, 1930.0]:
-		var shrine := Node2D.new()
-		shrine.position = Vector2(x, FLOOR_Y - 24.0)
-		shrine.z_index = -1
-		var stone := Polygon2D.new()
-		stone.polygon = PackedVector2Array([Vector2(-9, 23), Vector2(-11, -6), Vector2(0, -17), Vector2(11, -6), Vector2(9, 23)])
-		stone.color = Color("3c5c5c")
-		shrine.add_child(stone)
-		var mark := Polygon2D.new()
-		mark.polygon = PackedVector2Array([Vector2(-3, 12), Vector2(-4, -4), Vector2(0, -9), Vector2(4, -4), Vector2(3, 12)])
-		mark.color = Color("b5fff0")
-		shrine.add_child(mark)
-		world.add_child(shrine)
-		var light := PointLight2D.new()
-		light.texture = _make_glow_texture()
-		light.color = Color("7fe6cf")
-		light.energy = 1.8
-		light.texture_scale = 1.4
-		light.position = shrine.position + Vector2(0, -4)
-		world.add_child(light)
-		glow_lights.append(light)
-		light_origins.append(light.position)
-
-func _check_checkpoints() -> void:
-	var markers := [1040.0, 1930.0]
-	if checkpoint_marker < markers.size() and player.position.x >= markers[checkpoint_marker]:
-		checkpoint_x = markers[checkpoint_marker]
-		checkpoint_marker += 1
-		player.restore(2)
-		_show_message("Santuário de luz · campanha salva" if _save_campaign() else "Santuário alcançado, mas a gravação falhou.", 2.8)
-
-func _respawn_player() -> void:
-	respawn_timer = -999.0
-	player.health = maxi(3, player.max_health)
-	player.magic = player.max_magic
-	player.velocity = Vector2.ZERO
-	player.active = true
-	player.hurt_timer = 1.4
-	player.global_position = Vector2(checkpoint_x, FLOOR_Y - 33.0)
-	player.health_changed.emit(player.health)
-	_show_message("A trilha recomeça no último santuário", 2.6)
-
-func _clear_stage() -> void:
-	if stage_index >= STAGES.size() - 1:
-		_show_ending()
-		return
-	if stage_index == 5:
-		player.unlock_twin_magic()
-		player.restore(5)
-	stage_index += 1
-	_build_stage()
-	var stage: Dictionary = STAGES[stage_index]
-	if stage_index == 6:
-		_show_message("Aenia está livre! Pressione E para conversar." if _save_campaign() else "Aenia está livre, mas não foi possível salvar o progresso.", 4.0)
-	else:
-		_show_message((stage.title + " · " + stage.sub) if _save_campaign() else "Nova região iniciada, mas não foi possível salvar o progresso.", 3.0)
-
-func _on_boss_defeated() -> void:
-	boss_defeated = true
-	player.restore(2)
-	player.grant_skill_point()
-	if current_boss_id == "the_rock":
-		rock_recruited = true
-	var saved := _save_campaign()
-	if current_boss_id == "the_rock":
-		_show_message("The Rock virou aliado. +1 ponto de talento." if saved else "The Rock virou aliado, mas não foi possível salvar o progresso.", 4.0)
-	else:
-		_show_message("A corrupção recua. +1 ponto de talento." if saved else "A passagem está livre, mas não foi possível salvar o progresso.", 3.2)
-
-func _on_player_defeated() -> void:
-	respawn_timer = 0.01
+# --- Save ---
 
 func _save_campaign() -> bool:
 	if not playing or not player or not is_instance_valid(player):
@@ -785,9 +643,14 @@ func _save_campaign() -> bool:
 	var save_data := {
 		"version": SAVE_MANAGER.SAVE_VERSION,
 		"world_hour": world_hour,
-		"stage_index": stage_index,
-		"checkpoint_x": checkpoint_x,
-		"checkpoint_marker": checkpoint_marker,
+		"day": day,
+		"mode": mode,
+		"room_id": room_id,
+		"shrine_room": shrine_room,
+		"visited_rooms": visited_rooms.keys(),
+		"activated_shrines": activated_shrines.keys(),
+		"abilities": abilities.keys(),
+		"defeated_bosses": defeated_bosses.keys(),
 		"health": player.health,
 		"magic": player.magic,
 		"level": player.level,
@@ -795,7 +658,6 @@ func _save_campaign() -> bool:
 		"experience_to_next": player.experience_to_next,
 		"twin_magic": player.twin_magic,
 		"rock_recruited": rock_recruited,
-		"boss_defeated": boss_defeated,
 		"inventory": player.inventory.duplicate(true),
 		"collected_pickups": player.get_collected_pickup_ids(),
 		"skill_points": player.skill_points,
@@ -828,6 +690,8 @@ func _on_item_added(item_id: String, count: int) -> void:
 
 func _on_skills_changed() -> void:
 	_update_hud()
+
+# --- HUD ---
 
 func _show_hud() -> void:
 	_clear_ui()
@@ -862,8 +726,8 @@ func _show_hud() -> void:
 	hud_time = _label("", 10, Color("f2d8a0"))
 	vbox.add_child(hud_time)
 	hud_objective = _label("", 11, Color("ffe2a0"))
-	hud_objective.position = Vector2(390, 17)
-	hud_objective.size = Vector2(236, 24)
+	hud_objective.position = Vector2(330, 17)
+	hud_objective.size = Vector2(250, 24)
 	hud_objective.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	ui_root.add_child(hud_objective)
 	hud_message = _label("", 16, Color("ecfff7"), HORIZONTAL_ALIGNMENT_CENTER)
@@ -894,18 +758,34 @@ func _update_hud() -> void:
 	hud_magic.text = "MAGIA  " + "✦".repeat(player.magic) + "·".repeat(player.max_magic - player.magic)
 	if hud_progress:
 		hud_progress.text = "NÍVEL %02d · XP %d/%d · TALENTOS %d" % [player.level, player.experience, player.experience_to_next, player.skill_points]
-	if hud_stage:
-		hud_stage.text = "%02d  ·  %s" % [stage_index + 1, STAGES[stage_index].title]
+	if hud_stage and room_id != "":
+		var region_label := WorldMap.region_name(room_id)
+		var room_label: String = WorldMap.room(room_id).get("name", "")
+		hud_stage.text = room_label if room_label == region_label else "%s · %s" % [region_label, room_label]
+	if hud_objective:
+		var objective := ""
+		if world and is_instance_valid(world) and world.boss and is_instance_valid(world.boss):
+			objective = "DERROTE: " + str(world.boss.boss_name).to_upper()
+		elif world and is_instance_valid(world) and world.shrine and not world.shrine.active and world.shrine.is_player_near(player.global_position):
+			objective = "E · ATIVAR SANTUÁRIO"
+		elif world and is_instance_valid(world) and world.shrine and world.shrine.is_player_near(player.global_position):
+			objective = "E · DESCANSAR"
+		hud_objective.text = objective
 	if hud_time:
-		hud_time.text = "%s  ·  %s" % [_time_of_day_name(), _format_world_time()]
+		hud_time.text = "DIA %d · %s  ·  %s" % [day, _time_of_day_name(), _format_world_time()]
 	if hud_inventory_button:
 		var item_total := 0
 		for item_id in ITEM_CATALOG.item_ids():
 			item_total += int(player.inventory.get(item_id, 0))
 		hud_inventory_button.text = "BOLSA [I]  %d" % item_total
 
+# --- Relógio ---
+
 func _advance_world_time(delta: float) -> void:
+	var previous := world_hour
 	world_hour = fposmod(world_hour + 24.0 * delta / DAY_CYCLE_REAL_SECONDS, 24.0)
+	if world_hour < previous:
+		day += 1
 	_apply_world_time(false)
 
 func _apply_world_time(force: bool) -> void:
@@ -918,7 +798,7 @@ func _apply_world_time(force: bool) -> void:
 			if is_instance_valid(hostile) and hostile.has_method("set_time_difficulty"):
 				hostile.call("set_time_difficulty", pressure)
 	if hud_time:
-		hud_time.text = "%s  ·  %s" % [_time_of_day_name(), _format_world_time()]
+		hud_time.text = "DIA %d · %s  ·  %s" % [day, _time_of_day_name(), _format_world_time()]
 
 func _night_pressure() -> float:
 	if world_hour >= 21.0 or world_hour < 5.0:
@@ -994,13 +874,16 @@ func _show_pause() -> void:
 	var talents := _button("ÁRVORE DE TALENTOS")
 	talents.pressed.connect(func(): _open_skill_tree(true))
 	buttons.add_child(talents)
-	var restart := _button("RECOMEÇAR FASE")
+	var restart := _button("VOLTAR AO SANTUÁRIO")
 	restart.pressed.connect(func():
 		get_tree().paused = false
 		paused = false
 		player.health = player.max_health
 		player.magic = player.max_magic
-		_build_stage()
+		if shrine_room != "" and WorldMap.has_room(shrine_room):
+			_enter_room(shrine_room, "", true)
+		else:
+			_enter_room(WorldMap.START_ROOM, "")
 		_show_hud()
 		if not _save_campaign():
 			_show_message("Não foi possível salvar o progresso no disco.", 3.0)

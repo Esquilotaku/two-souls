@@ -38,6 +38,10 @@ var anim_time := 0.0
 var attack_animation_timer := 0.0
 var dash_animation_timer := 0.0
 var jump_count := 0
+## Pulo duplo do gavião (ligado pelo game.gd a partir das habilidades).
+var double_jump := false
+## Abaixo deste y (fundo da sala + folga) o Orion leva dano de queda.
+var fall_limit_y := 470.0
 var twin_magic := false
 var active := true
 var inventory: Dictionary = ITEM_CATALOG.empty_inventory()
@@ -67,6 +71,7 @@ func _ready() -> void:
 	collision.shape = shape
 	add_child(collision)
 	var camera := Camera2D.new()
+	camera.name = "Camera2D"
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 7.0
 	camera.limit_left = 0
@@ -95,7 +100,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y += GRAVITY * delta
 	else:
 		jump_count = 0
-	if Input.is_action_just_pressed("jump") and (is_on_floor() or (twin_magic and jump_count < 1)):
+	if Input.is_action_just_pressed("jump") and (is_on_floor() or (double_jump and jump_count < 1)):
 		velocity.y = JUMP_SPEED
 		jump_count += 1
 	if Input.is_action_just_pressed("attack") and attack_timer <= 0.0:
@@ -107,7 +112,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("super_punch") and super_punch_cooldown <= 0.0 and has_skill("super_punch"):
 		_super_punch()
 	move_and_slide()
-	if global_position.y > 470.0:
+	if global_position.y > fall_limit_y:
 		take_damage(1, true)
 	if character_sprite:
 		character_sprite.flip_h = facing < 0

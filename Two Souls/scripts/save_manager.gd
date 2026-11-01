@@ -4,8 +4,8 @@ extends RefCounted
 const SAVE_PATH := "user://two_souls_save.json"
 const TEMP_PATH := "user://two_souls_save.tmp"
 const BACKUP_PATH := "user://two_souls_save.bak"
-const SAVE_VERSION := 4
-const STAGE_COUNT := 8
+const SAVE_VERSION := 5
+const MODES := ["historia", "aventura", "desafio"]
 const INVENTORY_ITEMS := ["luminous_herb", "mana_seed"]
 const SKILL_IDS := ["spear_throw", "super_punch", "vitality", "mana_reserve"]
 const SKILL_PREREQUISITES := {"super_punch":"spear_throw", "mana_reserve":"vitality"}
@@ -65,10 +65,11 @@ static func _read_file(path: String) -> Dictionary:
 		return {}
 	return parsed
 
+
 static func _is_valid(data: Dictionary) -> bool:
-	var integer_fields := ["version", "stage_index", "checkpoint_marker", "health", "magic", "level", "experience", "experience_to_next", "skill_points"]
+	var integer_fields := ["version", "day", "health", "magic", "level", "experience", "experience_to_next", "skill_points"]
 	for field in integer_fields:
-		if typeof(data.get(field)) != TYPE_INT:
+		if not _is_whole(data.get(field)):
 			return false
 	if int(data["version"]) != SAVE_VERSION:
 		return false
@@ -77,15 +78,23 @@ static func _is_valid(data: Dictionary) -> bool:
 		return false
 	if float(data["world_hour"]) < 0.0 or float(data["world_hour"]) >= 24.0:
 		return false
-	if int(data["stage_index"]) < 0 or int(data["stage_index"]) >= STAGE_COUNT:
+	if int(data["day"]) < 1:
 		return false
-	if int(data["checkpoint_marker"]) < 0 or int(data["checkpoint_marker"]) > 2:
+	if not MODES.has(data.get("mode")):
 		return false
-	var checkpoint_type := typeof(data.get("checkpoint_x"))
-	if checkpoint_type != TYPE_FLOAT and checkpoint_type != TYPE_INT:
+	if typeof(data.get("room_id")) != TYPE_STRING or not WorldMap.has_room(data["room_id"]):
 		return false
-	var checkpoint_x := float(data["checkpoint_x"])
-	if checkpoint_x < 72.0 or checkpoint_x > 2612.0:
+	if typeof(data.get("shrine_room")) != TYPE_STRING:
+		return false
+	if data["shrine_room"] != "" and not WorldMap.has_room(data["shrine_room"]):
+		return false
+	if not _is_id_list(data.get("visited_rooms"), WorldMap.ROOMS.keys()):
+		return false
+	if not _is_id_list(data.get("activated_shrines"), WorldMap.ROOMS.keys()):
+		return false
+	if not _is_id_list(data.get("abilities"), WorldMap.ABILITIES.keys()):
+		return false
+	if not _is_id_list(data.get("defeated_bosses"), WorldMap.BOSSES.keys()):
 		return false
 	if int(data["health"]) < 1 or int(data["health"]) > 6:
 		return false
@@ -95,7 +104,7 @@ static func _is_valid(data: Dictionary) -> bool:
 		return false
 	if int(data["skill_points"]) < 0 or int(data["skill_points"]) > 99:
 		return false
-	for field in ["boss_defeated", "rock_recruited", "twin_magic"]:
+	for field in ["rock_recruited", "twin_magic"]:
 		if typeof(data.get(field)) != TYPE_BOOL:
 			return false
 	var inventory: Variant = data.get("inventory")
@@ -104,10 +113,10 @@ static func _is_valid(data: Dictionary) -> bool:
 	for item_id in inventory.keys():
 		if not INVENTORY_ITEMS.has(item_id):
 			return false
-		if typeof(inventory[item_id]) != TYPE_INT or int(inventory[item_id]) < 0 or int(inventory[item_id]) > 99:
+		if not _is_whole(inventory[item_id]) or int(inventory[item_id]) < 0 or int(inventory[item_id]) > 99:
 			return false
 	for item_id in INVENTORY_ITEMS:
-		if typeof(inventory.get(item_id, 0)) != TYPE_INT:
+		if not _is_whole(inventory.get(item_id, 0)):
 			return false
 	var collected_pickups: Variant = data.get("collected_pickups")
 	if typeof(collected_pickups) != TYPE_ARRAY or collected_pickups.size() > 2048:
@@ -129,8 +138,19 @@ static func _is_valid(data: Dictionary) -> bool:
 			return false
 	return true
 
+## Lista de textos sem repetição, todos dentro de allowed.
+static func _is_id_list(value: Variant, allowed: Array) -> bool:
+	if typeof(value) != TYPE_ARRAY or value.size() > allowed.size():
+		return false
+	var seen := {}
+	for entry in value:
+		if typeof(entry) != TYPE_STRING or not allowed.has(entry) or seen.has(entry):
+			return false
+		seen[entry] = true
+	return true
+
 static func _upgrade_campaign(data: Dictionary) -> Dictionary:
-	if data.is_empty() or typeof(data.get("version")) != TYPE_INT:
+	if data.is_empty() or not _is_whole(data.get("version")):
 		return {}
 	var upgraded := data.duplicate(true)
 	var version := int(upgraded["version"])
@@ -148,7 +168,28 @@ static func _upgrade_campaign(data: Dictionary) -> Dictionary:
 	if version == 3:
 		upgraded["world_hour"] = 7.0
 		version = 4
+	if version == 4:
+		# Mundo interligado: as fases lineares somem e a campanha recomeça na Clareira,
+		# mantendo nível, XP, itens, talentos e a hora. Itens pegos nas fases antigas não valem mais.
+		for old_field in ["stage_index", "checkpoint_x", "checkpoint_marker", "boss_defeated"]:
+			upgraded.erase(old_field)
+		upgraded["day"] = 1
+		upgraded["mode"] = "aventura"
+		upgraded["room_id"] = WorldMap.START_ROOM
+		upgraded["shrine_room"] = ""
+		upgraded["visited_rooms"] = []
+		upgraded["activated_shrines"] = []
+		upgraded["abilities"] = []
+		upgraded["defeated_bosses"] = []
+		upgraded["collected_pickups"] = []
+		version = 5
 	if version != SAVE_VERSION:
 		return {}
 	upgraded["version"] = SAVE_VERSION
 	return upgraded
+
+## O JSON do Godot devolve todo número como decimal (1 vira 1.0); aceita inteiros e decimais redondos.
+static func _is_whole(value: Variant) -> bool:
+	if typeof(value) == TYPE_INT:
+		return true
+	return typeof(value) == TYPE_FLOAT and is_equal_approx(value, floorf(value))
