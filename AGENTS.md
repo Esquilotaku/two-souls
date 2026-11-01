@@ -24,6 +24,7 @@ Claude e Codex não trabalham ao mesmo tempo nos mesmos arquivos.
 
 - Checar se o projeto carrega sem erro de script:
   `tools/Godot4.7.2/Godot_v4.7.2-stable_win64_console.exe --headless --path "Two Souls" --quit`
+- O repositório privado `Esquilotaku/two-souls` roda o mesmo teste no GitHub Actions a cada `git push` (`.github/workflows/godot-check.yml`). Envie seus commits ao terminar e confira se o teste passou.
 - "Pronto" só depois de rodar e conferir o resultado. Se não rodou, escreva no STATUS que não foi verificado.
 
 ## Limites

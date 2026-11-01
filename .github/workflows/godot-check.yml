@@ -1,0 +1,38 @@
+# Abre o jogo sem janela a cada envio e reprova se o Godot acusar erro.
+# O Godot sai com código 0 mesmo com erro de script, por isso o log é conferido.
+name: Godot check
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GODOT_VERSION: 4.7.2
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Baixar Godot
+        run: |
+          curl -sSL -o godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q godot.zip
+          mv "Godot_v${GODOT_VERSION}-stable_linux.x86_64" godot
+          chmod +x godot
+
+      - name: Importar recursos
+        run: ./godot --headless --path "Two Souls" --import 2>&1 | tee import.log
+
+      - name: Rodar 600 quadros
+        run: ./godot --headless --path "Two Souls" --quit-after 600 2>&1 | tee run.log
+
+      - name: Procurar erros no log
+        run: |
+          if grep -E "SCRIPT ERROR|^ERROR:|Parse Error" import.log run.log; then
+            echo "::error::O Godot acusou erro. Veja as linhas acima."
+            exit 1
+          fi
+          echo "Nenhum erro encontrado."
