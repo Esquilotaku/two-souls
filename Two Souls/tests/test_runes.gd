@@ -1,0 +1,40 @@
+extends SceneTree
+
+func _init() -> void:
+	var failures := 0
+	var menu_script = load("res://scripts/ui/rune_menu.gd")
+	if menu_script == null: failures += _fail("carrega script do menu")
+	var state := RuneState.new()
+	if state.equip("onca"): failures += _fail("não equipa corrompida")
+	if not state.found("onca"): failures += _fail("encontra runa desconhecida")
+	if not state.purify("onca"): failures += _fail("purifica runa encontrada")
+	if not state.equip("onca"): failures += _fail("equipa runa purificada")
+	state.found("boitata")
+	state.purify("boitata")
+	if not state.equip("boitata"): failures += _fail("equipa segunda runa")
+	state.found("curupira")
+	state.purify("curupira")
+	if state.equip("curupira"): failures += _fail("respeita limite inicial de espaços")
+	if not state.add_slot() or not state.equip("curupira"): failures += _fail("espaço adicional libera equipamento")
+	state.add_fragments(2)
+	if state.upgrade("onca"): failures += _fail("melhoria falha sem fragmentos suficientes")
+	state.add_fragments(1)
+	if not state.upgrade("onca") or state.fragments != 0: failures += _fail("melhoria gasta fragmentos")
+	var bonuses := state.total_bonuses()
+	if not is_equal_approx(float(bonuses["dash_speed"]), 0.20): failures += _fail("soma bônus de velocidade do dash")
+	if not is_equal_approx(float(bonuses["move_speed"]), 0.06): failures += _fail("soma bônus da segunda runa equipada")
+	var copy := RuneState.new()
+	var json_style_save: Dictionary = state.to_save()
+	json_style_save["slots"] = float(json_style_save["slots"])
+	json_style_save["fragments"] = float(json_style_save["fragments"])
+	for id in json_style_save["purified"]: json_style_save["purified"][id] = float(json_style_save["purified"][id])
+	copy.from_save(json_style_save)
+	if copy.slots != state.slots or copy.fragments != state.fragments or copy.equipped_runes != state.equipped_runes or int(copy.purified_runes.get("onca", 0)) != int(state.purified_runes.get("onca", 0)): failures += _fail("save ida e volta")
+	copy.from_save({"isso": "é lixo"})
+	if copy.slots != RuneCatalog.STARTING_SLOTS or not copy.found_runes.is_empty() or not copy.purified_runes.is_empty(): failures += _fail("save inválido redefine estado sem erro")
+	print("Runas: %d falha(s)" % failures)
+	quit(1 if failures > 0 else 0)
+
+func _fail(message: String) -> int:
+	push_error("FALHOU: " + message)
+	return 1

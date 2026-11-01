@@ -25,6 +25,7 @@ A ordem segue os marcos do `docs/plano-de-negocio.md`, seção 6.
 | 1.5 | Relógio com descanso no santuário e os modos História, Aventura e Desafio | Codex ou Claude | livre | mundo, tema 4 |
 | 1.6 | Controles novos (setas, Espaço, A, S, QWER, D, F, Enter) com remapeamento | Codex ou Claude | esperando Claude (integrar no game.gd), feito pelo Codex no branch codex/controles | jogo, seção 7 |
 | 1.7 | Bloqueios de habilidade: lança cravada e super soco primeiro | Codex ou Claude | livre | jogo, seção 3 |
+| 1.8 | Runas: achadas corrompidas, purificadas no santuário, equipadas em espaços, sobem com fragmentos | Codex | esperando Claude (ligar no jogo), implementado pelo Codex no branch codex/runas | jogo, seção 3 |
 
 ## Arte (em paralelo)
 
