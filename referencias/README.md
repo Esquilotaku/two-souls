@@ -27,6 +27,8 @@ powershell -ExecutionPolicy Bypass -File pipeline\baixar-referencias.ps1
 | `atmosfera-` | natureza, luz, neblina e paleta (referência para a floresta e a corrupção) |
 | `chefes-` | Titan Souls: chefes grandes em pixel art, leitura de padrão de ataque |
 | `hud-` | interface limpa em pixel art |
+| `acao-` | Broforce, Metal Slug: animação exagerada, explosões, impacto |
+| `mundo-` | Terraria: mundo grande em blocos, cavernas e camadas de profundidade |
 
 ## O que olhar em cada captura (checklist para quem estuda)
 

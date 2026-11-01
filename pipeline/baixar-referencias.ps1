@@ -54,7 +54,14 @@ $jogos = @(
     @("Sea of Stars", "atmosfera"),
     @("Rain World", "atmosfera"),
     @("Children of Morta", "atmosfera"),
-    @("Moonlighter", "hud")
+    @("Moonlighter", "hud"),
+    # Vistos na pesquisa do Gabriel (Google, "jogo pixel")
+    @("Broforce", "acao"),
+    @("METAL SLUG 3", "acao"),
+    @("Terraria", "mundo"),
+    @("FEZ", "atmosfera"),
+    @("Stardew Valley", "atmosfera"),
+    @("OCTOPATH TRAVELER", "atmosfera")
 )
 
 New-Item -ItemType Directory -Force -Path $Destino | Out-Null
