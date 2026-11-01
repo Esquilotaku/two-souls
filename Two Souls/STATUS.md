@@ -161,3 +161,22 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - **Decisões novas que a pesquisa levantou:** viagem rápida, marcadores no mapa, fonte e HUD para o Steam Deck, segunda rota para habilidades e alternativa para quem travar num chefe. Estão no `docs/TAREFAS.md` (R.2 a R.6).
 - **Bloqueios da nuvem:** a rede bloqueia `store.steampowered.com` e `youtube.com`. Os vídeos foram lidos pelo vidIQ (uns 50 créditos do vidIQ).
 - **Nada foi instalado e nenhum código do jogo mudou.**
+
+## Ponto de retomada — 01/11/2026, noite 3 (Claude, nuvem)
+
+- **Decisões de design** (detalhes em `docs/brainstorm-jogo.md`, seção 0, e `docs/brainstorm-mundo-interligado.md`, "Decisões de 01/11/2026 (noite)"):
+  - **Heróis:** **Kaê e Aená** (antes Orion e Aenia).
+  - **Vilão:** **Tau**, guardião caído da tribo do D Rock, corrompido pelo espírito da seca (nome provisório "Estiagem"); na fase 2 vira o **Teju Jaguá**.
+  - **Lendas:** Curupira, Boiúna, Minhocão, Mapinguari e Boitatá como subchefes; 8 lendas como minibosses. Vencer acalma; purificar depois do resgate liberta e vira NPC.
+  - **Saci:** NPC brincalhão.
+  - **Inimigos:** 50 comuns no 1.0, com um núcleo de 25 primeiro.
+  - **Mapa:** viagem rápida pelas raízes da Árvore Mãe (os santuários são brotos com ruínas da tribo); minimapa revelado andando; marcadores manuais e automáticos.
+  - **Habilidades:** R = onça, tatu e jiboia; runas de 2 a 5 espaços.
+  - **Final verdadeiro:** luta contra o espírito da seca e a chuva volta.
+- **Em aberto:** título do jogo e nome da floresta ("Two Souls" é o nome de trabalho; "Monte Ligna" sai).
+- **Novo:** `docs/historia.md`, a história reescrita com os nomes novos, **em rascunho, esperando a aprovação do Gabriel**.
+- **Próximo passo (no PC):**
+  - tarefa A.1, folha de estilo do Kaê;
+  - tarefa 1.1, plano técnico do mapa interligado, avaliando o addon MetSys com a leitura do Gabriel antes;
+  - depois, voltar a programar o jogo bruto.
+- **Ainda vale no código:** o protótipo ainda usa os nomes antigos (Orion, Aenia, The Rock). Trocar quando mexer nesses arquivos, sem pressa.
