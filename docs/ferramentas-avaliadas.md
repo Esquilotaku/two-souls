@@ -10,7 +10,7 @@ PC hoje: Node 22.14, npm 10.9, uv 0.13.4, sem Python instalado (o `uv` baixa o P
 
 | Ferramenta | Serve pra quê no jogo | Custo extra | Minha opinião |
 |---|---|---|---|
-| godot-mcp | Claude/Codex abrem o Godot, rodam o jogo e leem os erros | nenhum | **Instalar primeiro** |
+| godot-mcp | Claude/Codex abrem o Godot, rodam o jogo e leem os erros | nenhum | **Instalado em 01/11 (v0.1.1), funciona com Godot 4.7.2** |
 | Spec Kit | Escrever a especificação antes de programar cada sistema | nenhum | Talvez, depois do brainstorm |
 | Serena | Agente navega melhor no código quando ele crescer | nenhum | Depois, quando houver muitos scripts |
 | Taskmaster | Quebra o plano em tarefas | **pede chave de API paga** (ou usa Claude Code/Codex) | Não agora; repete o STATUS.md |
