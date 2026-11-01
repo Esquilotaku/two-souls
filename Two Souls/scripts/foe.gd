@@ -50,7 +50,7 @@ func _physics_process(delta: float) -> void:
 			facing = 1 if horizontal_distance > 0.0 else -1
 		if ranged:
 			velocity.x = -facing * speed * 0.6 if absf(horizontal_distance) < 112.0 else 0.0
-			if absf(horizontal_distance) < 320.0 and vertical_distance < 58.0 and ranged_cooldown <= 0.0:
+			if absf(horizontal_distance) < 320.0 and vertical_distance < 73.0 and ranged_cooldown <= 0.0:
 				_throw_spear()
 				ranged_cooldown = lerpf(2.1, 1.55, time_difficulty)
 		elif absf(horizontal_distance) < 150.0:

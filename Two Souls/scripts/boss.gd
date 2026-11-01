@@ -206,7 +206,7 @@ func _resolve_rock_attack(player: Node) -> void:
 	if attack_state == "punch":
 		if absf(player.global_position.x - global_position.x) < 122.0 and absf(player.global_position.y - global_position.y) < 60.0:
 			player.call("take_damage", 1)
-			player.set("velocity", Vector2(direction * 170.0, -125.0))
+			player.set("velocity", Vector2(direction * 510.0, -375.0))
 	elif attack_state == "rock":
 		var projectile := MagicBolt.new()
 		projectile.enemy_attack = true
@@ -312,7 +312,7 @@ func _physics_process_hooded_sorcerer(delta: float) -> void:
 func _resolve_hooded_claw(player: Node) -> void:
 	if absf(player.global_position.x - global_position.x) < 158.0 and absf(player.global_position.y - global_position.y) < 72.0:
 		player.call("take_damage", 1)
-		player.set("velocity", Vector2(direction * 185.0, -145.0))
+		player.set("velocity", Vector2(direction * 555.0, -435.0))
 
 func _spawn_hooded_orb(player: Node) -> void:
 	var bolt := MagicBolt.new()
@@ -327,7 +327,7 @@ func _attack(player: Node) -> void:
 	var distance := absf(player.global_position.x - global_position.x)
 	if distance < 150.0:
 		player.call("take_damage", 1)
-		player.set("velocity", Vector2(-direction * 100.0, -180.0))
+		player.set("velocity", Vector2(-direction * 300.0, -540.0))
 	else:
 		var bolt: MagicBolt = MagicBolt.new()
 		bolt.direction = int(signf(player.global_position.x - global_position.x))

@@ -30,7 +30,18 @@ func _process(delta: float) -> void:
 			hit_radius = 30.0
 		elif projectile_kind == "vine":
 			hit_radius = 21.0
-		if player and global_position.distance_to(player.global_position) < hit_radius:
+		var hit_extent := Vector2(hit_radius, hit_radius)
+		var player_collision := player.get_node_or_null("CollisionShape2D") if player else null
+		if player_collision and player_collision.shape is RectangleShape2D:
+			var player_size: Vector2 = player_collision.shape.size
+			hit_extent += player_size * 0.5
+		var hit_player := false
+		if player:
+			var from_player: Vector2 = global_position - player.global_position
+			var normalized_x: float = from_player.x / hit_extent.x
+			var normalized_y: float = from_player.y / hit_extent.y
+			hit_player = normalized_x * normalized_x + normalized_y * normalized_y < 1.0
+		if hit_player:
 			player.call("take_damage", damage)
 			queue_free()
 			return

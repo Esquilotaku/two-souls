@@ -347,7 +347,7 @@ func _continue_game() -> void:
 	_apply_world_time(true)
 	checkpoint_x = clampf(float(save_data["checkpoint_x"]), 72.0, LEVEL_WIDTH - 88.0)
 	checkpoint_marker = clampi(int(save_data["checkpoint_marker"]), 0, 2)
-	player.global_position = Vector2(checkpoint_x, FLOOR_Y - 18.0)
+	player.global_position = Vector2(checkpoint_x, FLOOR_Y - 33.0)
 	boss_defeated = bool(save_data["boss_defeated"])
 	boss_spawned = boss_defeated
 	_show_hud()
@@ -356,7 +356,7 @@ func _continue_game() -> void:
 func _create_player() -> void:
 	player = Orion.new()
 	player.process_mode = Node.PROCESS_MODE_PAUSABLE
-	player.position = Vector2(72, FLOOR_Y - 18)
+	player.position = Vector2(72, FLOOR_Y - 33)
 	player.health_changed.connect(_on_health_changed)
 	player.leveled_up.connect(_on_level_up)
 	player.defeated.connect(_on_player_defeated)
@@ -382,7 +382,7 @@ func _build_stage() -> void:
 	checkpoint_marker = 0
 	respawn_timer = 0.0
 	stage_start_time = Time.get_ticks_msec() / 1000.0
-	player.position = Vector2(72, FLOOR_Y - 18)
+	player.position = Vector2(72, FLOOR_Y - 33)
 	player.velocity = Vector2.ZERO
 	player.active = true
 	var palette_index := stage_index
@@ -745,7 +745,7 @@ func _respawn_player() -> void:
 	player.velocity = Vector2.ZERO
 	player.active = true
 	player.hurt_timer = 1.4
-	player.global_position = Vector2(checkpoint_x, FLOOR_Y - 18.0)
+	player.global_position = Vector2(checkpoint_x, FLOOR_Y - 33.0)
 	player.health_changed.emit(player.health)
 	_show_message("A trilha recomeça no último santuário", 2.6)
 

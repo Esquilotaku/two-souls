@@ -12,10 +12,12 @@ signal skills_changed
 const ITEM_CATALOG = preload("res://scripts/item_catalog.gd")
 const SKILL_CATALOG = preload("res://scripts/skill_catalog.gd")
 
-const GRAVITY := 980.0
-const MOVE_SPEED := 152.0
-const ACCELERATION := 1180.0
-const JUMP_SPEED := -340.0
+const WORLD_SCALE := 3.0
+const GRAVITY := 980.0 * WORLD_SCALE
+const MOVE_SPEED := 152.0 * WORLD_SCALE
+const ACCELERATION := 1180.0 * WORLD_SCALE
+const JUMP_SPEED := -340.0 * WORLD_SCALE
+const COLLISION_SIZE := Vector2(22.0, 66.0)
 
 var health := 5
 var max_health := 5
@@ -53,21 +55,21 @@ func _ready() -> void:
 	character_sprite.animation = "idle"
 	character_sprite.play()
 	character_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	character_sprite.scale = Vector2.ONE / 3.0
+	character_sprite.scale = Vector2.ONE
 	# O ponto (64, 88) do quadro deve coincidir com o pé da colisão (y=12).
-	character_sprite.position = Vector2(0.0, 12.0 - 40.0 / 3.0)
+	character_sprite.position = Vector2(16.0, COLLISION_SIZE.y * 0.5 - 40.0)
 	character_sprite.z_index = -1
 	add_child(character_sprite)
 	var collision := CollisionShape2D.new()
 	var shape := RectangleShape2D.new()
-	shape.size = Vector2(14, 24)
+	shape.size = COLLISION_SIZE
 	collision.shape = shape
 	add_child(collision)
 	var camera := Camera2D.new()
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 7.0
 	camera.limit_left = 0
-	camera.limit_top = -40
+	camera.limit_top = -100
 	camera.limit_bottom = 360
 	add_child(camera)
 	queue_redraw()
@@ -136,13 +138,13 @@ func _attack() -> void:
 		if not is_instance_valid(target):
 			continue
 		var offset: Vector2 = target.global_position - global_position
-		if absf(offset.x) < 48.0 and absf(offset.y) < 42.0 and offset.x * facing > -12.0:
+		if absf(offset.x) < 48.0 * WORLD_SCALE and absf(offset.y) < 42.0 * WORLD_SCALE and offset.x * facing > -12.0 * WORLD_SCALE:
 			target.call("take_hit", 1)
 	for target in get_tree().get_nodes_in_group("attackable_scenery"):
 		if not is_instance_valid(target):
 			continue
 		var offset: Vector2 = target.global_position - global_position
-		if absf(offset.x) < 50.0 and absf(offset.y) < 62.0 and offset.x * facing > -12.0:
+		if absf(offset.x) < 50.0 * WORLD_SCALE and absf(offset.y) < 62.0 * WORLD_SCALE and offset.x * facing > -12.0 * WORLD_SCALE:
 			target.call("take_hit", 1)
 
 func _cast_magic() -> void:
@@ -159,7 +161,7 @@ func take_damage(amount: int, from_fall: bool = false) -> void:
 		return
 	health = maxi(0, health - amount)
 	hurt_timer = 1.05
-	velocity = Vector2(-facing * 100.0, -145.0)
+	velocity = Vector2(-facing * 100.0 * WORLD_SCALE, -145.0 * WORLD_SCALE)
 	health_changed.emit(health)
 	if health <= 0:
 		active = false
@@ -292,10 +294,10 @@ func _throw_spear() -> void:
 	spear_cooldown = 1.15
 	var spear := MagicBolt.new()
 	spear.projectile_kind = "spear"
-	spear.speed = 360.0
+	spear.speed = 360.0 * WORLD_SCALE
 	spear.life = 1.2
 	spear.direction = facing
-	spear.position = global_position + Vector2(facing * 18.0, -3.0)
+	spear.position = global_position + Vector2(facing * 18.0 * WORLD_SCALE, -3.0 * WORLD_SCALE)
 	get_parent().add_child(spear)
 
 func _super_punch() -> void:
@@ -307,13 +309,13 @@ func _super_punch() -> void:
 		if not is_instance_valid(target):
 			continue
 		var offset: Vector2 = target.global_position - global_position
-		if absf(offset.x) < 72.0 and absf(offset.y) < 48.0 and offset.x * facing > -12.0:
+		if absf(offset.x) < 72.0 * WORLD_SCALE and absf(offset.y) < 48.0 * WORLD_SCALE and offset.x * facing > -12.0 * WORLD_SCALE:
 			target.call("take_hit", 3)
 	for target in get_tree().get_nodes_in_group("attackable_scenery"):
 		if not is_instance_valid(target):
 			continue
 		var offset: Vector2 = target.global_position - global_position
-		if absf(offset.x) < 74.0 and absf(offset.y) < 62.0 and offset.x * facing > -12.0:
+		if absf(offset.x) < 74.0 * WORLD_SCALE and absf(offset.y) < 62.0 * WORLD_SCALE and offset.x * facing > -12.0 * WORLD_SCALE:
 			target.call("take_hit", 3)
 
 func gain_experience(amount: int) -> void:
@@ -339,14 +341,14 @@ func _draw() -> void:
 		return
 	# The character's body and carried spear come from the approved pixel-art sprite.
 	if attack_timer > 0.13:
-		draw_arc(Vector2(10 * facing, -1), 22.0, -1.25 if facing > 0 else 2.1, 1.2 if facing > 0 else 4.55, 12, Color("a7fff2"), 2.0, false)
-		_draw_sparkle(Vector2(27 * facing, -11), Color("f4f1c0"))
+		draw_arc(Vector2(30 * facing, -3), 66.0, -1.25 if facing > 0 else 2.1, 1.2 if facing > 0 else 4.55, 12, Color("a7fff2"), 6.0, false)
+		_draw_sparkle(Vector2(81 * facing, -33), Color("f4f1c0"))
 	if super_punch_flash > 0.0:
-		var impact := Vector2(19.0 * facing, -2.0)
-		draw_circle(impact, 15.0, Color(0.52, 0.96, 0.87, super_punch_flash * 2.2))
-		draw_rect(Rect2(impact.x - 5.0, impact.y - 5.0, 10.0, 10.0), Color("f6ffe7"))
-		_draw_sparkle(impact + Vector2(10.0 * facing, -4.0), Color("fff1ad"))
+		var impact := Vector2(57.0 * facing, -6.0)
+		draw_circle(impact, 45.0, Color(0.52, 0.96, 0.87, super_punch_flash * 2.2))
+		draw_rect(Rect2(impact.x - 15.0, impact.y - 15.0, 30.0, 30.0), Color("f6ffe7"))
+		_draw_sparkle(impact + Vector2(30.0 * facing, -12.0), Color("fff1ad"))
 
 func _draw_sparkle(at: Vector2, color: Color) -> void:
-	draw_rect(Rect2(at.x - 1, at.y - 5, 2, 10), color)
-	draw_rect(Rect2(at.x - 5, at.y - 1, 10, 2), color)
+	draw_rect(Rect2(at.x - 3, at.y - 15, 6, 30), color)
+	draw_rect(Rect2(at.x - 15, at.y - 3, 30, 6), color)
