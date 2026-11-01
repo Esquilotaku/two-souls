@@ -181,3 +181,13 @@ Essas três podem ir para o Codex quando o núcleo estiver no branch, uma por ve
 - A câmera do Orion não tinha nome e o jogo não achava ela para prender nos limites; agora se chama `Camera2D`.
 - "Continuar" sempre volta ao último santuário ativado (ou ao início da Clareira), não ao ponto exato onde o jogador parou.
 - O pulo duplo agora vem do gavião (`double_jump` no `player.gd`), não mais da magia dos gêmeos.
+
+## 14. Mudanças pedidas pelo Gabriel depois de jogar (01/11/2026, noite)
+
+- **Tela interna 960×540** (era 640×360). O Orion (72 px) ocupa 13% da altura. A janela abre em tela cheia; os menus, feitos para 640×360, são ampliados 1,5x (`UI_SCALE` no `game.gd`). Uma célula do mapa passou a ser 960×540.
+- **O mapa inteiro numa cena só** (`scripts/world/world_scene.gd`). As 22 áreas ficam nas posições reais; as aberturas de áreas vizinhas se encontram e não há mais tela preta nem "portas" que teleportam. Fora das áreas há rocha escura. O jogo descobre em que área o Orion está pela posição.
+- **Chefes** nascem quando o Orion entra na área deles e somem se ele sair sem vencer.
+- **Passagens no teto** sem plataforma atravessável (regra de Hollow Knight, ver `docs/level-design-referencias.md`): um apoio embaixo da abertura, a 104 px do teto, deixa o pulo passar uns 25 px acima do chão da área de cima.
+- **Relevo provisório** em cada área (morros, plataformas soltas, rochas no teto nas regiões fechadas), sempre igual para a mesma área; arenas de chefe ficam planas. Vai ser trocado pelo desenho à mão.
+- **Runas ligadas** (`docs/runas.md`): cada chefe e subchefe deixa uma runa e 3 fragmentos; quatro áreas têm pedras roxas com runas; descansar num santuário abre o menu com purificação; a pausa tem o botão RUNAS. Efeitos aplicados: vida e magia (em corações), velocidade, recarga e chance de golpe forte. Fôlego e combo ainda não existem no jogo.
+- **Teste de fluxo** agora anda de verdade (aperta as teclas) pelas 48 passagens.

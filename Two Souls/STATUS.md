@@ -221,3 +221,18 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - Verificado: importacao do projeto, carregamento headless e todos os testes automatizados, incluindo `test_runes.gd`; GitHub Actions `41353603483` passou. Sem teste manual de gameplay.
 - Integracao no save, concessao das runas/fragmentos e aplicacao dos bonus nas habilidades ficam para Claude; tarefa 1.8 aguarda essa ligacao.
 - O branch foi enviado para `origin/codex/runas`; proximo passo: Claude integrar o RuneState no save e fluxo do jogo.
+
+## Ponto de retomada — 01/11/2026, noite (Claude, depois do primeiro teste do Gabriel)
+
+- Branch `claude/estrutura-mundo`. O Gabriel jogou e pediu: controles nas teclas definidas, um mapa só e maior, sensação de liberdade, pesquisa de level design, as runas e as ideias dos brainstorms, e as pastas organizadas.
+- **Feito:**
+  - controles da 1.6 juntados (branch `codex/controles`) e ligados; botão CONTROLES no título e na pausa. Corrigido: o Codex tinha estragado a acentuação do `docs/TAREFAS.md` (ficou a versão boa);
+  - tela 960×540, mapa inteiro numa cena (`world_scene.gd`), relevo nas áreas, HUD compacto (detalhes em `docs/plano-tecnico-mundo.md`, seção 14);
+  - inimigo de perto só bate se estiver na mesma altura (antes atravessava o chão);
+  - runas da 1.8 (branch `codex/runas`) juntadas e ligadas ao jogo e ao save;
+  - pesquisa em `docs/level-design-referencias.md`.
+- **Codex trabalhando:** avaliação do MetSys (O.4) no branch `codex/avaliacao-metsys`, só documento.
+- **Verificado:** 5 testes passam (`test_world_map`, `test_world_flow` andando pelas 48 passagens e com runas no save, `test_runes`, `test_input_config`, `test_aseprite_frames`); fotos do título e de 3 áreas conferidas.
+- **Não verificado:** ninguém jogou a versão nova. Pulo pelas passagens do teto foi testado por script, não com a mão. Balanceamento das runas é provisório.
+- **Organização das pastas:** inventário feito (148 arquivos, 336 MB, na Área de Trabalho do Gabriel). Plano proposto, nada movido ainda: espera o ok do Gabriel.
+- **Próximo passo:** o Gabriel joga; aprovar o plano de pastas; minimapa (1.4), relógio e modos (1.5), mecânicas reais dos bloqueios (1.7) e salas desenhadas à mão região por região.
