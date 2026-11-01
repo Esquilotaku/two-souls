@@ -4,11 +4,11 @@ Two Souls é um jogo de ação e exploração em pixel art (estilo metroidvania)
 
 ## Como jogar a versão atual
 
-1. Abra a pasta `tools\Godot4.7.2\`.
-2. Rode este comando (ou dê dois cliques no Godot e abra o projeto `Two Souls\project.godot`):
+1. Dê dois cliques em **`JOGAR.bat`**, aqui na pasta `F:\GAME`.
+2. Ou, num terminal PowerShell, rode (o `&` na frente é obrigatório no PowerShell):
 
-   ```
-   "F:\GAME\tools\Godot4.7.2\Godot_v4.7.2-stable_win64.exe" --path "F:\GAME\Two Souls"
+   ```powershell
+   & "F:\GAME\tools\Godot4.7.2\Godot_v4.7.2-stable_win64.exe" --path "F:\GAME\Two Souls"
    ```
 
 3. O jogo abre em tela cheia. As teclas estão no menu **COMO JOGAR** e podem ser trocadas em **CONTROLES**.
