@@ -76,3 +76,23 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - Verificação feita: o projeto **não compilava**. `foe.gd:47` e `boss.gd:83/164/265` usavam `var horizontal_distance :=` com valor sem tipo; trocado por `: float =`. Também foi preciso rodar `--import`, porque os sprites novos e o `ItemPickup` ainda não estavam no cache do Godot.
 - Depois da correção, o projeto carrega e roda 600 quadros sem janela (`--headless --quit-after 600`) sem erro. Isso **não** testa gameplay: ninguém jogou, apertou botões ou chegou nos chefes.
 - Próximo passo de código continua o mesmo: mundo de áreas interconectadas. Antes disso o Gabriel quer um brainstorm de design (modelo Fable, crédito de nuvem ainda a confirmar).
+
+## Ponto de retomada — 01/11/2026 (Claude, brainstorm de design)
+
+- Branch `claude/brainstorm-mundo`. Brainstorm de design com o Gabriel; nenhum código de jogo foi alterado.
+- **Bloco 1 concluído:** `docs/brainstorm-mundo-interligado.md`. Decisões principais:
+  - mapa único com alturas híbridas;
+  - mapa grande lançado por partes (1.0 com 8 regiões, 12 a 18 h);
+  - rede de cavernas sob o mapa, atalhos de volta com pista e segredos escondidos;
+  - santuários fixos, que só valem se ativados; morrer não tira nada;
+  - 5 habilidades (lança cravada → super soco → pulo duplo e mergulho em qualquer ordem → purificação);
+  - The Rock antes da árvore, que guarda Aenia (decisão da refeitura);
+  - o feiticeiro vira o lagarto na 2ª fase;
+  - 16 lutas (3 + 5 + 8);
+  - vários dias com descanso no santuário e modos História, Aventura e Desafio (Desafio todo à noite);
+  - demo do início até vencer The Rock.
+- **A fazer, na ordem:**
+  - bloco 2, `docs/brainstorm-jogo.md`: história, personagens, inimigos, progressão, arte, som, controles, duração, preço e público;
+  - bloco 3, `docs/estudio-e-cargos.md`: cargos, IA ou freelancer, coordenação dos agentes, avaliar o Paperclip;
+  - bloco 4, `docs/plano-de-negocio.md`: empresa no Brasil, Steam Direct, impostos, banco, orçamento, cronograma, marketing e canal Esquilo Otaku. Só com fonte aberta; o que não for conferido fica marcado como "não verificado".
+- **Não verificado:** nada foi rodado no Godot; o documento é só de design. O protótipo continua linear.

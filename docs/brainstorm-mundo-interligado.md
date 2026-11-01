@@ -50,7 +50,7 @@ Sessão de brainstorm entre o Gabriel e o Claude, 01/11/2026. Branch `claude/bra
 graph TD
   Copas["Copas (alto)"] --- Covil["Covil do Feiticeiro (alto)"]
   Clareira["Clareira da Árvore Mãe"] --- Floresta["Floresta Antiga"]
-  Floresta --- Coracao["Coração Corrompido"]
+  Floresta -->|2 selos: pulo duplo + mergulho| Coracao["Coração Corrompido"]
   Floresta -->|pulo duplo| Copas
   Clareira --- Trilha["Trilha da Tribo"]
   Floresta --- Lago["Lago"]
@@ -95,7 +95,9 @@ As linhas tracejadas são passagens subterrâneas ou secretas. Os rótulos mostr
 | 2 | Super soco | [Gabriel] (vem de vencer The Rock) | The Rock | rochas e paredes rachadas, entrada das Cavernas |
 | 3 ou 4 | Pulo duplo (vento ou folha) | [proposta] | subchefe nas Cavernas ou na Floresta | Copas, caminho alto até o Covil |
 | 3 ou 4 | Mergulho | [proposta] | subchefe do Lago | fundo do Lago, trecho alagado do Túnel |
-| 5 | Purificação (magia dos gêmeos) | magia dos gêmeos após o resgate: [Gabriel]; usar contra barreiras: [proposta] | resgate de Aenia | barreiras de corrupção, Coração Corrompido, Covil |
+| 5 | Purificação (magia dos gêmeos) | magia dos gêmeos após o resgate: [Gabriel]; usar contra barreiras: [proposta] | resgate de Aenia (vencer a Árvore Corrompida) | barreiras de corrupção, Covil |
+
+**Atualizado pelo tema 3:** a entrada do Coração Corrompido exige **pulo duplo e mergulho** (dois selos), não a purificação.
 
 ### Alternativas descartadas
 
@@ -108,15 +110,96 @@ As linhas tracejadas são passagens subterrâneas ou secretas. Os rótulos mostr
 
 ## Tema 3 — Chefes, subchefes e minibosses
 
-_Em discussão._
+### Decisões aprovadas
+
+1. **The Rock vem antes da Árvore Corrompida** [decisão da refeitura]: é consequência do tema 2, já que o super soco é a 2ª habilidade. Não é lembrança do original; o original continua sem ordem confirmada.
+2. **A Árvore Corrompida guarda Aenia** (opção A) [proposta]:
+   - O feiticeiro prende Aenia no Coração Corrompido.
+   - Vencer a árvore ao pôr do sol liberta Aenia e traz a purificação.
+   - A purificação abre o Covil, onde o final acontece à noite.
+   - Isso encaixa na lembrança do Gabriel: árvore ao pôr do sol e o final à noite.
+3. **Feiticeiro e lagarto: o feiticeiro se transforma** (opção B) [decisão da refeitura]:
+   - Fase 1: feiticeiro encapuzado, com magia e projéteis.
+   - Fase 2: absorve a corrupção e vira o lagarto meio dragão encapuzado, com garras e meteoros.
+   - O Gabriel não indicou que isso seja lembrança do original.
+4. **16 lutas no 1.0: 3 principais, 5 subchefes e 8 minibosses** (opção B) [Gabriel].
+
+| Tipo | Luta | Região | Recompensa |
+|---|---|---|---|
+| Principal | The Rock (testa Orion, depois vira aliado) [Gabriel] | Trilha da Tribo | super soco |
+| Principal | Árvore Corrompida (raízes, vinhas) [Gabriel] | Coração Corrompido | resgate de Aenia e purificação |
+| Principal | Feiticeiro → lagarto encapuzado (meteoros) | Covil do Feiticeiro | final |
+| Subchefe | a definir | Cavernas | pulo duplo |
+| Subchefe | a definir | Lago | mergulho |
+| Subchefe | a definir | Copas | caminho até o Covil |
+| Subchefe | a definir | Túnel | travessia de baixo |
+| Subchefe | a definir | Floresta Antiga | um dos selos do Coração |
+| Miniboss ×8 | variações mais fortes de inimigos comuns, com golpes novos [proposta] | 1 por região | vida máxima, talento ou item |
+
+A distribuição dos subchefes e minibosses é **provisória**. A Serpe do Brejo sai do 1.0 e vai para a região Brejo, depois do lançamento.
+
+### Alternativas descartadas
+
+- **Resgate no meio do jogo, nas Cavernas:** afastaria a árvore do resgate e do pôr do sol.
+- **Resgate só no final:** a magia dos gêmeos deixaria de ser habilidade de travessia.
+- **Feiticeiro e lagarto iguais desde o início, ou dois personagens separados:** a transformação dá duas fases ao final e aproveita as duas imagens antigas.
+- **12 lutas (3 + 3 + 6) e 8 lutas (3 + 2 + 3):** o Gabriel quer densidade maior. [opinião] Cada luta custa arte, animação e balanceamento; reaproveitar inimigos nos minibosses reduz esse custo.
+
+---
 
 ## Tema 4 — Relógio de 24 h e exploração livre
 
-_Em discussão._
+### Decisões aprovadas
+
+1. **Vários dias, com descanso no santuário** (opção B) [proposta]:
+   - O ciclo de 24 h roda livre e a jornada dura vários dias.
+   - No santuário o jogador descansa até de manhã ou até a noite.
+   - Cada chefe principal fixa o seu horário ao entrar na arena.
+   - A narrativa vira "a jornada até o ritual do feiticeiro", não "tudo num dia só".
+   - Não há cronômetro de tempo limite.
+2. **Três modos de dificuldade, ligados ao relógio** [Gabriel]:
+
+| Modo | Relógio | Público |
+|---|---|---|
+| História | quase sempre de dia; noite só para o chefe final | quem quer história e exploração com calma |
+| Aventura | padrão: vários dias, descanso, chefes fixam a hora | experiência principal |
+| Desafio | o jogo inteiro à noite, com inimigos mais fortes e ferozes | quem gosta de Dark Souls e jogos hardcore |
+
+3. **No Desafio, os chefes também lutam à noite, em versão noturna** (opção A) [proposta]:
+   - Mais vida, mais velocidade e menos tempo entre golpes.
+   - No 1.0 isso é só números mais um efeito visual. Golpes novos ficam para depois.
+4. **Troca de modo** (opção B) [proposta]:
+   - Entre História e Aventura, livre, em qualquer santuário.
+   - O Desafio só pode ser escolhido no início. Quem sair dele não volta, e perde a conquista da Steam de terminar no Desafio.
+
+### Alternativas descartadas
+
+- **Um dia só, com travas no relógio:** a noite quase só apareceria no fim, e o sistema pedido ficaria escondido.
+- **Relógio só visual:** remove a dificuldade noturna que o Gabriel pediu.
+- **Chefes mantendo o horário da história no Desafio:** contradiz "o jogo inteiro à noite".
+- **Chefes iguais no Desafio:** o desafio dos chefes não mudaria.
+- **Troca de modo totalmente livre:** o Desafio deixaria de ser uma medalha.
+- **Modo fixo do início ao fim:** quem travar num chefe teria de recomeçar o jogo.
+
+---
 
 ## Tema 5 — Escopo da demo e do 1.0
 
-_Em discussão._
+### Decisões aprovadas
+
+1. **1.0:** 8 regiões, 16 lutas, 5 habilidades de travessia, 3 modos, de 12 a 18 horas (temas 1 a 4).
+2. **Demo do Steam Next Fest: do início até vencer The Rock** (opção A) [proposta]:
+   - Uns 45 a 60 minutos.
+   - Regiões: Clareira, Trilha da Tribo e a entrada das Cavernas.
+   - Mostra a lança cravada, o super soco e uma parede rachada que ele abre.
+   - Termina com o gancho "o resto da floresta está aberto".
+
+[opinião] Com 16 lutas e 3 modos, este é um projeto de vários anos para uma pessoa com IA. A demo deve ser pequena e muito bem acabada, e o cronograma real fica para o `plano-de-negocio.md`.
+
+### Alternativas descartadas
+
+- **Demo de uma região só:** mostra pouco do mundo interligado.
+- **Demo de 3 ou 4 regiões:** atrasa a demo e gasta conteúdo do jogo.
 
 ---
 
@@ -124,5 +207,9 @@ _Em discussão._
 
 - **Mapa:** quantas salas por região, e o nome final de cada região.
 - **Minimapa:** escala, ícones, e se o mapa é comprado, achado ou revelado andando.
-- **Subchefes:** quem são os que dão o pulo duplo e o mergulho.
-- **Pós-1.0:** o que existe nas regiões-gancho e quais delas usam o gancho de vinha e o planar.
+- **Subchefes e minibosses:** quem são, os golpes, e a distribuição final.
+- **Ritual:** quando o ritual do feiticeiro acontece na história, e se existe alguma consequência por demorar. A proposta atual é não ter tempo limite.
+- **Demo:** se a demo oferece o modo Desafio.
+- **Escala do relógio:** quanto tempo dura um dia de jogo (o protótipo usa 15 min) e quais são os horários exatos dos chefes. O protótipo usa 10:00, 18:00 e 22:00.
+- **Pós-1.0:** o que existe nas regiões-gancho, quais delas usam o gancho de vinha e o planar, e se elas chegam em atualização gratuita ou numa expansão paga.
+- **Original:** a ordem real entre The Rock e a árvore no jogo da faculdade continua sem confirmação. A ordem acima é decisão da refeitura.
