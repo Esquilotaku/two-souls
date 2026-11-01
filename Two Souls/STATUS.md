@@ -131,3 +131,19 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   - o `AGENTS.md` ganhou a seção "Quem faz o quê", os documentos de `docs/` na lista de arquivos e a regra de marcar e atualizar tarefas no quadro.
 - **Pendente (O.1):** o Gabriel quer usar o **Orca** (`stablyai/orca`, app de desktop que roda Claude Code e Codex lado a lado) e a skill de orquestração dele. **Nada foi instalado.** Pela regra do AGENTS.md, o Gabriel lê antes; a instalação é feita na **sessão do PC**, onde os agentes rodam.
 - **Próximo passo:** tarefa 1.1 do quadro, o plano técnico do mundo interligado.
+
+## Ponto de retomada — 01/11/2026, noite (Claude, PC, tarefa O.1)
+
+- Branch `claude/brainstorm-mundo`. O `main` local só foi avançado até o `origin/main`.
+- **Feito:**
+  - o Orca 1.4.245 foi instalado no PC;
+  - a skill `orchestration` foi instalada pelo próprio Orca para o Claude e o Codex;
+  - detalhes, conferências e ressalvas estão em `docs/orca.md`, e há uma linha de uso no `AGENTS.md` (seção "Como verificar");
+  - a O.1 está marcada como feita no quadro.
+- **Verificado:** `orca status` ok, a skill aparece no Claude Code, e `orca skills get orchestration` e `orca orchestration run-list` funcionam.
+- **Não verificado:**
+  - se o Codex enxerga a skill (ela está em `~/.agents/skills`, sem link em `~/.codex/skills`);
+  - um ciclo completo Claude → Codex → `worker_done`;
+  - a telemetria do Orca continua **ligada**: o Gabriel precisa desligar em Settings → Privacy.
+- **Fora do git:** a pasta `txt/` (notas do Gabriel) continua sem commit; falta decidir se entra.
+- **Próximo passo:** testar o Orca com uma tarefa pequena, por exemplo o Claude pedir ao Codex uma revisão e receber o resultado. Depois, a tarefa 1.1, o plano técnico do mundo interligado.
