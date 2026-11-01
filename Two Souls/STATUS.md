@@ -192,3 +192,18 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - Mundo inspecionado: o piso e as plataformas abertas não têm teto físico baixo; `tunnel_layer.gd` é decorativo e não está instanciado no protótipo. Alcances de ataque de chefe e velocidades de inimigos/chefes não foram balanceados jogando; as plataformas mais altas, passagens visuais e proporção do personagem em movimento não foram validadas com controle manual.
 - **Verificado:** Aseprite CLI refez o arquivo e exportou o PNG/JSON; Godot 4.7.2 headless abriu o projeto, `tests/test_aseprite_frames.gd` passou (1 JSON, 0 falhas) e o jogo rodou com `--quit-after 600`, sem erros de script.
 - **Pendente:** enviar o branch e conferir o GitHub Actions; não foi feito teste manual jogando. A aprovação visual da arte continua com o Gabriel.
+
+## Ponto de retomada — 01/11/2026, noite (Claude, marco 1: estrutura do mundo)
+
+- Branch `claude/estrutura-mundo`, saído de `codex/orion-basico` (o Orion de 72 px). A arte foi pausada a pedido do Gabriel; a A.3 segue esperando revisão.
+- **Feito:**
+  - 1.1: plano técnico em `docs/plano-tecnico-mundo.md` (salas, portas, habilidades, santuários, save 5, controles, quem faz o quê).
+  - 1.2: o jogo deixou de ser 8 corredores em fila. Agora são **22 salas do mapa completo do 1.0** em blocos cinzas (`scripts/world/world_map.gd` e `world_room.gd`), com portas nos 4 lados, transição escurecendo a tela, bloqueios laranja por habilidade, ganchos pós-1.0 fechados, chefes e subchefes provisórios e altares.
+  - 1.3: santuários (`scripts/world/shrine.gd`): ativar com E, descansar, morrer volta ao último ativado sem perder nada.
+  - Save versão 5 com sala, santuário, salas visitadas, habilidades e chefes; save 4 migra para o início da Clareira mantendo nível, itens e talentos.
+  - Corrigidos: Orion deslocava 32 px ao virar; câmera sem nome (os limites não eram aplicados); o save nunca era lido de volta porque o JSON devolve números decimais (o "Continuar" nunca aparecia).
+  - CI roda todos os `tests/test_*.gd`.
+- **Codex (pelo Orca):** fez a 1.6 no branch `codex/controles` (`input_config.gd`, `ui/controls_menu.gd`, teste próprio; Actions verde segundo ele). **Ainda não foi ligado no jogo**: precisa juntar o branch e chamar o `InputConfig` no `game.gd`. Não conferi o código dele.
+- **Verificado:** `tests/test_world_map.gd` (22 salas, todas alcançáveis na ordem das habilidades), `tests/test_world_flow.gd` (jogo sozinho: 48 passagens de porta, bloqueio, santuário, morte, continuar, migração), `test_aseprite_frames.gd`, 600 quadros sem erro. Fotos de 4 salas conferidas.
+- **Não verificado:** ninguém jogou com teclado. Pulo, escadas automáticas, alcance das portas de cima, chefes nas salas novas e balanceamento são cálculo, não jogo. Os subchefes ainda usam o chefe genérico. Os rascunhos do Codex ganharam `.gdignore` para o Godot não importá-los.
+- **Próximo passo:** o Gabriel joga e junta os branches; depois ligar os controles da 1.6, minimapa (1.4), relógio com descanso e modos (1.5) e as mecânicas reais dos bloqueios (1.7).

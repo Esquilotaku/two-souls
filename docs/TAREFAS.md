@@ -18,12 +18,12 @@ A ordem segue os marcos do `docs/plano-de-negocio.md`, seção 6.
 
 | # | Tarefa | Responsável sugerido | Estado | Referência |
 |---|---|---|---|---|
-| 1.1 | Plano técnico do mundo interligado: salas, transições, regiões, como o save guarda a sala atual e as salas visitadas | Claude | em andamento (Claude, claude/estrutura-mundo) | mundo, tema 1 |
-| 1.2 | Trocar os 8 corredores lineares por salas interligadas (primeiro, só a Clareira, a Trilha e a entrada das Cavernas com arte provisória) | Codex ou Claude | em andamento (Claude, claude/estrutura-mundo) | mundo, tema 1 |
-| 1.3 | Santuários fixos que só valem se ativados; morrer volta ao último ativado sem perder nada | Codex ou Claude | em andamento (Claude, claude/estrutura-mundo) | mundo, tema 1, itens 6 e 7 |
+| 1.1 | Plano técnico do mundo interligado: salas, transições, regiões, como o save guarda a sala atual e as salas visitadas | Claude | feito (01/11/2026), `docs/plano-tecnico-mundo.md` | mundo, tema 1 |
+| 1.2 | Trocar os 8 corredores lineares por salas interligadas (primeiro, só a Clareira, a Trilha e a entrada das Cavernas com arte provisória) | Codex ou Claude | feito (01/11/2026): mapa completo do 1.0, 22 salas em cinza, branch claude/estrutura-mundo | mundo, tema 1 |
+| 1.3 | Santuários fixos que só valem se ativados; morrer volta ao último ativado sem perder nada | Codex ou Claude | feito (01/11/2026), sem a escolha manhã/noite do descanso (fica na 1.5) | mundo, tema 1, itens 6 e 7 |
 | 1.4 | Minimapa revelado conforme as salas visitadas | Codex ou Claude | livre | mundo, tema 1 |
 | 1.5 | Relógio com descanso no santuário e os modos História, Aventura e Desafio | Codex ou Claude | livre | mundo, tema 4 |
-| 1.6 | Controles novos (setas, Espaço, A, S, QWER, D, F, Enter) com remapeamento | Codex ou Claude | livre | jogo, seção 7 |
+| 1.6 | Controles novos (setas, Espaço, A, S, QWER, D, F, Enter) com remapeamento | Codex ou Claude | esperando Claude (integrar no game.gd), feito pelo Codex no branch codex/controles | jogo, seção 7 |
 | 1.7 | Bloqueios de habilidade: lança cravada e super soco primeiro | Codex ou Claude | livre | jogo, seção 3 |
 
 ## Arte (em paralelo)

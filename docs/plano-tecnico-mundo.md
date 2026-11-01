@@ -97,7 +97,7 @@ O caminho obrigatório: lança na Clareira → Trilha → D Rock (super soco) �
 ## 7. Santuários (tarefa 1.3)
 
 - Ficam em salas fixas (campo `shrine`), uns 9 no mapa.
-- **Ativar:** encostar e apertar `interact` (seta para cima). Ativado, o santuário salva, enche vida e magia e vira o ponto de volta.
+- **Ativar:** encostar e apertar `interact` (seta para cima depois da 1.6; até lá, a tecla E). Ativado, o santuário salva, enche vida e magia e vira o ponto de volta.
 - **Descansar:** apertar `interact` de novo num santuário ativado. Salva, enche vida e magia e faz os inimigos voltarem. A escolha de descansar até de manhã ou até a noite é da tarefa 1.5.
 - **Morrer:** volta à sala do último santuário ativado, com tudo (sem perder XP, itens nem habilidades). Antes de ativar o primeiro, volta ao início da Clareira.
 
@@ -151,11 +151,12 @@ Nomes das ações no `InputMap`. Os que já existem continuam com o mesmo nome, 
 |---|---|---|
 | `scripts/world/world_map.gd` | dados das regiões, salas e portas; validação | Claude |
 | `scripts/world/world_room.gd` | monta uma sala (chão, paredes, plataformas, portas, bloqueios, santuário, inimigos, chefe) | Claude |
-| `scripts/world/room_door.gd`, `ability_gate.gd`, `shrine.gd` | peças da sala | Claude |
+| `scripts/world/shrine.gd` | santuário (`WorldShrine`); portas e bloqueios ficam dentro do `world_room.gd` | Claude |
 | `scripts/game.gd` | fluxo: entra na sala, transição, morte, santuário, save | Claude |
 | `scripts/save_manager.gd` | save versão 5 e migração da 4 | Claude |
 | `scripts/input_config.gd`, `scripts/ui/controls_menu.gd` | controles e remapeamento | Codex |
-| `tests/test_world_map.gd` | portas com volta, salas alcançáveis, salas montam sem erro | Claude |
+| `tests/test_world_map.gd` | portas com volta e vizinhas, salas alcançáveis, salas montam sem erro | Claude |
+| `tests/test_world_flow.gd` | joga sozinho: atravessa todas as portas, santuário, morte, continuar, migração do save 4 | Claude |
 | `tests/test_input_config.gd` | padrões e remapeamento | Codex |
 
 O GitHub Actions roda todos os `tests/test_*.gd`.
@@ -172,3 +173,11 @@ Essas três podem ir para o Codex quando o núcleo estiver no branch, uma por ve
 
 - Os números de pulo, as alturas das plataformas e o tamanho das salas foram calculados, não jogados.
 - Os chefes atuais foram feitos para o mundo de antes, com o chão em y 304; cada sala passa o próprio chão para eles, mas o comportamento nas salas novas só se confirma jogando.
+
+## 13. O que mudou ao programar (01/11/2026)
+
+- As portas e os bloqueios ficaram dentro do `world_room.gd`; só o santuário virou arquivo próprio.
+- O JSON do Godot lê todo número como decimal (1 vira 1.0). O `save_manager.gd` passou a aceitar números redondos; antes disso o "Continuar" nunca aparecia, inclusive no protótipo antigo.
+- A câmera do Orion não tinha nome e o jogo não achava ela para prender nos limites; agora se chama `Camera2D`.
+- "Continuar" sempre volta ao último santuário ativado (ou ao início da Clareira), não ao ponto exato onde o jogador parou.
+- O pulo duplo agora vem do gavião (`double_jump` no `player.gd`), não mais da magia dos gêmeos.
