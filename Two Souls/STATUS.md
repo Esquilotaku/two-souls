@@ -242,3 +242,10 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - MetSys não foi instalado; nenhum arquivo de código do jogo foi alterado. Apenas este STATUS, `docs/TAREFAS.md` e o documento de avaliação fazem parte desta tarefa.
 - Não foi verificada a compatibilidade do addon no Godot 4.7.2 nem foi rodada verificação do jogo; esta tarefa foi de leitura e documentação. A compatibilidade real permanece a confirmar em cópia isolada, caso Gabriel decida avaliar uma adoção.
 - Tarefa O.4 aguarda Gabriel ler `docs/tecnico/avaliacao-metsys.md` e decidir se quer protótipo do editor de mapa/minimapa.
+
+## Ponto de retomada — 01/11/2026 (Codex, pesquisa de jogabilidade)
+
+- Criado `docs/design/referencia-grand-chase.md` com pesquisa de movimento, combos, especiais, fases, HUD e propostas para Two Souls. O documento separa `[fonte]` e `[opinião]` e lista 15 links públicos consultados; nenhum código-fonte de Grand Chase foi aberto ou usado.
+- A pesquisa registra as variações entre personagens/classes/versões e deixa explícito que duração de fase e proporções de inimigos/chefes não têm média/medida pública confiável nas fontes abertas.
+- Não houve alteração em `Two Souls/` além deste STATUS; não rodei o jogo nem testes por ser entrega documental.
+- Tarefa O.5 aguarda Gabriel ler `docs/design/referencia-grand-chase.md`.
