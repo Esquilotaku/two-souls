@@ -1,5 +1,7 @@
 # Referências visuais — pixel art, metroidvania e HUD
 
+**Estudo completo dos jogos** (ferramentas, level design, HUD e lições): [`estudo-de-jogos.md`](estudo-de-jogos.md).
+
 Pasta de estudo para o Gabriel, o Claude e o Codex. **Referência inspira, não é para copiar**: nada daqui entra no jogo (regra do `AGENTS.md`).
 
 ## Como baixar as imagens (no PC)
@@ -21,6 +23,7 @@ powershell -ExecutionPolicy Bypass -File pipeline\baixar-referencias.ps1
 
 | Pasta começa com | O que estudar ali |
 |---|---|
+| `metroidvania-ref-` | Hollow Knight, Silksong, Ori 1 e 2: não são pixel art, mas são a referência de mapa, HUD e exploração |
 | `metroidvania-` | mapa, leitura do personagem no cenário, HUD de vida e magia, portas e bloqueios |
 | `brasileiro-` | Dandara e Kaze: como jogos brasileiros apresentam a identidade visual |
 | `precisao-` | Celeste, Shovel Knight, Katana ZERO: plataforma difícil e legível (referência para os desafios estilo Jump Quest) |
