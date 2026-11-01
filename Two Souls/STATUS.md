@@ -69,3 +69,10 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - `scripts/save_manager.gd` — salvamento local.
 - `Two Souls - Plano do Jogo.md` em `F:\GAME` — decisões e perguntas de design.
 - `F:\GAME\twosouls\Cut Scenes.docx` — descrição original das cenas.
+
+## Ponto de retomada — 01/11/2026 (Claude)
+
+- A pasta `F:\GAME` agora é um repositório git (branch `main`). As regras de trabalho entre Claude e Codex estão em `F:\GAME\AGENTS.md`: ler este STATUS ao começar, commits pequenos com prefixo `[claude]` ou `[codex]`, atualizar esta seção e commitar antes de passar a vez.
+- Verificação feita: o projeto **não compilava**. `foe.gd:47` e `boss.gd:83/164/265` usavam `var horizontal_distance :=` com valor sem tipo; trocado por `: float =`. Também foi preciso rodar `--import`, porque os sprites novos e o `ItemPickup` ainda não estavam no cache do Godot.
+- Depois da correção, o projeto carrega e roda 600 quadros sem janela (`--headless --quit-after 600`) sem erro. Isso **não** testa gameplay: ninguém jogou, apertou botões ou chegou nos chefes.
+- Próximo passo de código continua o mesmo: mundo de áreas interconectadas. Antes disso o Gabriel quer um brainstorm de design (modelo Fable, crédito de nuvem ainda a confirmar).

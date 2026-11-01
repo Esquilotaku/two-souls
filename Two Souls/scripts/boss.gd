@@ -80,7 +80,7 @@ func _physics_process_corrupted_tree(delta: float) -> void:
 	velocity.x = 0.0
 	var player := get_tree().get_first_node_in_group("player")
 	if player:
-		var horizontal_distance := player.global_position.x - global_position.x
+		var horizontal_distance: float = player.global_position.x - global_position.x
 		if absf(horizontal_distance) > 1.0:
 			direction = 1 if horizontal_distance > 0.0 else -1
 		if attack_state == "idle":
@@ -161,7 +161,7 @@ func _physics_process_the_rock(delta: float) -> void:
 		queue_redraw()
 		return
 	if player:
-		var horizontal_distance := player.global_position.x - global_position.x
+		var horizontal_distance: float = player.global_position.x - global_position.x
 		var distance := absf(horizontal_distance)
 		if absf(horizontal_distance) > 1.0:
 			direction = 1 if horizontal_distance > 0.0 else -1
@@ -262,7 +262,7 @@ func _physics_process_hooded_sorcerer(delta: float) -> void:
 	meteor_cooldown = maxf(0.0, meteor_cooldown - delta)
 	var player := get_tree().get_first_node_in_group("player")
 	if player:
-		var horizontal_distance := player.global_position.x - global_position.x
+		var horizontal_distance: float = player.global_position.x - global_position.x
 		var distance := absf(horizontal_distance)
 		if absf(horizontal_distance) > 1.0:
 			direction = 1 if horizontal_distance > 0.0 else -1

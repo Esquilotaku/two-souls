@@ -44,7 +44,7 @@ func _physics_process(delta: float) -> void:
 	ranged_cooldown = maxf(0.0, ranged_cooldown - delta)
 	var player := get_tree().get_first_node_in_group("player")
 	if player:
-		var horizontal_distance := player.global_position.x - global_position.x
+		var horizontal_distance: float = player.global_position.x - global_position.x
 		var vertical_distance := absf(player.global_position.y - global_position.y)
 		if absf(horizontal_distance) > 1.0:
 			facing = 1 if horizontal_distance > 0.0 else -1
