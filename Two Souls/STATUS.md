@@ -260,8 +260,14 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   - pulo de 120 px e pulo duplo consertado (antes não funcionava depois de um pulo normal);
   - HUD novo (`scripts/ui/hud.gd`): retrato, HP/MP com números, nível/XP, área e relógio, barra do chefe, Q/W/E com recarga, sem botões por cima. Conferido com foto da tela cheia 1920×1080;
   - o menu de controles esconde ações ainda não programadas (`InputConfig.NOT_READY`).
-- **Não feito (próximas tarefas no quadro):** 2.1 combos (tabela em `docs/design/combos-proposta.md`, esperando aprovação), 2.2 mapa grande com andares (~160 telas até o D Rock), 2.3 inimigos grandes. O visual do mapa ainda é de blocos cinzas.
+- **Não feito (próximas tarefas no quadro):** o acabamento da 2.1 (fôlego e transformação real R); 2.2 mapa grande com andares (~160 telas até o D Rock), ainda com visual de blocos cinzas. A 2.3 está registrada abaixo, esperando Claude usar os tipos no mapa.
 - **Verificado:** todos os testes passam (inclusive 48 passagens andando e o dash). Ninguém jogou esta versão.
+## Ponto de retomada — 02/11/2026 (Codex, tarefa 2.3)
+
+- Implementados três tipos provisórios em `scripts/foe.gd`, com colisões de 72, 76 e 100 px e desenhos por código; o lanceiro mantém os ataques `ranged`/`tribal`. A barra de vida aparece depois do primeiro golpe. Chefes mantêm super armadura (sem `apply_knockback`); D Rock tem 116 px de colisão e cerca de 124 px desenhados, ~1,7× o Kaê de 72 px. Guia: `docs/design/inimigos-provisorios.md`.
+- **Verificado:** Godot 4.7.2 importou o projeto e passou `--headless --path "Two Souls" --quit`; `test_enemies.gd` e todos os `test_*.gd` passaram, incluindo `test_combat.gd`. O import foi necessário porque a pasta `.godot` não tinha os recursos importados.
+- **Próximo passo:** Claude escolher `kind` ao criar inimigos no mapa. A tarefa 2.3 está esperando Claude aplicar os tipos; não foi feito teste manual de gameplay. Push e GitHub Actions ainda pendentes.
+
 ## Ponto de retomada — 01/11/2026, noite 2 (Claude, nuvem: pesquisa de referências)
 
 - **Pasta nova `referencias/`** (comece por `referencias/README.md` e `referencias/checklist-do-jogo.md`):
