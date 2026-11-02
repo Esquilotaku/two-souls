@@ -27,7 +27,7 @@ A ordem segue os marcos do `docs/producao/plano-de-negocio.md`, seção 6.
 | 1.7 | Bloqueios de habilidade: lança cravada e super soco primeiro | Codex ou Claude | livre | jogo, seção 3 |
 | 1.8 | Runas: achadas corrompidas, purificadas no santuário, equipadas em espaços, sobem com fragmentos | Codex | feito (01/11/2026): Codex fez, Claude ligou (chefes e pedras dão runas; santuário purifica; pausa equipa); faltam fôlego e combo | jogo, seção 3 |
 | 2.1 | Combos de comando no estilo arcade (tabela em `docs/design/combos-proposta.md`) | Claude | feito (02/11/2026): tabela aprovada e programada; faltam fôlego e transformação real (R) | combos-proposta |
-| 2.2 | Mapa grande no estilo Grand Chase: céu aberto, andares de plataforma, uns 5 min correndo até o D Rock (blocos à mão + montador fixo) | Claude + Codex | em andamento (Claude, claude/estrutura-mundo) | level-design-referencias, referencia-grand-chase |
+| 2.2 | Mapa grande no estilo Grand Chase: céu aberto, andares de plataforma, uns 5 min correndo até o D Rock (blocos à mão + montador fixo) | Claude + Codex | feito para o caminho até o D Rock (02/11): 302 s medidos pelo corredor automático; o resto do mapa ainda no tamanho antigo | level-design-referencias, referencia-grand-chase |
 | 2.3 | Inimigos grandes (do tamanho do Orion ou maiores) e chefes com super armadura | Codex ou Claude | em andamento (Codex, codex/inimigos-grandes) | referencia-grand-chase |
 
 ## Arte (em paralelo)

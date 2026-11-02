@@ -294,3 +294,15 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   - tarefa 1.1, plano técnico do mapa interligado, avaliando o addon MetSys com a leitura do Gabriel antes;
   - depois, voltar a programar o jogo bruto.
 - **Ainda vale no código:** o protótipo ainda usa os nomes antigos (Orion, Aenia, The Rock). Trocar quando mexer nesses arquivos, sem pressa.
+
+## Ponto de retomada — 02/11/2026, manhã (Claude, PC: mapa grande e Codex em paralelo)
+
+- **Decisão do Gabriel (02/11):** o mapa fica numa cena só (registrado em `docs/tecnico/plano-tecnico-mundo.md`, seção 0). MetSys não será instalado agora.
+- **2.2 feito para o caminho até o D Rock:**
+  - Clareira 16 telas, Trilha 90, Aldeia 88 (duas de altura), arena 2; Túnel e cavernas deslocados para continuar encaixados;
+  - gerador de andares por semente fixa (`_add_andares` no `world_room.gd`): plano, 2º andar, escada até o 3º, muro, muralha com degraus de chão, ponte; inimigos nos andares;
+  - inimigos comuns numa camada de colisão própria: o Kaê atravessa o corpo deles (antes travavam o caminho como parede).
+- **Medido:** `tests/medir_corrida.gd` (fora do CI) faz um corredor automático ir da Clareira ao D Rock pulando sem parar e ignorando inimigos: **302 s (5,0 min)**. A meta do Gabriel era ~5 min para quem sabe o caminho. Jogando normal deve dar mais; não foi medido com pessoa.
+- **Codex trabalhando (execução Orca `run_25fe37e11981`, caixa de correio no terminal "Caixa do Claude"):** 1.4 minimapa (branch `codex/minimapa`) e 2.3 inimigos grandes (branch `codex/inimigos-grandes`). O Orca tinha fechado na pausa e foi reaberto; a caixa de correio antiga sumiu.
+- **Verificado:** todos os testes passam; fotos em tela cheia da Trilha e da Aldeia conferidas.
+- **Não verificado:** ninguém jogou. O resto do mapa (Floresta, Lago, Copas, Coração, Covil) continua no tamanho antigo e com o relevo simples.
