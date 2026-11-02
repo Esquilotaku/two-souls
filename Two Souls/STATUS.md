@@ -306,3 +306,10 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - **Codex trabalhando (execução Orca `run_25fe37e11981`, caixa de correio no terminal "Caixa do Claude"):** 1.4 minimapa (branch `codex/minimapa`) e 2.3 inimigos grandes (branch `codex/inimigos-grandes`). O Orca tinha fechado na pausa e foi reaberto; a caixa de correio antiga sumiu.
 - **Verificado:** todos os testes passam; fotos em tela cheia da Trilha e da Aldeia conferidas.
 - **Não verificado:** ninguém jogou. O resto do mapa (Floresta, Lago, Copas, Coração, Covil) continua no tamanho antigo e com o relevo simples.
+
+## Ponto de retomada ? 02/11/2026 (Codex, minimapa)
+
+- A tarefa 1.4 foi implementada no branch `codex/minimapa`: `scripts/ui/minimap.gd` desenha as ?reas visitadas por cima da interface, com cores das regi?es, destaque da ?rea atual, ponto piscando, portas e bloqueios laranja com letra provis?ria. O modo compacto mede 120?70 px e fica no canto inferior direito; o mapa grande centraliza no jogador e permite zoom pela roda do mouse.
+- Criados `tests/test_minimap.gd` e `docs/tecnico/minimapa.md`, com instru??es de integra??o em tr?s linhas para o Claude. O minimapa ainda n?o foi ligado ao `game.gd`, conforme divis?o de trabalho.
+- Verificado em Godot 4.7.2: carregamento headless do projeto e todos os testes `tests/test_*.gd` passaram, incluindo a ?rea de exemplo 60?2. N?o foi feito teste manual com o jogo aberto.
+- Pr?ximo passo: Claude integrar o controle no `game.gd` e ligar a a??o `map`; a tarefa 1.4 est? esperando essa integra??o.
