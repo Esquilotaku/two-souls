@@ -192,6 +192,9 @@ func _add_platforms() -> void:
 func _add_relief() -> void:
 	if data.has("boss"):
 		return
+	if data.get("andares", false):
+		_add_andares()
+		return
 	var random := RandomNumberGenerator.new()
 	random.seed = hash(room_id)
 	var blocked := _relief_blocked_spans()
@@ -343,6 +346,9 @@ func _add_pickups(collected_pickups: Callable) -> void:
 		add_child(pickup)
 
 func _add_foes() -> void:
+	# Nas áreas com andares, os inimigos são postos pelo próprio gerador (_add_andares).
+	if data.get("andares", false):
+		return
 	var count := int(data.get("foes", 0))
 	var usable := size_px.x - 400.0
 	for index in range(count):
@@ -358,6 +364,7 @@ func _add_foes() -> void:
 			foe.tribal = true
 		foe.process_mode = Node.PROCESS_MODE_PAUSABLE
 		add_child(foe)
+		_foe_layer(foe)
 
 func _add_boss(boss_key: String) -> void:
 	var info: Dictionary = WorldMap.BOSSES[boss_key]
@@ -458,3 +465,104 @@ func _add_rune_stone(rune_id: String) -> void:
 
 func has_ceiling() -> bool:
 	return data.get("region", "") in REGIONS_WITH_CEILING
+
+# --- Andares no estilo Grand Chase (tarefa 2.2) ---
+# Cada tela da área recebe um bloco escolhido por uma semente fixa (sempre igual para a mesma área):
+# chão com até 3 andares de plataformas, muros e muralhas que fazem o jogador subir, e inimigos nos andares.
+# É o "blocos à mão + montador fixo" (docs/design/level-design-referencias.md): os blocos são simples e
+# provisórios; depois cada trecho pode ser desenhado à mão no lugar do gerado.
+
+## Distância entre andares: menor que o pulo (120 px, player.gd), para subir de um para o outro.
+const ANDAR := 100.0
+const BLOCKS := ["plano", "andar2", "escada", "muro", "muralha", "ponte"]
+const BLOCK_WEIGHTS := [0.14, 0.20, 0.20, 0.18, 0.16, 0.12]
+## Inimigos por tela, em média (ajustar jogando).
+const FOES_PER_SCREEN := 0.8
+
+func _add_andares() -> void:
+	var random := RandomNumberGenerator.new()
+	random.seed = hash(room_id + ":andares")
+	var blocked := _relief_blocked_spans()
+	var screens: int = data["size"].x
+	var base := floor_y()
+	var foe_spots: Array[Vector2] = []
+	for screen in range(screens):
+		var x0 := screen * WorldMap.SCREEN.x
+		var span := Vector2(x0 + 40.0, x0 + WorldMap.SCREEN.x - 40.0)
+		if _overlaps(span, blocked):
+			# Tela com porta, buraco, santuário ou altar: fica plana para não atrapalhar.
+			continue
+		var kind := _pick_block(random)
+		match kind:
+			"plano":
+				foe_spots.append(Vector2(x0 + 320.0, base))
+			"andar2":
+				var w := random.randf_range(220.0, 360.0)
+				var x := x0 + random.randf_range(60.0, WorldMap.SCREEN.x - 60.0 - w)
+				_add_solid(Rect2(x, base - ANDAR, w, 14.0), 0.18)
+				foe_spots.append(Vector2(x + w * 0.5, base - ANDAR))
+			"escada":
+				_add_solid(Rect2(x0 + 80.0, base - ANDAR, 170.0, 14.0), 0.18)
+				_add_solid(Rect2(x0 + 300.0, base - ANDAR * 2.0, 220.0, 14.0), 0.18)
+				foe_spots.append(Vector2(x0 + 410.0, base - ANDAR * 2.0))
+			"muro":
+				var h: float = [56.0, 72.0, 88.0][random.randi_range(0, 2)]
+				var w2 := random.randf_range(120.0, 220.0)
+				_add_solid(Rect2(x0 + 260.0, base - h, w2, h), 0.08)
+				foe_spots.append(Vector2(x0 + 260.0 + w2 * 0.5, base - h))
+			"muralha":
+				# Alta demais para um pulo só: degrau de chão encostado nos dois lados (sobe no degrau, pula a
+				# muralha, desce no outro degrau). Plataforma solta antes dela obrigava a voltar para subir.
+				_add_solid(Rect2(x0 + 220.0, base - 90.0, 110.0, 90.0), 0.08)
+				_add_solid(Rect2(x0 + 330.0, base - 180.0, 90.0, 180.0), 0.04)
+				_add_solid(Rect2(x0 + 420.0, base - 90.0, 110.0, 90.0), 0.08)
+				foe_spots.append(Vector2(x0 + 520.0, base))
+			"ponte":
+				for i in range(3):
+					var level := 1.0 if i != 1 else 2.0
+					_add_solid(Rect2(x0 + 60.0 + i * 190.0, base - ANDAR * level, 140.0, 14.0), 0.18)
+				foe_spots.append(Vector2(x0 + 320.0, base - ANDAR * 2.0))
+		# Áreas com duas telas de altura ganham andares mais altos (4º e 5º) em parte das telas.
+		if int(data["size"].y) > 1 and random.randf() < 0.5:
+			_add_solid(Rect2(x0 + 200.0, base - ANDAR * 3.0, 200.0, 14.0), 0.18)
+			_add_solid(Rect2(x0 + 420.0, base - ANDAR * 4.0, 160.0, 14.0), 0.18)
+	_place_foes(foe_spots, random)
+
+func _pick_block(random: RandomNumberGenerator) -> String:
+	var roll := random.randf()
+	var acc := 0.0
+	for i in range(BLOCKS.size()):
+		acc += BLOCK_WEIGHTS[i]
+		if roll <= acc:
+			return BLOCKS[i]
+	return BLOCKS[0]
+
+## Põe inimigos em parte dos pontos sugeridos; cada um nasce um pouco acima e cai no andar.
+func _place_foes(spots: Array[Vector2], random: RandomNumberGenerator) -> void:
+	var wanted := int(round(float(data["size"].x) * FOES_PER_SCREEN))
+	var index := 0
+	for spot in spots:
+		if index >= wanted:
+			break
+		if random.randf() > 0.85:
+			continue
+		var foe := ForestFoe.new()
+		foe.drop_id = "%s:foe:%d" % [room_id, index]
+		foe.position = spot + Vector2(0.0, -60.0)
+		foe.floor_y = spot.y
+		foe.speed = 27.0 + float(index % 3) * 5.0
+		foe.patrol_span = 60.0
+		if data.get("tribal", false) and index % 3 == 1:
+			foe.ranged = true
+			foe.tribal = true
+		foe.process_mode = Node.PROCESS_MODE_PAUSABLE
+		add_child(foe)
+		_foe_layer(foe)
+		index += 1
+
+## Inimigos comuns ficam numa camada própria (2): pisam no chão (máscara 1), mas não travam o Kaê,
+## que atravessa o corpo deles e só leva dano de contato, como em Grand Chase e Hollow Knight.
+## Os chefes continuam na camada do mundo: eles fecham a arena de propósito.
+func _foe_layer(foe: CharacterBody2D) -> void:
+	foe.collision_layer = 2
+	foe.collision_mask = 1

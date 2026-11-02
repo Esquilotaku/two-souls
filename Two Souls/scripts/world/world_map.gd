@@ -54,41 +54,40 @@ const ROOMS := {
 	# --- Clareira da Árvore Mãe ---
 	"clareira_inicio": {
 		"region": "clareira", "name": "Clareira da Árvore Mãe",
-		"cell": Vector2i(0, 0), "size": Vector2i(2, 1),
+		"cell": Vector2i(0, 0), "size": Vector2i(16, 1),
 		"doors": [
 			{"id": "leste", "side": "east", "row": 0, "to": "trilha_entrada", "to_door": "oeste"},
 			{"id": "oeste", "side": "west", "row": 0, "to": "floresta_borda", "to_door": "leste"},
-			{"id": "baixo", "side": "down", "col": 1, "to": "cav_clareira", "to_door": "cima", "gate": "super_punch"},
+			{"id": "baixo", "side": "down", "col": 15, "to": "cav_clareira", "to_door": "cima", "gate": "super_punch"},
 		],
 		"spawn": Vector2(160.0, 0.0), "shrine": 360.0, "grants": "spear_wall", "altar": 860.0,
 		"pickups": ["luminous_herb"],
 		"platforms": [[520.0, 220.0, 120.0]],
+		"andares": true,
 	},
 	# --- Trilha da Tribo ---
 	"trilha_entrada": {
 		"region": "trilha", "name": "Trilha da Tribo",
-		"cell": Vector2i(2, 0), "size": Vector2i(2, 1),
+		"cell": Vector2i(16, 0), "size": Vector2i(90, 1),
 		"doors": [
 			{"id": "oeste", "side": "west", "row": 0, "to": "clareira_inicio", "to_door": "leste"},
 			{"id": "leste", "side": "east", "row": 0, "to": "trilha_aldeia", "to_door": "oeste", "gate": "spear_wall"},
 		],
-		"foes": 3, "tribal": true,
-		"platforms": [[300.0, 230.0, 112.0], [620.0, 200.0, 96.0], [940.0, 230.0, 112.0]],
+		"tribal": true, "andares": true,
 	},
 	"trilha_aldeia": {
 		"region": "trilha", "name": "Aldeia da Tribo",
-		"cell": Vector2i(4, 0), "size": Vector2i(2, 1),
+		"cell": Vector2i(106, -1), "size": Vector2i(88, 2),
 		"doors": [
-			{"id": "oeste", "side": "west", "row": 0, "to": "trilha_entrada", "to_door": "leste"},
-			{"id": "leste", "side": "east", "row": 0, "to": "trilha_arena", "to_door": "oeste"},
+			{"id": "oeste", "side": "west", "row": 1, "to": "trilha_entrada", "to_door": "leste"},
+			{"id": "leste", "side": "east", "row": 1, "to": "trilha_arena", "to_door": "oeste"},
 			{"id": "baixo", "side": "down", "col": 0, "to": "cav_tunel", "to_door": "cima", "gate": "super_punch"},
 		],
-		"shrine": 760.0, "foes": 2, "tribal": true, "pickups": ["mana_seed"],
-		"platforms": [[880.0, 210.0, 140.0], [1080.0, 170.0, 100.0]],
+		"shrine": 760.0, "tribal": true, "andares": true, "pickups": ["mana_seed"],
 	},
 	"trilha_arena": {
 		"region": "trilha", "name": "Arena do D Rock",
-		"cell": Vector2i(6, 0), "size": Vector2i(1, 1),
+		"cell": Vector2i(194, 0), "size": Vector2i(2, 1),
 		"doors": [
 			{"id": "oeste", "side": "west", "row": 0, "to": "trilha_aldeia", "to_door": "leste"},
 		],
@@ -158,9 +157,9 @@ const ROOMS := {
 	# --- Cavernas e Túnel ---
 	"cav_clareira": {
 		"region": "cavernas", "name": "Caverna sob a Clareira",
-		"cell": Vector2i(0, 1), "size": Vector2i(2, 1),
+		"cell": Vector2i(12, 1), "size": Vector2i(4, 1),
 		"doors": [
-			{"id": "cima", "side": "up", "col": 1, "to": "clareira_inicio", "to_door": "baixo", "gate": "super_punch"},
+			{"id": "cima", "side": "up", "col": 3, "to": "clareira_inicio", "to_door": "baixo", "gate": "super_punch"},
 			{"id": "leste", "side": "east", "row": 0, "to": "cav_tunel", "to_door": "oeste"},
 			{"id": "baixo", "side": "down", "col": 0, "to": "cav_profundas", "to_door": "cima", "gate": "tatu"},
 		],
@@ -168,10 +167,10 @@ const ROOMS := {
 	},
 	"cav_tunel": {
 		"region": "cavernas", "name": "O Túnel",
-		"cell": Vector2i(2, 1), "size": Vector2i(3, 1),
+		"cell": Vector2i(16, 1), "size": Vector2i(91, 1),
 		"doors": [
 			{"id": "oeste", "side": "west", "row": 0, "to": "cav_clareira", "to_door": "leste"},
-			{"id": "cima", "side": "up", "col": 2, "to": "trilha_aldeia", "to_door": "baixo", "gate": "super_punch"},
+			{"id": "cima", "side": "up", "col": 90, "to": "trilha_aldeia", "to_door": "baixo", "gate": "super_punch"},
 			{"id": "leste", "side": "east", "row": 0, "to": "cav_toca_tatu", "to_door": "oeste"},
 		],
 		"shrine": 960.0, "foes": 3, "pickups": ["luminous_herb"],
@@ -179,7 +178,7 @@ const ROOMS := {
 	},
 	"cav_toca_tatu": {
 		"region": "cavernas", "name": "Toca do Minhocão",
-		"cell": Vector2i(5, 1), "size": Vector2i(1, 1),
+		"cell": Vector2i(107, 1), "size": Vector2i(1, 1),
 		"doors": [
 			{"id": "oeste", "side": "west", "row": 0, "to": "cav_tunel", "to_door": "leste"},
 		],
@@ -187,7 +186,7 @@ const ROOMS := {
 	},
 	"cav_alagada": {
 		"region": "cavernas", "name": "Galeria Alagada",
-		"cell": Vector2i(-3, 2), "size": Vector2i(3, 1),
+		"cell": Vector2i(-3, 2), "size": Vector2i(15, 1),
 		"doors": [
 			{"id": "oeste", "side": "west", "row": 0, "to": "lago_fundo", "to_door": "leste"},
 			{"id": "leste", "side": "east", "row": 0, "to": "cav_profundas", "to_door": "oeste"},
@@ -196,7 +195,7 @@ const ROOMS := {
 	},
 	"cav_profundas": {
 		"region": "cavernas", "name": "Cavernas Profundas",
-		"cell": Vector2i(0, 2), "size": Vector2i(3, 1),
+		"cell": Vector2i(12, 2), "size": Vector2i(3, 1),
 		"doors": [
 			{"id": "oeste", "side": "west", "row": 0, "to": "cav_alagada", "to_door": "leste"},
 			{"id": "cima", "side": "up", "col": 0, "to": "cav_clareira", "to_door": "baixo", "gate": "tatu"},
@@ -207,7 +206,7 @@ const ROOMS := {
 	},
 	"cav_ninho": {
 		"region": "cavernas", "name": "Ninho do Mapinguari",
-		"cell": Vector2i(3, 2), "size": Vector2i(1, 1),
+		"cell": Vector2i(15, 2), "size": Vector2i(1, 1),
 		"doors": [
 			{"id": "oeste", "side": "west", "row": 0, "to": "cav_profundas", "to_door": "leste"},
 		],
