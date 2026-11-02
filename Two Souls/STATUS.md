@@ -319,3 +319,14 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 - Criados `tests/test_minimap.gd` e `docs/tecnico/minimapa.md`, com instru??es de integra??o em tr?s linhas para o Claude. O minimapa ainda n?o foi ligado ao `game.gd`, conforme divis?o de trabalho.
 - Verificado em Godot 4.7.2: carregamento headless do projeto e todos os testes `tests/test_*.gd` passaram, incluindo a ?rea de exemplo 60?2. N?o foi feito teste manual com o jogo aberto.
 - Pr?ximo passo: Claude integrar o controle no `game.gd` e ligar a a??o `map`; a tarefa 1.4 est? esperando essa integra??o.
+
+## Ponto de retomada — 02/11/2026 (Claude, PC: minimapa e inimigos ligados)
+
+- Juntados os branches `codex/minimapa` (1.4) e `codex/inimigos-grandes` (2.3); acentuação conferida, arquivos dentro do combinado.
+- **Ligado no jogo pelo Claude:**
+  - minimapa no canto de baixo à direita, na camada da interface (a instrução do Codex o punha no nó do jogo, onde andaria com a câmera); **Tab** abre o mapa grande e pausa;
+  - o minimapa pequeno passou a ficar centrado no Kaê, na proporção 16:9 e com moldura (o do Codex espremia o mapa inteiro em 120×70 px, com proporção torta);
+  - tipos de inimigo por área: lanceiros na Trilha, corredores no resto, um bicho grande a cada 5.
+- **Verificado:** os 7 testes passam (`test_minimap` e `test_enemies` novos); o corredor automático segue em 302 s até o D Rock; fotos em tela cheia do minimapa, do mapa grande e da Trilha conferidas.
+- **Não verificado:** ninguém jogou. Marcadores manuais e ícones de animal no mapa ficam para depois. Os inimigos ainda são formas provisórias desenhadas por código.
+- **Próximo passo sugerido:** o Gabriel joga até o D Rock; depois, viagem rápida pelas raízes (santuários-broto), fôlego do dash, transformação no R e esticar as outras regiões como a Trilha.

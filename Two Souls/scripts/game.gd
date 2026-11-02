@@ -44,6 +44,9 @@ var skill_tree_returns_to_pause := false
 var respawn_timer := 0.0
 var message_timer := 0.0
 var hud: GameHud
+## Minimapa no canto e mapa grande no Tab (scripts/ui/minimap.gd). Fica na camada da interface, fora do ui_root.
+var minimap: WorldMinimap
+var map_open := false
 var world_hour := 7.0
 var world_ambient: CanvasModulate
 var last_enemy_night_pressure := -1.0
@@ -87,6 +90,10 @@ func _process(delta: float) -> void:
 			_open_skill_tree(true)
 		elif not inventory_open:
 			_open_skill_tree(false)
+	if Input.is_action_just_pressed("map") and playing and not dialogue_open and not inventory_open and not skill_tree_open and (not paused or map_open):
+		_toggle_map()
+		return
+
 	if not playing or paused:
 		return
 	if not player or not is_instance_valid(player) or not world or not is_instance_valid(world):
@@ -110,6 +117,7 @@ func _process(delta: float) -> void:
 	_track_room()
 	_check_altar()
 	_check_rune_stone()
+	_update_minimap()
 	_update_hud()
 
 func _create_ui() -> void:
@@ -123,6 +131,9 @@ func _create_ui() -> void:
 	ui_root.size = UI_SIZE
 	ui_root.mouse_filter = Control.MOUSE_FILTER_PASS
 	ui_layer.add_child(ui_root)
+	minimap = WorldMinimap.new()
+	minimap.visible = false
+	ui_layer.add_child(minimap)
 
 ## Teclas e botões do brainstorm-jogo.md (seção 7), com as trocas do jogador em user://controles.cfg.
 func _configure_controls() -> void:
@@ -145,6 +156,10 @@ func _open_controls_menu(return_to: Callable) -> void:
 func _show_title() -> void:
 	playing = false
 	paused = false
+	map_open = false
+	if minimap:
+		minimap.set_large_map(false)
+		minimap.visible = false
 	inventory_open = false
 	skill_tree_open = false
 	get_tree().paused = true
@@ -1191,3 +1206,20 @@ func _clear_ui() -> void:
 		ui_root.remove_child(child)
 		child.queue_free()
 	hud = null
+
+# --- Minimapa (tarefa 1.4) ---
+
+func _update_minimap() -> void:
+	if not minimap or not player:
+		return
+	minimap.visible = playing
+	minimap.update_view(visited_rooms, room_id, player.global_position, abilities)
+
+## Tab abre o mapa grande e pausa o jogo, como nos metroidvanias; Tab de novo fecha.
+func _toggle_map() -> void:
+	map_open = not map_open
+	minimap.set_large_map(map_open)
+	_update_minimap()
+	paused = map_open
+	get_tree().paused = map_open
+	player.active = not map_open and player.health > 0

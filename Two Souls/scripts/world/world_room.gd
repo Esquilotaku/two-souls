@@ -362,6 +362,7 @@ func _add_foes() -> void:
 		if data.get("tribal", false) and index % 2 == 1:
 			foe.ranged = true
 			foe.tribal = true
+		foe.kind = _foe_kind(index)
 		foe.process_mode = Node.PROCESS_MODE_PAUSABLE
 		add_child(foe)
 		_foe_layer(foe)
@@ -555,6 +556,7 @@ func _place_foes(spots: Array[Vector2], random: RandomNumberGenerator) -> void:
 		if data.get("tribal", false) and index % 3 == 1:
 			foe.ranged = true
 			foe.tribal = true
+		foe.kind = _foe_kind(index)
 		foe.process_mode = Node.PROCESS_MODE_PAUSABLE
 		add_child(foe)
 		_foe_layer(foe)
@@ -566,3 +568,12 @@ func _place_foes(spots: Array[Vector2], random: RandomNumberGenerator) -> void:
 func _foe_layer(foe: CharacterBody2D) -> void:
 	foe.collision_layer = 2
 	foe.collision_mask = 1
+
+## Tipo provisório de inimigo (docs/design/inimigos-provisorios.md): lanceiros na Trilha da Tribo,
+## corredores corrompidos no resto e, a cada 5, um bicho grande. Trocar quando o bestiário for escolhido.
+func _foe_kind(index: int) -> String:
+	if index % 5 == 4:
+		return "giant_beast"
+	if data.get("tribal", false) and index % 3 == 1:
+		return "tribal_spearman"
+	return "corrupted_runner"

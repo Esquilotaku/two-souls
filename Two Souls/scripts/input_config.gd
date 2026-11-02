@@ -14,7 +14,7 @@ const ACTION_NAMES := {
 
 ## Ações que ainda não fazem nada no jogo: ficam fora do menu e da ajuda até serem programadas.
 ## O dash não tem tecla: é duplo toque na seta (player.gd).
-const NOT_READY := ["dash", "transform", "context", "quick_heal", "confirm", "map"]
+const NOT_READY := ["dash", "transform", "context", "quick_heal", "confirm"]
 
 static var DEFAULTS: Dictionary = _make_defaults()
 

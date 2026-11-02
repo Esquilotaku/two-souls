@@ -4,7 +4,11 @@ extends Control
 
 const COMPACT_SIZE := Vector2(120.0, 70.0)
 const COMPACT_MARGIN := Vector2(12.0, 12.0)
-const LARGE_CELL_PIXELS := 32.0
+## Uma tela do jogo é 16:9; as áreas são desenhadas nessa proporção para não ficarem tortas.
+const CELL_ASPECT := Vector2(16.0, 9.0)
+## Pixels por unidade de proporção: mapa grande 2 (uma tela = 32x18 px), minimapa 1,25 (uma tela = 20x11 px).
+const LARGE_UNIT := 2.0
+const COMPACT_UNIT := 1.25
 const DOOR_COLOR := Color("d9d5bc")
 const GATE_COLOR := Color("f29b38")
 
@@ -19,6 +23,8 @@ func _ready() -> void:
 	set_process(true)
 	mouse_filter = Control.MOUSE_FILTER_PASS
 	custom_minimum_size = COMPACT_SIZE
+	# Áreas fora da caixa são cortadas (o mapa tem centenas de telas de largura).
+	clip_contents = true
 	_set_layout()
 
 ## Alimenta o mapa com os mesmos dados que o fluxo do jogo já mantém.
@@ -68,7 +74,7 @@ func visible_rects() -> Array[Dictionary]:
 func rect_for_room(room_data: Dictionary) -> Rect2:
 	var cell: Vector2i = room_data.get("cell", Vector2i.ZERO)
 	var cells: Vector2i = room_data.get("size", Vector2i.ONE)
-	var map_scale := Vector2.ONE * LARGE_CELL_PIXELS * _large_zoom if _large_map else _cell_scale()
+	var map_scale := _cell_scale()
 	return Rect2(_map_point(Vector2(cell)), Vector2(cells) * map_scale)
 
 func _process(_delta: float) -> void:
@@ -89,6 +95,10 @@ func _gui_input(event: InputEvent) -> void:
 func _draw() -> void:
 	if _large_map:
 		_draw_backdrop()
+	else:
+		# Moldura no estilo do HUD (scripts/ui/hud.gd).
+		draw_rect(Rect2(Vector2.ZERO, size), Color(0.08, 0.1, 0.17, 0.85), true)
+		draw_rect(Rect2(Vector2.ZERO, size), Color("8d9ab8"), false, 1.0)
 	for item in visible_rects():
 		var rect: Rect2 = item["rect"]
 		draw_rect(rect, item["color"], true)
@@ -132,32 +142,12 @@ func _draw_player() -> void:
 	var point := _map_point(_player_world_pos / WorldMap.SCREEN)
 	draw_circle(point, (2.0 if _large_map else 1.2) + pulse * (1.5 if _large_map else 0.7), Color("fff7b0"))
 
+## Tamanho de uma tela do jogo no mapa, sempre na proporção 16:9.
 func _cell_scale() -> Vector2:
-	if _large_map:
-		return Vector2.ONE
-	var bounds := _map_bounds()
-	return Vector2((COMPACT_SIZE.x - 12.0) / maxf(bounds.size.x, 1.0), (COMPACT_SIZE.y - 12.0) / maxf(bounds.size.y, 1.0))
+	return CELL_ASPECT * (LARGE_UNIT * _large_zoom if _large_map else COMPACT_UNIT)
 
+## Os dois modos ficam centrados no Kaê: o mapa é largo demais para caber inteiro numa caixa pequena.
 func _map_point(map_units: Vector2) -> Vector2:
-	if _large_map:
-		var center := _player_world_pos / WorldMap.SCREEN
-		return size * 0.5 + (map_units - center) * LARGE_CELL_PIXELS * _large_zoom
-	var bounds := _map_bounds()
-	var scale := _cell_scale()
-	var used_size := bounds.size * scale
-	var top_left := size - used_size - COMPACT_MARGIN
+	var center := _player_world_pos / WorldMap.SCREEN
+	return size * 0.5 + (map_units - center) * _cell_scale()
 
-	# Em uso inline, permanece no canto inferior direito, afastado do HUD superior.
-	return top_left + (map_units - bounds.position) * scale
-
-func _map_bounds() -> Rect2:
-	var bounds := Rect2()
-	var first := true
-	for room_id in WorldMap.room_ids():
-		var data: Dictionary = WorldMap.room(room_id)
-		var cell: Vector2i = data.get("cell", Vector2i.ZERO)
-		var cells: Vector2i = data.get("size", Vector2i.ONE)
-		var rect := Rect2(Vector2(cell), Vector2(cells))
-		bounds = rect if first else bounds.merge(rect)
-		first = false
-	return bounds
