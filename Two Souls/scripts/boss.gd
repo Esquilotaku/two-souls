@@ -39,6 +39,7 @@ func _ready() -> void:
 		collision_mask = 1
 	var collision := CollisionShape2D.new()
 	var shape := RectangleShape2D.new()
+	# Chefes têm super armadura: não implementam apply_knockback; seus tamanhos destacam-se ao lado do Kaê (72 px).
 	shape.size = Vector2(88, 116) if boss_id == "the_rock" else (Vector2(64, 58) if boss_id == "hooded_sorcerer" else Vector2(52, 48))
 	collision.shape = shape
 	if boss_id == "the_rock":
