@@ -8,7 +8,7 @@ No `game.gd`, declare a variável junto das outras variáveis do jogo, adicione 
 
 ```gdscript
 var minimap := WorldMinimap.new() # junto das variáveis do game.gd
-add_child(minimap); minimap.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT) # em _ready()
+add_child(minimap) # em _ready(); o controle já se posiciona no canto inferior direito
 minimap.update_view(visited_rooms, room_id, player.global_position, abilities) # em _process(), junto do HUD
 ```
 

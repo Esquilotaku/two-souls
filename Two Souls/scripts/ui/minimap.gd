@@ -19,6 +19,7 @@ func _ready() -> void:
 	set_process(true)
 	mouse_filter = Control.MOUSE_FILTER_PASS
 	custom_minimum_size = COMPACT_SIZE
+	_set_layout()
 
 ## Alimenta o mapa com os mesmos dados que o fluxo do jogo já mantém.
 func update_view(visited: Dictionary, current_room: String, player_world_pos: Vector2, abilities: Dictionary) -> void:
@@ -31,10 +32,24 @@ func update_view(visited: Dictionary, current_room: String, player_world_pos: Ve
 ## O game pode chamar esta função ao abrir ou fechar a ação map (Tab).
 func set_large_map(open: bool) -> void:
 	_large_map = open
+	_set_layout()
 	queue_redraw()
 
 func is_large_map_open() -> bool:
 	return _large_map
+
+func _set_layout() -> void:
+	if _large_map:
+		set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	else:
+		anchor_left = 1.0
+		anchor_top = 1.0
+		anchor_right = 1.0
+		anchor_bottom = 1.0
+		offset_left = -COMPACT_SIZE.x - 12.0
+		offset_top = -COMPACT_SIZE.y - 12.0
+		offset_right = -12.0
+		offset_bottom = -12.0
 
 ## Lista de retângulos revelados em coordenadas do Control, usada também pelo teste.
 func visible_rects() -> Array[Dictionary]:
@@ -93,7 +108,6 @@ func _draw_doors(room_id: String) -> void:
 	var data: Dictionary = WorldMap.room(room_id)
 	var origin: Vector2 = Vector2(data.get("cell", Vector2i.ZERO))
 	var extent: Vector2 = Vector2(data.get("size", Vector2i.ONE))
-	var cell_scale := _cell_scale()
 	for door: Dictionary in data.get("doors", []):
 		var point := origin
 		match door.get("side", ""):
@@ -115,7 +129,6 @@ func _draw_player() -> void:
 	if not _visited.has(_current_room) or not bool(_visited.get(_current_room, false)):
 		return
 	var pulse := 0.5 + 0.5 * sin(float(Time.get_ticks_msec()) / 180.0)
-	var cell_scale := _cell_scale()
 	var point := _map_point(_player_world_pos / WorldMap.SCREEN)
 	draw_circle(point, (2.0 if _large_map else 1.2) + pulse * (1.5 if _large_map else 0.7), Color("fff7b0"))
 
@@ -124,11 +137,6 @@ func _cell_scale() -> Vector2:
 		return Vector2.ONE
 	var bounds := _map_bounds()
 	return Vector2((COMPACT_SIZE.x - 12.0) / maxf(bounds.size.x, 1.0), (COMPACT_SIZE.y - 12.0) / maxf(bounds.size.y, 1.0))
-
-func _map_scale() -> Vector2:
-	if _large_map:
-		return Vector2.ONE * LARGE_CELL_PIXELS * _large_zoom
-	return Vector2.ONE
 
 func _map_point(map_units: Vector2) -> Vector2:
 	if _large_map:

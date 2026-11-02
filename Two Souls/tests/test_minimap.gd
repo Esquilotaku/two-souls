@@ -12,7 +12,6 @@ func _init() -> void:
 	_expect(minimap.visible_rects().is_empty(), "sem áreas visitadas, o mapa fica vazio")
 
 	var rects := minimap.visible_rects()
-	_expect(rects.is_empty(), "área conhecida mas não visitada não aparece")
 	var largo := minimap.rect_for_room({"cell": Vector2i(300, 10), "size": Vector2i(60, 2)})
 	_expect(largo.size.x > largo.size.y, "a área de exemplo 60 x 2 mantém proporção horizontal")
 	minimap.update_view({"trilha_entrada": true}, "trilha_entrada", Vector2(16 * 640.0, 0), {"spear_wall": false})
@@ -22,7 +21,9 @@ func _init() -> void:
 		_expect(rects[0]["id"] == "trilha_entrada", "o retângulo pertence à área visitada")
 	minimap.set_large_map(true)
 	_expect(minimap.is_large_map_open(), "o modo mapa grande pode ser aberto")
-	_expect(minimap.visible_rects().size() == 1, "a área 60 x 2 também desenha no modo grande")
+	largo = minimap.rect_for_room({"cell": Vector2i(300, 10), "size": Vector2i(60, 2)})
+	_expect(largo.size.x > largo.size.y, "área 60 x 2 mantém proporção também no mapa grande")
+	_expect(minimap.visible_rects().size() == 1, "só a sala visitada continua visível no modo grande")
 	minimap.update_view({"clareira_inicio": true}, "clareira_inicio", Vector2.ZERO, {})
 	_expect(minimap.visible_rects().size() == 1, "área não visitada continua escondida")
 	minimap.free()
