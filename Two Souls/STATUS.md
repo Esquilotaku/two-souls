@@ -294,3 +294,11 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
   - tarefa 1.1, plano técnico do mapa interligado, avaliando o addon MetSys com a leitura do Gabriel antes;
   - depois, voltar a programar o jogo bruto.
 - **Ainda vale no código:** o protótipo ainda usa os nomes antigos (Orion, Aenia, The Rock). Trocar quando mexer nesses arquivos, sem pressa.
+
+
+## Ponto de retomada ? 02/11/2026 (Codex, minimapa)
+
+- A tarefa 1.4 foi implementada no branch `codex/minimapa`: `scripts/ui/minimap.gd` desenha as ?reas visitadas por cima da interface, com cores das regi?es, destaque da ?rea atual, ponto piscando, portas e bloqueios laranja com letra provis?ria. O modo compacto mede 120?70 px e fica no canto inferior direito; o mapa grande centraliza no jogador e permite zoom pela roda do mouse.
+- Criados `tests/test_minimap.gd` e `docs/tecnico/minimapa.md`, com instru??es de integra??o em tr?s linhas para o Claude. O minimapa ainda n?o foi ligado ao `game.gd`, conforme divis?o de trabalho.
+- Verificado em Godot 4.7.2: carregamento headless do projeto e todos os testes `tests/test_*.gd` passaram, incluindo a ?rea de exemplo 60?2. N?o foi feito teste manual com o jogo aberto.
+- Pr?ximo passo: Claude integrar o controle no `game.gd` e ligar a a??o `map`; a tarefa 1.4 est? esperando essa integra??o.
