@@ -2,7 +2,7 @@ extends RefCounted
 class_name RuneCatalog
 
 const STARTING_SLOTS := 2
-const MAX_SLOTS := 6
+const MAX_SLOTS := 5
 const MAX_LEVEL := 3
 const UPGRADE_COSTS := {1: 3, 2: 6} # custo para passar do nível indicado ao próximo
 

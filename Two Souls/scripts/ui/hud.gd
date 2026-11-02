@@ -29,6 +29,7 @@ var _boss_box: Control
 var _boss_name: Label
 var _boss_fill: ColorRect
 var _slots: Array[Dictionary] = []
+var _combo_text: Label
 
 const BAR_WIDTH := 116.0
 const BOSS_BAR_WIDTH := 300.0
@@ -43,6 +44,10 @@ func _ready() -> void:
 	_message_text = _label("", 13, TEXT_COLOR, Vector2(40, 262), Vector2(560, 24), HORIZONTAL_ALIGNMENT_CENTER)
 	_message_text.add_theme_color_override("font_outline_color", FRAME_SHADOW)
 	_message_text.add_theme_constant_override("outline_size", 4)
+	# Contador de golpes seguidos, como nos jogos de fliperama.
+	_combo_text = _label("", 16, Color("ffe08a"), Vector2(500, 120), Vector2(130, 24), HORIZONTAL_ALIGNMENT_RIGHT)
+	_combo_text.add_theme_color_override("font_outline_color", FRAME_SHADOW)
+	_combo_text.add_theme_constant_override("outline_size", 5)
 
 ## info: dicionário montado pelo game.gd a cada quadro (ver _hud_info no game.gd).
 func refresh(info: Dictionary) -> void:
@@ -58,6 +63,8 @@ func refresh(info: Dictionary) -> void:
 	if boss_max > 0:
 		_boss_name.text = info["boss_name"]
 		_boss_fill.size.x = BOSS_BAR_WIDTH * clampf(float(info["boss_health"]) / float(boss_max), 0.0, 1.0)
+	var combo := int(info.get("combo", 0))
+	_combo_text.text = "%d GOLPES" % combo if combo >= 2 else ""
 	var skills: Array = info.get("skills", [])
 	for index in range(_slots.size()):
 		var slot: Dictionary = _slots[index]

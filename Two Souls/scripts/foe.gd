@@ -20,6 +20,9 @@ var tribal := false
 var is_rock_summon := false
 var facing := 1
 var drop_id := ""
+## Atordoado por golpe (combos do Kaê): não anda nem ataca.
+var stun_timer := 0.0
+const STUN_GRAVITY := 2400.0
 var time_difficulty := 0.0
 var base_health := 2
 var base_speed := 28.0
@@ -39,6 +42,14 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	age += delta
+	if stun_timer > 0.0:
+		# Lançado ou empurrado por um golpe: sem andar nem atacar até cair e o tempo passar.
+		stun_timer -= delta
+		velocity.y += STUN_GRAVITY * delta
+		velocity.x = move_toward(velocity.x, 0.0, 600.0 * delta)
+		move_and_slide()
+		queue_redraw()
+		return
 	hit_flash = maxf(0.0, hit_flash - delta)
 	attack_cooldown = maxf(0.0, attack_cooldown - delta)
 	ranged_cooldown = maxf(0.0, ranged_cooldown - delta)
@@ -161,3 +172,8 @@ func _draw_tribal_spearman() -> void:
 	]), Color("d4ded1"))
 	if health == 1:
 		draw_rect(Rect2(-2, -19, 4, 2), Color("e59678"))
+
+## Empurrão e lançamento dos combos (scripts/combat/orion_combo.gd). Chefes não têm esta função: super armadura.
+func apply_knockback(push: Vector2, stun: float) -> void:
+	velocity = push
+	stun_timer = maxf(stun_timer, stun)

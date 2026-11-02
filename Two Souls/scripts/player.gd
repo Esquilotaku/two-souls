@@ -37,6 +37,9 @@ var experience := 0
 var experience_to_next := 100
 var facing := 1
 var attack_timer := 0.0
+## Combos de comando (scripts/combat/orion_combo.gd).
+var combo := OrionCombo.new()
+var hit_stop := 0.0
 var magic_timer := 0.0
 var spear_cooldown := 0.0
 var super_punch_cooldown := 0.0
@@ -91,6 +94,11 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if not active:
 		return
+	combo.read_input()
+	# Pausa curtinha no acerto (hit-stop) para o golpe ter peso.
+	if hit_stop > 0.0:
+		hit_stop -= delta
+		return
 	anim_time += delta
 	attack_timer = maxf(0.0, attack_timer - delta)
 	attack_animation_timer = maxf(0.0, attack_animation_timer - delta)
@@ -119,8 +127,12 @@ func _physics_process(delta: float) -> void:
 		# Cair de uma borda conta como o primeiro pulo: no ar sobra só o pulo duplo.
 		jump_count = maxi(jump_count, 0 if is_on_floor() else 1) + 1
 		dash_time_left = 0.0
-	if Input.is_action_just_pressed("attack") and attack_timer <= 0.0:
-		_attack()
+	var started := combo.update(self, delta)
+	if started != "":
+		attack_animation_timer = float(OrionCombo.MOVES[started]["time"]) + 0.05
+		if character_sprite:
+			character_sprite.play("attack")
+			character_sprite.frame = 0
 	if Input.is_action_just_pressed("magic") and magic_timer <= 0.0 and magic > 0:
 		_cast_magic()
 	if Input.is_action_just_pressed("throw_spear") and spear_cooldown <= 0.0 and has_skill("spear_throw"):
@@ -154,22 +166,6 @@ func _update_animation() -> void:
 func start_dash_animation(duration: float = 0.24) -> void:
 	# Ponto de entrada para o estado de dash quando a habilidade for acionada.
 	dash_animation_timer = maxf(dash_animation_timer, duration)
-
-func _attack() -> void:
-	attack_timer = 0.34
-	attack_animation_timer = 0.5
-	for target in get_tree().get_nodes_in_group("hostile"):
-		if not is_instance_valid(target):
-			continue
-		var offset: Vector2 = target.global_position - global_position
-		if absf(offset.x) < 48.0 * WORLD_SCALE and absf(offset.y) < 42.0 * WORLD_SCALE and offset.x * facing > -12.0 * WORLD_SCALE:
-			target.call("take_hit", _hit_amount())
-	for target in get_tree().get_nodes_in_group("attackable_scenery"):
-		if not is_instance_valid(target):
-			continue
-		var offset: Vector2 = target.global_position - global_position
-		if absf(offset.x) < 50.0 * WORLD_SCALE and absf(offset.y) < 62.0 * WORLD_SCALE and offset.x * facing > -12.0 * WORLD_SCALE:
-			target.call("take_hit", _hit_amount())
 
 func _cast_magic() -> void:
 	magic -= 1
@@ -364,9 +360,8 @@ func _draw() -> void:
 	if flicker:
 		return
 	# The character's body and carried spear come from the approved pixel-art sprite.
-	if attack_timer > 0.13:
-		draw_arc(Vector2(30 * facing, -3), 66.0, -1.25 if facing > 0 else 2.1, 1.2 if facing > 0 else 4.55, 12, Color("a7fff2"), 6.0, false)
-		_draw_sparkle(Vector2(81 * facing, -33), Color("f4f1c0"))
+	if combo.is_attacking():
+		_draw_combo_move()
 	if super_punch_flash > 0.0:
 		var impact := Vector2(57.0 * facing, -6.0)
 		draw_circle(impact, 45.0, Color(0.52, 0.96, 0.87, super_punch_flash * 2.2))
@@ -420,9 +415,38 @@ func _check_dash_tap(delta: float) -> void:
 		dash_direction = tapped
 		facing = tapped
 		dash_time_left = DASH_TIME
+		combo.move = ""
 		dash_cooldown = DASH_TIME + DASH_COOLDOWN
 		start_dash_animation(DASH_TIME + 0.06)
 		_last_tap_direction = 0
 	else:
 		_last_tap_direction = tapped
 		_last_tap_time = now
+
+# --- Desenho provisório dos golpes do combo (até a arte de cada golpe existir) ---
+
+func _draw_combo_move() -> void:
+	var info: Dictionary = OrionCombo.MOVES[combo.move]
+	var progress := clampf(combo.move_time / float(info["time"]), 0.0, 1.0)
+	var fade := 1.0 - progress
+	var trail := Color(0.65, 1.0, 0.95, 0.85 * fade)
+	var f := float(facing)
+	match combo.move:
+		"a1", "a2", "air", "lunge":
+			draw_arc(Vector2(18 * f, -8), 44.0, -0.9 if f > 0 else 2.2, 0.9 if f > 0 else 4.0, 10, trail, 4.0)
+		"a3":
+			draw_arc(Vector2(0, -10), 52.0, 0.0, TAU * progress, 18, trail, 4.0)
+		"launcher", "upper":
+			draw_line(Vector2(20 * f, 30), Vector2(26 * f, -70), trail, 5.0)
+		"sweep":
+			draw_arc(Vector2(10 * f, 24), 46.0, 0.2 if f > 0 else 2.0, 1.1 if f > 0 else 2.9, 10, trail, 4.0)
+		"dive":
+			draw_line(Vector2(0, -20), Vector2(4 * f, 50), trail, 5.0)
+		"a4":
+			# Transformação relâmpago: silhueta preta do animal com olhos e marcas verdes (brainstorm, seção 3).
+			var alpha := 0.9 * fade
+			var body := Vector2(46 * f, -6)
+			draw_circle(body, 34.0, Color(0.03, 0.05, 0.04, alpha))
+			draw_circle(body + Vector2(28 * f, -16), 18.0, Color(0.03, 0.05, 0.04, alpha))
+			draw_circle(body + Vector2(34 * f, -20), 3.0, Color(0.24, 0.81, 0.37, alpha))
+			draw_arc(body, 40.0, 0.0, TAU, 20, Color(0.24, 0.81, 0.37, alpha * 0.8), 2.0)

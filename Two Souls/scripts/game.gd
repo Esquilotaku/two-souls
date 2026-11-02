@@ -169,7 +169,7 @@ func _show_title() -> void:
 	title.add_theme_constant_override("shadow_offset_x", 3)
 	title.add_theme_constant_override("shadow_offset_y", 4)
 	ui_root.add_child(title)
-	var subtitle := _label("A JORNADA DE ORION", 16, Color("b8e9e1"), HORIZONTAL_ALIGNMENT_CENTER)
+	var subtitle := _label("A JORNADA DE KAÊ", 16, Color("b8e9e1"), HORIZONTAL_ALIGNMENT_CENTER)
 	subtitle.position = Vector2(70, 82)
 	subtitle.size = Vector2(500, 30)
 	ui_root.add_child(subtitle)
@@ -257,7 +257,7 @@ func _show_controls() -> void:
 	title.position = Vector2(90, 42)
 	title.size = Vector2(460, 48)
 	ui_root.add_child(title)
-	var help := "Ande com as setas; %s pula.\n%s ataca; %s dash; %s magia.\n%s lança e %s super soco, depois de ganhá-los.\n%s ativa santuários e fala com Aenia.\nBlocos laranja pedem uma habilidade.\n%s bolsa; %s talentos; %s pausa." % [
+	var help := "Ande com as setas; %s pula. Seta 2x: dash.\n%s ataca (A A A A; A A + seta cima ou baixo).\n%s magia; %s lança e %s super soco, depois de ganhá-los.\n%s ativa santuários e fala com Aená.\nBlocos laranja pedem uma habilidade.\n%s bolsa; %s talentos; %s pausa." % [
 		_key_name("jump"), _key_name("attack"), _key_name("magic"),
 		_key_name("throw_spear"), _key_name("super_punch"), _key_name("interact"),
 		_key_name("inventory"), _key_name("skill_tree"), _key_name("pause")]
@@ -289,7 +289,7 @@ func _start_new_game() -> void:
 	_apply_world_time(true)
 	_show_hud()
 	if _save_campaign():
-		_show_message("Monte Ligna · siga as luzes entre as raízes", 3.2)
+		_show_message("Siga as luzes entre as raízes", 3.2)
 	else:
 		_show_message("Jornada iniciada, mas não foi possível salvar no disco.", 4.0)
 
@@ -543,7 +543,7 @@ func _respawn_player() -> void:
 	player.hurt_timer = 1.4
 	_place_at_shrine()
 	player.health_changed.emit(player.health)
-	_show_message("Orion desperta no último santuário", 2.6)
+	_show_message("Kaê desperta no último santuário", 2.6)
 
 func _on_player_defeated() -> void:
 	respawn_timer = 0.01
@@ -581,7 +581,7 @@ func _on_boss_defeated(boss_key: String) -> void:
 	if boss_key == "the_rock":
 		_show_message("D Rock virou aliado. +1 ponto de talento." if saved else "D Rock virou aliado, mas não foi possível salvar o progresso.", 4.0)
 	elif boss_key == "corrupted_tree":
-		_show_message("Aenia está livre! Pressione %s para conversar." % _key_name("interact") if saved else "Aenia está livre, mas não foi possível salvar o progresso.", 4.0)
+		_show_message("Aená está livre! Pressione %s para conversar." % _key_name("interact") if saved else "Aená está livre, mas não foi possível salvar o progresso.", 4.0)
 
 func _add_rock_companion() -> void:
 	var companion := CorruptedBoss.new()
@@ -650,7 +650,7 @@ func _show_aenia_dialogue() -> void:
 	panel.size = Vector2(382, 116)
 	panel.color = Color(0.035, 0.09, 0.15, 0.94)
 	ui_root.add_child(panel)
-	var speaker := _label("AENIA", 15, Color("9ef5dc"))
+	var speaker := _label("AENÁ", 15, Color("9ef5dc"))
 	speaker.position = Vector2(208, 198)
 	speaker.size = Vector2(344, 24)
 	ui_root.add_child(speaker)
@@ -766,6 +766,7 @@ func _hud_info() -> Dictionary:
 		"place": place,
 		"time": "Dia %d · %s · %s" % [day, _time_of_day_name().capitalize(), _format_world_time()],
 		"objective": objective,
+		"combo": player.combo.hits_in_a_row,
 		"skills": [
 			{"key": _key_name("throw_spear"), "short": "Lança", "unlocked": player.has_skill("spear_throw"),
 				"cooldown": player.spear_cooldown / maxf(0.01, 1.15 * player._cooldown_scale())},
@@ -1094,7 +1095,7 @@ func _purchase_skill(skill_id: String) -> void:
 
 func _use_inventory_item(item_id: String) -> void:
 	if not player or not is_instance_valid(player) or not player.use_item(item_id):
-		_show_inventory("Orion só pode usar o item quando precisar dele.")
+		_show_inventory("Kaê só pode usar o item quando precisar dele.")
 		return
 	var definition := ITEM_CATALOG.get_definition(item_id)
 	var saved := _save_campaign()
@@ -1139,7 +1140,7 @@ func _show_ending() -> void:
 	aenia_portrait.size = Vector2(150, 156)
 	aenia_portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui_root.add_child(aenia_portrait)
-	var story := _label("Orion e Aenia reuniram suas forças. A Árvore Mãe voltou a brilhar, e Monte Ligna respirou em paz.", 16, Color("e6eee7"), HORIZONTAL_ALIGNMENT_CENTER)
+	var story := _label("Kaê e Aená reuniram suas forças. A Árvore Mãe voltou a brilhar, e a floresta respirou em paz.", 16, Color("e6eee7"), HORIZONTAL_ALIGNMENT_CENTER)
 	story.position = Vector2(62, 228)
 	story.size = Vector2(516, 50)
 	story.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

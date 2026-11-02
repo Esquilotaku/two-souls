@@ -207,7 +207,10 @@ func _test_dash() -> void:
 	_expect(not game.player.is_dashing(), "dois toques lentos não dão dash")
 	_release_all()
 
+## Segura a tecla por 2 quadros de física (o jogo lê teclas na física; no modo sem janela os quadros
+## de desenho são mais rápidos e um toque curto demais poderia sumir entre duas leituras).
 func _tap(action: String) -> void:
 	Input.action_press(action)
-	await _frames(2)
+	await physics_frame
+	await physics_frame
 	Input.action_release(action)

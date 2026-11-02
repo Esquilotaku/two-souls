@@ -16,7 +16,7 @@ const REGIONS := {
 	"cavernas": {"name": "Cavernas e Túnel", "color": "4a4458"},
 	"copas": {"name": "Copas", "color": "4f7a3a"},
 	"coracao": {"name": "Coração Corrompido", "color": "5a3a5f"},
-	"covil": {"name": "Covil do Feiticeiro", "color": "3a2f4f"},
+	"covil": {"name": "Covil de Tau", "color": "3a2f4f"},
 }
 
 ## Habilidades de travessia, na ordem do brainstorm-jogo.md (seção 3).
@@ -36,18 +36,18 @@ const FUTURE_REGIONS := {
 	"ruinas": "Ruínas sob o Lago",
 	"raizes_profundas": "Raízes Profundas",
 	"pico_nevado": "Pico Nevado",
-	"bosque_aenia": "Bosque de Aenia",
+	"bosque_aenia": "Bosque de Aená",
 }
 
 ## Chefes por sala. "boss_id" usa os comportamentos do boss.gd; os subchefes ainda são o genérico.
 const BOSSES := {
 	"the_rock": {"rune": "mapinguari", "name": "D Rock", "boss_id": "the_rock", "tier": "major", "hour": 10.0, "health": 14, "variant": 2},
-	"onca_corrompida": {"rune": "onca", "name": "Onça Corrompida", "boss_id": "generic", "tier": "sub_boss", "health": 10, "variant": 1},
-	"jiboia_corrompida": {"rune": "jiboia", "name": "Jiboia Corrompida", "boss_id": "swamp_guardian", "tier": "sub_boss", "health": 12, "variant": 1},
-	"tatu_corrompido": {"rune": "tatu", "name": "Tatu Corrompido", "boss_id": "generic", "tier": "sub_boss", "health": 12, "variant": 0},
-	"gaviao_corrompido": {"rune": "gaviaoreal", "name": "Gavião Corrompido", "boss_id": "generic", "tier": "sub_boss", "health": 12, "variant": 2},
+	"onca_corrompida": {"rune": "onca", "name": "Curupira", "boss_id": "generic", "tier": "sub_boss", "health": 10, "variant": 1},
+	"jiboia_corrompida": {"rune": "jiboia", "name": "Boiúna", "boss_id": "swamp_guardian", "tier": "sub_boss", "health": 12, "variant": 1},
+	"tatu_corrompido": {"rune": "tatu", "name": "Minhocão", "boss_id": "generic", "tier": "sub_boss", "health": 12, "variant": 0},
+	"gaviao_corrompido": {"rune": "gaviaoreal", "name": "Mapinguari", "boss_id": "generic", "tier": "sub_boss", "health": 12, "variant": 2},
 	"corrupted_tree": {"rune": "curupira", "name": "Árvore Corrompida", "boss_id": "corrupted_tree", "tier": "major", "hour": 18.0, "health": 16, "variant": 0},
-	"hooded_sorcerer": {"name": "Feiticeiro Encapuzado", "boss_id": "hooded_sorcerer", "tier": "major", "hour": 22.0, "health": 18, "variant": 2},
+	"hooded_sorcerer": {"name": "Tau, o Teju Jaguá", "boss_id": "hooded_sorcerer", "tier": "major", "hour": 22.0, "health": 18, "variant": 2},
 }
 
 const ROOMS := {
@@ -117,7 +117,7 @@ const ROOMS := {
 		"shrine": 640.0, "foes": 3, "pickups": ["luminous_herb"],
 	},
 	"floresta_toca": {
-		"region": "floresta", "name": "Toca da Onça",
+		"region": "floresta", "name": "Toca do Curupira",
 		"cell": Vector2i(-5, 0), "size": Vector2i(1, 1),
 		"doors": [
 			{"id": "leste", "side": "east", "row": 0, "to": "floresta_centro", "to_door": "oeste"},
@@ -137,7 +137,7 @@ const ROOMS := {
 		"platforms": [[560.0, 220.0, 120.0]],
 	},
 	"lago_toca": {
-		"region": "lago", "name": "Toca da Jiboia",
+		"region": "lago", "name": "Toca da Boiúna",
 		"cell": Vector2i(-6, 1), "size": Vector2i(1, 1),
 		"doors": [
 			{"id": "leste", "side": "east", "row": 0, "to": "lago_margem", "to_door": "oeste"},
@@ -178,7 +178,7 @@ const ROOMS := {
 		"platforms": [[1500.0, 210.0, 140.0]],
 	},
 	"cav_toca_tatu": {
-		"region": "cavernas", "name": "Toca do Tatu",
+		"region": "cavernas", "name": "Toca do Minhocão",
 		"cell": Vector2i(5, 1), "size": Vector2i(1, 1),
 		"doors": [
 			{"id": "oeste", "side": "west", "row": 0, "to": "cav_tunel", "to_door": "leste"},
@@ -206,7 +206,7 @@ const ROOMS := {
 		"shrine": 1600.0, "foes": 3, "pickups": ["mana_seed"], "rune": "boitata",
 	},
 	"cav_ninho": {
-		"region": "cavernas", "name": "Ninho do Gavião",
+		"region": "cavernas", "name": "Ninho do Mapinguari",
 		"cell": Vector2i(3, 2), "size": Vector2i(1, 1),
 		"doors": [
 			{"id": "oeste", "side": "west", "row": 0, "to": "cav_profundas", "to_door": "leste"},
@@ -265,7 +265,7 @@ const ROOMS := {
 		"shrine": 900.0, "foes": 3,
 	},
 	"covil_trono": {
-		"region": "covil", "name": "Trono do Feiticeiro",
+		"region": "covil", "name": "Trono de Tau",
 		"cell": Vector2i(-9, -3), "size": Vector2i(1, 1),
 		"doors": [
 			{"id": "leste", "side": "east", "row": 0, "to": "covil_portao", "to_door": "oeste"},
