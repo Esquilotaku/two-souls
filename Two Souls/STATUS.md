@@ -266,7 +266,7 @@ Reprojetar a progressão como um mundo de áreas interconectadas, com caminhos q
 
 - Implementados três tipos provisórios em `scripts/foe.gd`, com colisões de 72, 76 e 100 px e desenhos por código; o lanceiro mantém os ataques `ranged`/`tribal`. A barra de vida aparece depois do primeiro golpe. Chefes mantêm super armadura (sem `apply_knockback`); D Rock tem 116 px de colisão e cerca de 124 px desenhados, ~1,7× o Kaê de 72 px. Guia: `docs/design/inimigos-provisorios.md`.
 - **Verificado:** Godot 4.7.2 importou o projeto e passou `--headless --path "Two Souls" --quit`; `test_enemies.gd` e todos os `test_*.gd` passaram, incluindo `test_combat.gd`. O import foi necessário porque a pasta `.godot` não tinha os recursos importados.
-- **Próximo passo:** Claude escolher `kind` ao criar inimigos no mapa. A tarefa 2.3 está esperando Claude aplicar os tipos; não foi feito teste manual de gameplay. Push e GitHub Actions ainda pendentes.
+- **Próximo passo:** Claude escolher `kind` ao criar inimigos no mapa. A tarefa 2.3 está esperando Claude aplicar os tipos; não foi feito teste manual de gameplay. Branch enviado; o GitHub Actions passou no run `41392637954`.
 
 ## Ponto de retomada — 01/11/2026, noite 2 (Claude, nuvem: pesquisa de referências)
 
