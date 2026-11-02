@@ -1,6 +1,6 @@
 # Combos do Orion — proposta para aprovação
 
-Proposta do Claude em 01/11/2026, a partir do pedido do Gabriel ("metroidvania bem arcade, fliperama, combos tipo A+A+A+seta cima, A+A+seta baixo") e da pesquisa em `referencia-grand-chase.md` (fontes públicas). **Nada aqui foi programado ainda**: o Gabriel aprova, corta ou muda e só então vira código.
+Proposta do Claude em 01/11/2026, a partir do pedido do Gabriel ("metroidvania bem arcade, fliperama, combos tipo A+A+A+seta cima, A+A+seta baixo") e da pesquisa em `referencia-grand-chase.md` (fontes públicas). **Aprovada pelo Gabriel em 02/11/2026 e programada** em `Two Souls/scripts/combat/orion_combo.gd` (teste: `tests/test_combat.gd`). As perguntas do fim seguem em aberto; até a resposta, o final do combo mostra a silhueta do animal e o dash não gasta fôlego.
 
 ## Como os comandos funcionam
 
