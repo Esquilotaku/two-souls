@@ -21,14 +21,14 @@ A ordem segue os marcos do `docs/producao/plano-de-negocio.md`, seção 6.
 | 1.1 | Plano técnico do mundo interligado: salas, transições, regiões, como o save guarda a sala atual e as salas visitadas | Claude | feito (01/11/2026), `docs/tecnico/plano-tecnico-mundo.md` | mundo, tema 1 |
 | 1.2 | Trocar os 8 corredores lineares por salas interligadas (primeiro, só a Clareira, a Trilha e a entrada das Cavernas com arte provisória) | Codex ou Claude | feito (01/11/2026): mapa completo do 1.0, 22 salas em cinza, branch claude/estrutura-mundo | mundo, tema 1 |
 | 1.3 | Santuários fixos que só valem se ativados; morrer volta ao último ativado sem perder nada | Codex ou Claude | feito (01/11/2026), sem a escolha manhã/noite do descanso (fica na 1.5) | mundo, tema 1, itens 6 e 7 |
-| 1.4 | Minimapa revelado conforme as salas visitadas | Codex ou Claude | livre | mundo, tema 1 |
+| 1.4 | Minimapa revelado conforme as salas visitadas | Codex ou Claude | em andamento (Codex, codex/minimapa) | mundo, tema 1 |
 | 1.5 | Relógio com descanso no santuário e os modos História, Aventura e Desafio | Codex ou Claude | livre | mundo, tema 4 |
 | 1.6 | Controles novos (setas, Espaço, A, S, QWER, D, F, Enter) com remapeamento | Codex ou Claude | feito (01/11/2026): Codex fez, Claude ligou no jogo (título e pausa) | jogo, seção 7 |
 | 1.7 | Bloqueios de habilidade: lança cravada e super soco primeiro | Codex ou Claude | livre | jogo, seção 3 |
 | 1.8 | Runas: achadas corrompidas, purificadas no santuário, equipadas em espaços, sobem com fragmentos | Codex | feito (01/11/2026): Codex fez, Claude ligou (chefes e pedras dão runas; santuário purifica; pausa equipa); faltam fôlego e combo | jogo, seção 3 |
 | 2.1 | Combos de comando no estilo arcade (tabela em `docs/design/combos-proposta.md`) | Claude | feito (02/11/2026): tabela aprovada e programada; faltam fôlego e transformação real (R) | combos-proposta |
-| 2.2 | Mapa grande no estilo Grand Chase: céu aberto, andares de plataforma, uns 5 min correndo até o D Rock (blocos à mão + montador fixo) | Claude + Codex | livre | level-design-referencias, referencia-grand-chase |
-| 2.3 | Inimigos grandes (do tamanho do Orion ou maiores) e chefes com super armadura | Codex ou Claude | livre | referencia-grand-chase |
+| 2.2 | Mapa grande no estilo Grand Chase: céu aberto, andares de plataforma, uns 5 min correndo até o D Rock (blocos à mão + montador fixo) | Claude + Codex | em andamento (Claude, claude/estrutura-mundo) | level-design-referencias, referencia-grand-chase |
+| 2.3 | Inimigos grandes (do tamanho do Orion ou maiores) e chefes com super armadura | Codex ou Claude | em andamento (Codex, codex/inimigos-grandes) | referencia-grand-chase |
 
 ## Arte (em paralelo)
 

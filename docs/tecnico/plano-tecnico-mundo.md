@@ -182,6 +182,10 @@ Essas três podem ir para o Codex quando o núcleo estiver no branch, uma por ve
 - "Continuar" sempre volta ao último santuário ativado (ou ao início da Clareira), não ao ponto exato onde o jogador parou.
 - O pulo duplo agora vem do gavião (`double_jump` no `player.gd`), não mais da magia dos gêmeos.
 
+## 0. Decisão de arquitetura (02/11/2026)
+
+**O mapa inteiro fica numa cena só** (`scripts/world/world_scene.gd`), decisão do Gabriel em 01/11 confirmada em 02/11. Um roteiro de retomada vindo da sessão da nuvem pedia "salas como cenas separadas" (como no vídeo do Inbound Shovel e no MetSys); o Gabriel escolheu manter a cena única. Do vídeo, aproveita-se a ideia de desenhar o minimapa numa camada própria, sem encolher o cenário (para não derrubar o desempenho). O MetSys não será instalado agora, porque o fluxo dele carrega uma sala por vez (`avaliacao-metsys.md`).
+
 ## 14. Mudanças pedidas pelo Gabriel depois de jogar (01/11/2026, noite)
 
 - **Tela interna 960×540** (era 640×360). O Orion (72 px) ocupa 13% da altura. A janela abre em tela cheia; os menus, feitos para 640×360, são ampliados 1,5x (`UI_SCALE` no `game.gd`). Uma célula do mapa passou a ser 960×540.
